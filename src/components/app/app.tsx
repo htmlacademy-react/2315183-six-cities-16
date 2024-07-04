@@ -1,8 +1,12 @@
 import MainPage from '../../pages/main-page/main-page.tsx';
 
-function App(): JSX.Element {
+type AppProps = {
+  countOfCards: number;
+}
+
+function App({countOfCards}: AppProps): JSX.Element {
   return (
-    <MainPage />
+    <MainPage countOfCards={countOfCards} />
   );
 }
 
