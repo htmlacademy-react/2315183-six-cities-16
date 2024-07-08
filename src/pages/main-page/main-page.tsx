@@ -1,3 +1,4 @@
+import Logo from '../../components/logo/logo.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 
 type MainPageProps = {
@@ -14,6 +15,7 @@ function MainPage({countOfCards}: MainPageProps): JSX.Element {
               <a className="header__logo-link header__logo-link--active">
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </a>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
