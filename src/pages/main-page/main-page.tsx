@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 
@@ -8,6 +9,9 @@ type MainPageProps = {
 function MainPage({countOfCards}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>6 cities</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
