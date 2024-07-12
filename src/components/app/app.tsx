@@ -8,12 +8,17 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offer } from '../../types/offer.ts';
+import { useState } from 'react';
 
 type AppProps = {
   offers: Offer[];
 }
 
 function App({offers}: AppProps): JSX.Element {
+  const [currentOffer, setCurrentOffer] = useState({
+    id: ''
+  });
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -23,6 +28,12 @@ function App({offers}: AppProps): JSX.Element {
             element={
               <MainPage
                 offers={offers}
+                onOfferClick={(id: string) => {
+                  setCurrentOffer({
+                    ...currentOffer,
+                    id: id
+                  });
+                }}
               />
             }
           />
@@ -33,14 +44,21 @@ function App({offers}: AppProps): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute
+                authorizationStatus={AuthorizationStatus.NoAuth}
+              >
                 <FavoritesPage />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Offer}
-            element={<OfferPage />}
+            element={
+              <OfferPage
+                currentOfferId={currentOffer as Offer}
+                offers={offers}
+              />
+            }
           />
           <Route
             path="*"

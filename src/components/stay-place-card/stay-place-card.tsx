@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Offer } from '../../types/offer.ts';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const.ts';
 
 type StayPlaceCardProps = {
   offer: Offer;
+  onOfferClick: (id: string) => void;
 }
 
-function StayPlaceCard({offer}: StayPlaceCardProps): JSX.Element {
+function StayPlaceCard({offer, onOfferClick}: StayPlaceCardProps): JSX.Element {
   const {id, title, type, price, previewImage, isFavorite, isPremium} = offer;
   const [currentOffer, setCurrentOffer] = useState({
     id
@@ -14,11 +17,12 @@ function StayPlaceCard({offer}: StayPlaceCardProps): JSX.Element {
   return (
     <article className="cities__card place-card"
       id={`offer-${id}`}
-      onMouseOver={() => {
+      onClick={() => {
         setCurrentOffer({
           ...currentOffer,
           id: id
         });
+        onOfferClick(currentOffer.id);
       }}
     >
       { isPremium ?
@@ -54,7 +58,9 @@ function StayPlaceCard({offer}: StayPlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`${AppRoute.Offer}=${id}`}>
+            {title}
+          </Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

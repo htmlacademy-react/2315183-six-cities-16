@@ -5,9 +5,10 @@ import { Offer } from '../../types/offer.ts';
 
 type MainPageProps = {
   offers: Offer[];
+  onOfferClick: (id: string) => void;
 }
 
-function MainPage({offers}: MainPageProps): JSX.Element {
+function MainPage({offers, onOfferClick}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -100,6 +101,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
               </form>
               <StayPlaceCards
                 offers={offers}
+                onOfferClick={onOfferClick}
               />
             </section>
             <div className="cities__right-section">

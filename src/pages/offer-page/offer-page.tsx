@@ -1,7 +1,25 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo.tsx';
+import { Offer } from '../../types/offer.ts';
 
-function OfferPage(): JSX.Element {
+type OfferPageProps = {
+  offers: Offer[];
+  currentOfferId: Offer;
+}
+
+function OfferPage({currentOfferId, offers}: OfferPageProps): JSX.Element {
+  const offerHref = window.location.href;
+  let offerId = '';
+
+  if (currentOfferId.id === '') {
+    offerId = offerHref.split('=').pop() as string;
+  } else {
+    offerId = currentOfferId.id;
+  }
+
+  const offer = offers.find((element) => element.id === offerId);
+  const { title, price, isFavorite, isPremium, rating } = offer as Offer;
+
   return (
     <div className="page">
       <Helmet>
@@ -60,18 +78,19 @@ function OfferPage(): JSX.Element {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className="offer__mark">
-                <span>Premium</span>
-              </div>
+              {isPremium ?
+                <div className="offer__mark">
+                  <span>Premium</span>
+                </div> : ''}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button className={`offer__bookmark-button button ${isFavorite ? 'offer__bookmark-button--active' : ''}`} type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
-                  <span className="visually-hidden">To bookmarks</span>
+                  <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
                 </button>
               </div>
               <div className="offer__rating rating">
@@ -79,7 +98,7 @@ function OfferPage(): JSX.Element {
                   <span style={{width: '80%'}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">4.8</span>
+                <span className="offer__rating-value rating__value">{rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
@@ -93,7 +112,7 @@ function OfferPage(): JSX.Element {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;120</b>
+                <b className="offer__price-value">&euro;{price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
