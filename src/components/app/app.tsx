@@ -10,18 +10,21 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Offer } from '../../types/offer.ts';
 
 type AppProps = {
-  countOfCards: number;
   offers: Offer[];
 }
 
-function App({countOfCards, offers}: AppProps): JSX.Element {
+function App({offers}: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage countOfCards={countOfCards} />}
+            element={
+              <MainPage
+                offers={offers}
+              />
+            }
           />
           <Route
             path={AppRoute.Login}

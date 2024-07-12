@@ -1,12 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
+import { Offer } from '../../types/offer.ts';
 
 type MainPageProps = {
-  countOfCards: number;
+  offers: Offer[];
 }
 
-function MainPage({countOfCards}: MainPageProps): JSX.Element {
+function MainPage({offers}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -97,7 +98,9 @@ function MainPage({countOfCards}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <StayPlaceCards countOfCards={countOfCards}/>
+              <StayPlaceCards
+                offers={offers}
+              />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
