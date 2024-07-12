@@ -19,6 +19,13 @@ function App({offers}: AppProps): JSX.Element {
     id: ''
   });
 
+  const offerClickHandler = (id: string) => {
+    setCurrentOffer({
+      ...currentOffer,
+      id: id
+    });
+  };
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -28,12 +35,7 @@ function App({offers}: AppProps): JSX.Element {
             element={
               <MainPage
                 offers={offers}
-                onOfferClick={(id: string) => {
-                  setCurrentOffer({
-                    ...currentOffer,
-                    id: id
-                  });
-                }}
+                onOfferClick={offerClickHandler}
               />
             }
           />
@@ -45,9 +47,12 @@ function App({offers}: AppProps): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth}
+                authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesPage />
+                <FavoritesPage
+                  offers={offers}
+                  onOfferClick={offerClickHandler}
+                />
               </PrivateRoute>
             }
           />

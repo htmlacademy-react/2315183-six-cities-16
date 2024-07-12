@@ -102,6 +102,7 @@ function MainPage({offers, onOfferClick}: MainPageProps): JSX.Element {
               <StayPlaceCards
                 offers={offers}
                 onOfferClick={onOfferClick}
+                isFavoritePage={false}
               />
             </section>
             <div className="cities__right-section">
