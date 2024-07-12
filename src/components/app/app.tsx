@@ -7,12 +7,14 @@ import OfferPage from '../../pages/offer-page/offer-page.tsx';
 import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import { HelmetProvider } from 'react-helmet-async';
+import { Offer } from '../../types/offer.ts';
 
 type AppProps = {
   countOfCards: number;
+  offers: Offer[];
 }
 
-function App({countOfCards}: AppProps): JSX.Element {
+function App({countOfCards, offers}: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
