@@ -7,19 +7,35 @@ import OfferPage from '../../pages/offer-page/offer-page.tsx';
 import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import { HelmetProvider } from 'react-helmet-async';
+import { Offer } from '../../types/offer.ts';
+import { useState } from 'react';
 
 type AppProps = {
-  countOfCards: number;
+  offers: Offer[];
 }
 
-function App({countOfCards}: AppProps): JSX.Element {
+function App({offers}: AppProps): JSX.Element {
+  const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
+
+  const offerClickHandler = (id: string) => {
+    setCurrentOffer({
+      ...currentOffer,
+      id: id
+    });
+  };
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage countOfCards={countOfCards} />}
+            element={
+              <MainPage
+                offers={offers}
+                onOfferClick={offerClickHandler}
+              />
+            }
           />
           <Route
             path={AppRoute.Login}
@@ -28,15 +44,28 @@ function App({countOfCards}: AppProps): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <FavoritesPage />
+              <PrivateRoute
+                authorizationStatus={AuthorizationStatus.Auth}
+              >
+                <FavoritesPage
+                  offers={offers}
+                  onOfferClick={offerClickHandler}
+                />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Offer}
-            element={<OfferPage />}
-          />
+          >
+            <Route
+              path={AppRoute.OfferId}
+              element={
+                <OfferPage
+                  offers={offers}
+                />
+              }
+            />
+          </Route>
           <Route
             path="*"
             element={<NotFoundPage />}

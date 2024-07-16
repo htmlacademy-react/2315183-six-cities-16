@@ -1,12 +1,11 @@
-export const Setting = {
-  countOfCards: 5
-};
+const STARS = [1, 2, 3, 4, 5];
 
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer/:id',
-  Root = '/'
+  Offer = '/offer',
+  OfferId = ':id',
+  Root = '/',
 }
 
 export enum AuthorizationStatus {
@@ -14,3 +13,5 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
+
+export { STARS };
