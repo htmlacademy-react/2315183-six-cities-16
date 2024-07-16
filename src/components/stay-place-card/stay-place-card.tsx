@@ -10,9 +10,7 @@ type StayPlaceCardProps = {
 
 function StayPlaceCard({offer, onOfferClick}: StayPlaceCardProps): JSX.Element {
   const {id, title, type, price, previewImage, isFavorite, isPremium} = offer;
-  const [currentOffer, setCurrentOffer] = useState({
-    id
-  });
+  const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
 
   return (
     <article className="cities__card place-card"
@@ -58,7 +56,7 @@ function StayPlaceCard({offer, onOfferClick}: StayPlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}=${id}`}>
+          <Link to={`${AppRoute.Offer}/${id}`}>
             {title}
           </Link>
         </h2>

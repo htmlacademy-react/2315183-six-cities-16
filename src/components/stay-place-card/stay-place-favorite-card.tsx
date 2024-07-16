@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Offer } from '../../types/offer.ts';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const.ts';
 
 type StayPlaceFavoriteCardProps = {
   offer: Offer;
@@ -8,9 +10,7 @@ type StayPlaceFavoriteCardProps = {
 
 function StayPlaceFavoriteCard({offer, onOfferClick}: StayPlaceFavoriteCardProps): JSX.Element {
   const {id, title, type, price, previewImage, isFavorite, isPremium} = offer;
-  const [currentOffer, setCurrentOffer] = useState({
-    id
-  });
+  const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
 
   return (
     <article className="favorites__card place-card"
@@ -56,7 +56,9 @@ function StayPlaceFavoriteCard({offer, onOfferClick}: StayPlaceFavoriteCardProps
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`${AppRoute.Offer}/${id}`}>
+            {title}
+          </Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

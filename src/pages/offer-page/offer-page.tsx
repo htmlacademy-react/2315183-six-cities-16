@@ -2,23 +2,16 @@ import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo.tsx';
 import { Offer } from '../../types/offer.ts';
 import CommentForm from '../../components/comment-form/comment-form.tsx';
+import { useParams } from 'react-router-dom';
 
 type OfferPageProps = {
   offers: Offer[];
-  currentOfferId: Offer;
 }
 
-function OfferPage({currentOfferId, offers}: OfferPageProps): JSX.Element {
-  const offerHref = window.location.href;
-  let offerId = '';
+function OfferPage({offers}: OfferPageProps): JSX.Element {
+  const { id } = useParams();
 
-  if (currentOfferId.id === '') {
-    offerId = offerHref.split('=').pop() as string;
-  } else {
-    offerId = currentOfferId.id;
-  }
-
-  const offer = offers.find((element) => element.id === offerId);
+  const offer = offers.find((element) => element.id === id);
   const { title, price, isFavorite, isPremium, rating } = offer as Offer;
 
   return (

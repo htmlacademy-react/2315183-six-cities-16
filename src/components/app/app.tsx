@@ -15,9 +15,7 @@ type AppProps = {
 }
 
 function App({offers}: AppProps): JSX.Element {
-  const [currentOffer, setCurrentOffer] = useState({
-    id: ''
-  });
+  const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
 
   const offerClickHandler = (id: string) => {
     setCurrentOffer({
@@ -58,13 +56,16 @@ function App({offers}: AppProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={
-              <OfferPage
-                currentOfferId={currentOffer as Offer}
-                offers={offers}
-              />
-            }
-          />
+          >
+            <Route
+              path={AppRoute.OfferId}
+              element={
+                <OfferPage
+                  offers={offers}
+                />
+              }
+            />
+          </Route>
           <Route
             path="*"
             element={<NotFoundPage />}
