@@ -62,6 +62,7 @@ function App({offers}: AppProps): JSX.Element {
                 <FavoritesPage
                   offers={offers}
                   onOfferClick={offerClickHandler}
+                  onOfferHover={offerHoverHandler}
                 />
               </PrivateRoute>
             }
