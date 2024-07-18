@@ -16,12 +16,22 @@ type AppProps = {
 
 function App({offers}: AppProps): JSX.Element {
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
+    undefined
+  );
 
   const offerClickHandler = (id: string) => {
     setCurrentOffer({
       ...currentOffer,
       id: id
     });
+  };
+
+  const offerHoverHandler = (offerName: string) => {
+    const currentPoint = offers.find((offer) =>
+      offer.title === offerName,
+    );
+    setSelectedOffer(currentPoint);
   };
 
   return (
@@ -34,6 +44,8 @@ function App({offers}: AppProps): JSX.Element {
               <MainPage
                 offers={offers}
                 onOfferClick={offerClickHandler}
+                onOfferHover={offerHoverHandler}
+                selectedOffer={selectedOffer}
               />
             }
           />

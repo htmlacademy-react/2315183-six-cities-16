@@ -21,3 +21,6 @@ export type Offer = {
   isPremium: boolean;
   rating: number;
 };
+
+export type OfferClick = (id: string) => void;
+export type OfferHover = (offerName: string) => void;

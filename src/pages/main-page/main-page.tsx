@@ -1,14 +1,26 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
-import { Offer } from '../../types/offer.ts';
+import { City, Offer, OfferClick, OfferHover } from '../../types/offer.ts';
+import Map from '../../components/map/map.tsx';
 
 type MainPageProps = {
   offers: Offer[];
-  onOfferClick: (id: string) => void;
+  onOfferClick: OfferClick;
+  onOfferHover: OfferHover;
+  selectedOffer: Offer | undefined;
 }
 
-function MainPage({offers, onOfferClick}: MainPageProps): JSX.Element {
+function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageProps): JSX.Element {
+  const cityRef: City = {
+    name: 'Amsterdam',
+    location: {
+      latitude: 52.37403,
+      longitude: 4.88969,
+      zoom: 13
+    }
+  };
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -102,11 +114,18 @@ function MainPage({offers, onOfferClick}: MainPageProps): JSX.Element {
               <StayPlaceCards
                 offers={offers}
                 onOfferClick={onOfferClick}
+                onOfferHover={onOfferHover}
                 isFavoritePage={false}
               />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map
+                  city={cityRef}
+                  points={offers}
+                  selectedOffer={selectedOffer}
+                />
+              </section>
             </div>
           </div>
         </div>
