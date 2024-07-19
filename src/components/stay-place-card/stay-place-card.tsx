@@ -15,7 +15,7 @@ function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps):
 
   const offerHoverHandler = (evt: MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
-    onOfferHover(evt.currentTarget.innerText);
+    onOfferHover(evt.currentTarget.querySelector('h2')?.innerText);
   };
 
   return (

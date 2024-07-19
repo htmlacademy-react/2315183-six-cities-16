@@ -23,4 +23,4 @@ export type Offer = {
 };
 
 export type OfferClick = (id: string) => void;
-export type OfferHover = (offerName: string) => void;
+export type OfferHover = (offerName: string | undefined) => void;
