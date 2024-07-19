@@ -1,8 +1,8 @@
 const STARS = [1, 2, 3, 4, 5];
 
 const UrlMarkers = {
-  URL_MARKER_DEFAULT:'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
-  URL_MARKER_CURRENT: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg'
+  URL_MARKER_DEFAULT: 'https://i.imghippo.com/files/NmFSB1721386035.svg',
+  URL_MARKER_CURRENT: 'https://i.imghippo.com/files/HgRqu1721386117.svg'
 };
 
 export enum AppRoute {
