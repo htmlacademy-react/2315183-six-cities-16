@@ -3,6 +3,7 @@ import useMap from '../hooks/use-map';
 import { City, Offer } from '../../types/offer';
 import { UrlMarkers } from '../../const';
 import { Icon, layerGroup, Marker } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   city: City;
