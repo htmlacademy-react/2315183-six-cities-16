@@ -5,14 +5,17 @@ import { useParams } from 'react-router-dom';
 import ReviewsList from '../../components/reviews/reviews-list.tsx';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
+import Map from '../../components/map/map.tsx';
+import { city } from '../../const.ts';
 
 type OfferPageProps = {
   offers: Offer[];
+  selectedOffer: Offer | undefined;
   onOfferClick: OfferClick;
   onOfferHover: OfferHover;
 }
 
-function OfferPage({offers, onOfferClick, onOfferHover}: OfferPageProps): JSX.Element {
+function OfferPage({offers, selectedOffer, onOfferClick, onOfferHover}: OfferPageProps): JSX.Element {
   const { id } = useParams();
 
   const offer: Offer | undefined = offers.find((element) => element.id === id);
@@ -175,7 +178,13 @@ function OfferPage({offers, onOfferClick, onOfferHover}: OfferPageProps): JSX.El
                 <ReviewsList offer={offer}/>
               </div>
             </div>
-            <section className="offer__map map"></section>
+            <section className="offer__map map">
+              <Map
+                city={city}
+                points={offers.filter((offerElement) => offerElement.id !== offer.id)}
+                selectedOffer={selectedOffer}
+              />
+            </section>
           </section>
           <div className="container">
             <section className="near-places places">
