@@ -27,9 +27,9 @@ function App({offers}: AppProps): JSX.Element {
     });
   };
 
-  const offerHoverHandler = (offerName: string | undefined) => {
+  const offerHoverHandler = (offerElement: Offer) => {
     const currentPoint = offers.find((offer) =>
-      offer.title === offerName,
+      offer.title === offerElement.title,
     );
     setSelectedOffer(currentPoint);
   };

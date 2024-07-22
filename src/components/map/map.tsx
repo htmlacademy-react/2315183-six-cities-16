@@ -16,7 +16,7 @@ function Map({city, points, selectedOffer}: MapProps): JSX.Element {
   const map = useMap(mapRef, city);
 
   const defaultCustomIcon = new Icon({
-    iconUrl: UrlMarkers.URL_MARKER_DEFAULT,
+    iconUrl: UrlMarkers.URL_MARKER_DEFAULT
   });
 
   const currentCustomIcon = new Icon({

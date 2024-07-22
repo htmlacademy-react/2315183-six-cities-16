@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react';
+import { useState } from 'react';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const.ts';
@@ -13,11 +13,6 @@ function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps):
   const {id, title, type, price, previewImage, isFavorite, isPremium} = offer;
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
 
-  const offerHoverHandler = (evt: MouseEvent<HTMLLIElement>) => {
-    evt.preventDefault();
-    onOfferHover(evt.currentTarget.querySelector('h2')?.innerText);
-  };
-
   return (
     <article className="cities__card place-card"
       id={`offer-${id}`}
@@ -28,7 +23,7 @@ function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps):
         });
         onOfferClick(currentOffer.id);
       }}
-      onMouseEnter={offerHoverHandler}
+      onMouseEnter={() => onOfferHover(offer)}
     >
       { isPremium ?
         <div className="place-card__mark">
