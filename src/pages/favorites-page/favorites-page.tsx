@@ -55,7 +55,7 @@ function FavoritesPage({offers, onOfferClick, onOfferHover}: FavoritesPageProps)
                     </a>
                   </div>
                 </div>
-                <StayPlaceCards offers={offers} onOfferClick={onOfferClick} onOfferHover={onOfferHover} isFavoritePage/>
+                <StayPlaceCards offers={offers} currentOffer={undefined} onOfferClick={onOfferClick} onOfferHover={onOfferHover} isFavoritePage/>
               </li>
             </ul>
           </section>
