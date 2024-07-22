@@ -15,7 +15,7 @@ function ReviewsList({offer}: ReviewsListProps): JSX.Element {
       <h2 className="reviews__title">
         Reviews &middot;
         <span className="reviews__amount">
-          { currentComments.length ? '0' : currentComments.length }
+          { currentComments.length === undefined ? '0' : currentComments.length }
         </span>
       </h2>
       {currentComments?.length ? <ReviewItem comments={currentComments}/> : ''}
