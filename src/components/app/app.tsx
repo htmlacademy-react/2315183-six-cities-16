@@ -16,12 +16,22 @@ type AppProps = {
 
 function App({offers}: AppProps): JSX.Element {
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
+    undefined
+  );
 
   const offerClickHandler = (id: string) => {
     setCurrentOffer({
       ...currentOffer,
       id: id
     });
+  };
+
+  const offerHoverHandler = (offerElement: Offer) => {
+    const currentPoint = offers.find((offer) =>
+      offer.title === offerElement.title,
+    );
+    setSelectedOffer(currentPoint);
   };
 
   return (
@@ -34,6 +44,8 @@ function App({offers}: AppProps): JSX.Element {
               <MainPage
                 offers={offers}
                 onOfferClick={offerClickHandler}
+                onOfferHover={offerHoverHandler}
+                selectedOffer={selectedOffer}
               />
             }
           />
@@ -50,6 +62,7 @@ function App({offers}: AppProps): JSX.Element {
                 <FavoritesPage
                   offers={offers}
                   onOfferClick={offerClickHandler}
+                  onOfferHover={offerHoverHandler}
                 />
               </PrivateRoute>
             }

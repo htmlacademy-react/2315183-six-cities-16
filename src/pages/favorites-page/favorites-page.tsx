@@ -1,14 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo.tsx';
-import { Offer } from '../../types/offer.ts';
+import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 
 type FavoritesPageProps = {
   offers: Offer[];
-  onOfferClick: (id: string) => void;
+  onOfferClick: OfferClick;
+  onOfferHover: OfferHover;
 }
 
-function FavoritesPage({offers, onOfferClick}: FavoritesPageProps): JSX.Element {
+function FavoritesPage({offers, onOfferClick, onOfferHover}: FavoritesPageProps): JSX.Element {
   return (
     <div className="page">
       <Helmet>
@@ -54,7 +55,7 @@ function FavoritesPage({offers, onOfferClick}: FavoritesPageProps): JSX.Element 
                     </a>
                   </div>
                 </div>
-                <StayPlaceCards offers={offers} onOfferClick={onOfferClick} isFavoritePage/>
+                <StayPlaceCards offers={offers} onOfferClick={onOfferClick} onOfferHover={onOfferHover} isFavoritePage/>
               </li>
             </ul>
           </section>

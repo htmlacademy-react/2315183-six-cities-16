@@ -1,5 +1,10 @@
 const STARS = [1, 2, 3, 4, 5];
 
+const UrlMarkers = {
+  URL_MARKER_DEFAULT: '../public/img/pin.svg',
+  URL_MARKER_CURRENT: '../public/img/pin-active.svg'
+};
+
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
@@ -14,4 +19,4 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export { STARS };
+export { STARS, UrlMarkers };
