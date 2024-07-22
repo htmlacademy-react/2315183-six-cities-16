@@ -4,12 +4,13 @@ import StayPlaceFavoriteCard from './stay-place-favorite-card.tsx';
 
 type StayPlaceCardsProps = {
   offers: Offer[];
+  currentOffer: Offer | undefined;
   onOfferClick: OfferClick;
   onOfferHover: OfferHover;
   isFavoritePage: boolean;
 }
 
-function StayPlaceCards({offers, onOfferClick, onOfferHover, isFavoritePage}: StayPlaceCardsProps): JSX.Element {
+function StayPlaceCards({offers, currentOffer, onOfferClick, onOfferHover, isFavoritePage}: StayPlaceCardsProps): JSX.Element {
   if (isFavoritePage) {
     return (
       <div className="favorites__places">
@@ -18,9 +19,20 @@ function StayPlaceCards({offers, onOfferClick, onOfferHover, isFavoritePage}: St
     );
   }
   return (
-    <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) =>
-        (
+    <div
+      className={currentOffer === undefined ? 'cities__places-list places__list tabs__content' : 'near-places__list places__list'}
+    >
+      {currentOffer === undefined
+        ? offers.map((offer) =>
+          (
+            <StayPlaceCard
+              key={offer.id}
+              offer={offer}
+              onOfferClick={onOfferClick}
+              onOfferHover={onOfferHover}
+            />
+          ))
+        : offers.filter((offer) => offer.id !== currentOffer.id).map((offer) => (
           <StayPlaceCard
             key={offer.id}
             offer={offer}

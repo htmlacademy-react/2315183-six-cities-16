@@ -75,6 +75,8 @@ function App({offers}: AppProps): JSX.Element {
               element={
                 <OfferPage
                   offers={offers}
+                  onOfferClick={offerClickHandler}
+                  onOfferHover={offerHoverHandler}
                 />
               }
             />

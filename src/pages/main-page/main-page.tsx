@@ -113,6 +113,7 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
               </form>
               <StayPlaceCards
                 offers={offers}
+                currentOffer={undefined}
                 onOfferClick={onOfferClick}
                 onOfferHover={onOfferHover}
                 isFavoritePage={false}
