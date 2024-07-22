@@ -19,7 +19,7 @@ export const comments: Comment[] = [
     rating: 3,
     user: {
       name: 'Emely',
-      avatarUrl: 'https://16.design.htmlacademy.pro/static/avatar/5.jpg',
+      avatarUrl: 'https://16.design.htmlacademy.pro/static/avatar/4.jpg',
       isPro: false
     }
   },
