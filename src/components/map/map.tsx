@@ -14,6 +14,7 @@ type MapProps = {
 function Map({city, points, selectedOffer}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const markers: Marker[] = [];
 
   const defaultCustomIcon = new Icon({
     iconUrl: UrlMarkers.URL_MARKER_DEFAULT
@@ -39,10 +40,15 @@ function Map({city, points, selectedOffer}: MapProps): JSX.Element {
               : defaultCustomIcon
           )
           .addTo(map);
+
+        markers.push(marker);
       });
 
       return () => {
         map.removeLayer(markerLayer);
+        markers.forEach((marker) => {
+          marker.remove();
+        });
       };
     }
   }, [map, points, selectedOffer]);
