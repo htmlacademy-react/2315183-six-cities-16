@@ -19,6 +19,7 @@ function OfferPage({offers, selectedOffer, onOfferClick, onOfferHover}: OfferPag
   const { id } = useParams();
 
   const offer: Offer | undefined = offers.find((element) => element.id === id);
+  const nearestOffers = offers.filter((offerElement) => offerElement.id !== offer?.id);
 
   if (offer !== undefined) {
     const { title, price, isFavorite, isPremium, rating } = offer;
@@ -181,7 +182,7 @@ function OfferPage({offers, selectedOffer, onOfferClick, onOfferHover}: OfferPag
             <section className="offer__map map">
               <Map
                 city={city}
-                points={offers.filter((offerElement) => offerElement.id !== offer.id)}
+                points={nearestOffers}
                 selectedOffer={selectedOffer}
               />
             </section>
