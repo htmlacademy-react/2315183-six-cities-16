@@ -1,6 +1,10 @@
+import withStayPlaceCard from '../../hocs/with-stay-place-card.tsx';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import StayPlaceCard from './stay-place-card.tsx';
 import StayPlaceFavoriteCard from './stay-place-favorite-card.tsx';
+
+const AllStayPlaceCardsWrapped = withStayPlaceCard(StayPlaceCard);
+const FavoritesStayPlaceCardsWrapped = withStayPlaceCard(StayPlaceFavoriteCard);
 
 type StayPlaceCardsProps = {
   offers: Offer[];
@@ -14,7 +18,7 @@ function StayPlaceCards({offers, currentOffer, onOfferClick, onOfferHover, isFav
   if (isFavoritePage) {
     return (
       <div className="favorites__places">
-        {offers.map((offer) => <StayPlaceFavoriteCard key={offer.id} offer={offer} onOfferClick={onOfferClick}/>)}
+        {offers.map((offer) => <FavoritesStayPlaceCardsWrapped key={offer.id} offer={offer} onOfferClick={onOfferClick}/>)}
       </div>
     );
   }
@@ -25,21 +29,23 @@ function StayPlaceCards({offers, currentOffer, onOfferClick, onOfferHover, isFav
       {currentOffer === undefined
         ? offers.map((offer) =>
           (
-            <StayPlaceCard
+            <AllStayPlaceCardsWrapped
               key={offer.id}
               offer={offer}
               onOfferClick={onOfferClick}
               onOfferHover={onOfferHover}
             />
           ))
-        : offers.filter((offer) => offer.id !== currentOffer.id).map((offer) => (
-          <StayPlaceCard
-            key={offer.id}
-            offer={offer}
-            onOfferClick={onOfferClick}
-            onOfferHover={onOfferHover}
-          />
-        ))}
+        : offers
+          .filter((offer) => offer.id !== currentOffer.id)
+          .map((offer) => (
+            <AllStayPlaceCardsWrapped
+              key={offer.id}
+              offer={offer}
+              onOfferClick={onOfferClick}
+              onOfferHover={onOfferHover}
+            />
+          ))}
     </div>
   );
 }
