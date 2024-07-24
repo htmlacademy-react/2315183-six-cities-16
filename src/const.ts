@@ -16,6 +16,11 @@ const UrlMarkers = {
   URL_MARKER_CURRENT: '../public/img/pin-active.svg'
 };
 
+const OffersClassNames = {
+  DEFAULT: 'cities__places-list places__list tabs__content',
+  NEAREST: 'near-places__list places__list'
+};
+
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
@@ -30,4 +35,4 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export { STARS, UrlMarkers, city };
+export { STARS, UrlMarkers, city, OffersClassNames };

@@ -8,13 +8,13 @@ const FavoritesStayPlaceCardsWrapped = withStayPlaceCard(StayPlaceFavoriteCard);
 
 type StayPlaceCardsProps = {
   offers: Offer[];
-  currentOffer: Offer | undefined;
+  className?: string;
   onOfferClick: OfferClick;
   onOfferHover: OfferHover;
-  isFavoritePage: boolean;
+  isFavoritePage?: boolean;
 }
 
-function StayPlaceCards({offers, currentOffer, onOfferClick, onOfferHover, isFavoritePage}: StayPlaceCardsProps): JSX.Element {
+function StayPlaceCards({offers, className, onOfferClick, onOfferHover, isFavoritePage}: StayPlaceCardsProps): JSX.Element {
   if (isFavoritePage) {
     return (
       <div className="favorites__places">
@@ -24,28 +24,18 @@ function StayPlaceCards({offers, currentOffer, onOfferClick, onOfferHover, isFav
   }
   return (
     <div
-      className={currentOffer === undefined ? 'cities__places-list places__list tabs__content' : 'near-places__list places__list'}
+      className={className}
     >
-      {currentOffer === undefined
-        ? offers.map((offer) =>
-          (
-            <AllStayPlaceCardsWrapped
-              key={offer.id}
-              offer={offer}
-              onOfferClick={onOfferClick}
-              onOfferHover={onOfferHover}
-            />
-          ))
-        : offers
-          .filter((offer) => offer.id !== currentOffer.id)
-          .map((offer) => (
-            <AllStayPlaceCardsWrapped
-              key={offer.id}
-              offer={offer}
-              onOfferClick={onOfferClick}
-              onOfferHover={onOfferHover}
-            />
-          ))}
+      {
+        offers.map((offer) => (
+          <AllStayPlaceCardsWrapped
+            key={offer.id}
+            offer={offer}
+            onOfferClick={onOfferClick}
+            onOfferHover={onOfferHover}
+          />
+        ))
+      }
     </div>
   );
 }

@@ -3,7 +3,7 @@ import Logo from '../../components/logo/logo.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
-import { city } from '../../const.ts';
+import { city, OffersClassNames } from '../../const.ts';
 
 type MainPageProps = {
   offers: Offer[];
@@ -105,10 +105,9 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
               </form>
               <StayPlaceCards
                 offers={offers}
-                currentOffer={undefined}
+                className={OffersClassNames.DEFAULT}
                 onOfferClick={onOfferClick}
                 onOfferHover={onOfferHover}
-                isFavoritePage={false}
               />
             </section>
             <div className="cities__right-section">

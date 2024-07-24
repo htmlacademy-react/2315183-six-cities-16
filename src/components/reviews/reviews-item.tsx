@@ -1,14 +1,14 @@
 import { Comment } from '../../types/comments.ts';
 
 type ReviewItemProps = {
-  comments: Comment[] | undefined;
+  comments: Comment[];
 }
 
 function ReviewItem({comments}: ReviewItemProps): JSX.Element {
   return (
     <ul className="reviews__list">
       {
-        comments?.map((comment) => (
+        comments.map((comment) => (
           <li className="reviews__item" key={comment.id}>
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">

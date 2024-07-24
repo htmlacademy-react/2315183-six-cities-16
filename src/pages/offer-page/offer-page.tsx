@@ -6,7 +6,7 @@ import ReviewsList from '../../components/reviews/reviews-list.tsx';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 import Map from '../../components/map/map.tsx';
-import { city } from '../../const.ts';
+import { city, OffersClassNames } from '../../const.ts';
 
 type OfferPageProps = {
   offers: Offer[];
@@ -191,11 +191,10 @@ function OfferPage({offers, selectedOffer, onOfferClick, onOfferHover}: OfferPag
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <StayPlaceCards
-                offers={offers}
-                currentOffer={offer}
+                offers={offers.filter((offerElement) => offerElement.id !== offer?.id)}
+                className={OffersClassNames.NEAREST}
                 onOfferClick={onOfferClick}
                 onOfferHover={onOfferHover}
-                isFavoritePage={false}
               />
             </section>
           </div>
