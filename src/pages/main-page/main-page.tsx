@@ -1,8 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
-import { City, Offer, OfferClick, OfferHover } from '../../types/offer.ts';
+import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
+import { city, OffersClassNames } from '../../const.ts';
 
 type MainPageProps = {
   offers: Offer[];
@@ -12,15 +13,6 @@ type MainPageProps = {
 }
 
 function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageProps): JSX.Element {
-  const cityRef: City = {
-    name: 'Amsterdam',
-    location: {
-      latitude: 52.37403,
-      longitude: 4.88969,
-      zoom: 13
-    }
-  };
-
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -113,15 +105,15 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
               </form>
               <StayPlaceCards
                 offers={offers}
+                className={OffersClassNames.DEFAULT}
                 onOfferClick={onOfferClick}
                 onOfferHover={onOfferHover}
-                isFavoritePage={false}
               />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map
-                  city={cityRef}
+                  city={city}
                   points={offers}
                   selectedOffer={selectedOffer}
                 />

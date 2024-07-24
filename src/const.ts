@@ -1,8 +1,24 @@
+import { City } from './types/offer.ts';
+
 const STARS = [1, 2, 3, 4, 5];
+
+const city: City = {
+  name: 'Amsterdam',
+  location: {
+    latitude: 52.37403,
+    longitude: 4.88969,
+    zoom: 13
+  }
+};
 
 const UrlMarkers = {
   URL_MARKER_DEFAULT: '../public/img/pin.svg',
   URL_MARKER_CURRENT: '../public/img/pin-active.svg'
+};
+
+const OffersClassNames = {
+  DEFAULT: 'cities__places-list places__list tabs__content',
+  NEAREST: 'near-places__list places__list'
 };
 
 export enum AppRoute {
@@ -19,4 +35,4 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export { STARS, UrlMarkers };
+export { STARS, UrlMarkers, city, OffersClassNames };
