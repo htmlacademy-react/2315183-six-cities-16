@@ -3,8 +3,9 @@ import Logo from '../../components/logo/logo.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
-import { Cities, OffersClassNames } from '../../const.ts';
+import { OffersClassNames } from '../../const.ts';
 import { store } from '../../store/index.ts';
+import CitiesList from '../../components/cities-list/cities-list.tsx';
 
 type MainPageProps = {
   offers: Offer[];
@@ -51,38 +52,7 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <CitiesList />
           </section>
         </div>
         <div className="cities">
@@ -115,7 +85,7 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map
-                  city={Cities.AMSTERDAM}
+                  city={store.getState().city}
                   points={offersInCity}
                   selectedOffer={selectedOffer}
                 />

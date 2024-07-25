@@ -4,7 +4,7 @@ import { offers } from '../mocks/offers.ts';
 import { changeCity, fillOffers } from './action.ts';
 
 const initialState = {
-  city: Cities.AMSTERDAM,
+  city: Cities.PARIS,
   offers: offers
 };
 

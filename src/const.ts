@@ -1,19 +1,11 @@
 const STARS = [1, 2, 3, 4, 5];
 
 const Cities = {
-  AMSTERDAM: {
-    name: 'Amsterdam',
-    location: {
-      latitude: 52.37403,
-      longitude: 4.88969,
-      zoom: 13
-    }
-  },
   PARIS: {
     name: 'Paris',
     location: {
-      latitude: 52.37403,
-      longitude: 4.88969,
+      latitude: 48.85661,
+      longitude: 2.351499,
       zoom: 13
     }
   },
@@ -27,6 +19,14 @@ const Cities = {
   },
   BRUSSELS: {
     name: 'Brussels',
+    location: {
+      latitude: 52.37403,
+      longitude: 4.88969,
+      zoom: 13
+    }
+  },
+  AMSTERDAM: {
+    name: 'Amsterdam',
     location: {
       latitude: 52.37403,
       longitude: 4.88969,
