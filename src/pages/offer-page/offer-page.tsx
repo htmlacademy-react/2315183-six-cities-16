@@ -6,7 +6,7 @@ import ReviewsList from '../../components/reviews/reviews-list.tsx';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 import Map from '../../components/map/map.tsx';
-import { city, OffersClassNames } from '../../const.ts';
+import { Cities, OffersClassNames } from '../../const.ts';
 
 type OfferPageProps = {
   offers: Offer[];
@@ -181,7 +181,7 @@ function OfferPage({offers, selectedOffer, onOfferClick, onOfferHover}: OfferPag
             </div>
             <section className="offer__map map">
               <Map
-                city={city}
+                city={Cities.AMSTERDAM}
                 points={nearestOffers}
                 selectedOffer={selectedOffer}
               />

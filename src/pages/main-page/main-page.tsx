@@ -3,7 +3,7 @@ import Logo from '../../components/logo/logo.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
-import { city, OffersClassNames } from '../../const.ts';
+import { Cities, OffersClassNames } from '../../const.ts';
 
 type MainPageProps = {
   offers: Offer[];
@@ -113,7 +113,7 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map
-                  city={city}
+                  city={Cities.AMSTERDAM}
                   points={offers}
                   selectedOffer={selectedOffer}
                 />

@@ -1,13 +1,53 @@
-import { City } from './types/offer.ts';
-
 const STARS = [1, 2, 3, 4, 5];
 
-const city: City = {
-  name: 'Amsterdam',
-  location: {
-    latitude: 52.37403,
-    longitude: 4.88969,
-    zoom: 13
+const Cities = {
+  AMSTERDAM: {
+    name: 'Amsterdam',
+    location: {
+      latitude: 52.37403,
+      longitude: 4.88969,
+      zoom: 13
+    }
+  },
+  PARIS: {
+    name: 'Paris',
+    location: {
+      latitude: 52.37403,
+      longitude: 4.88969,
+      zoom: 13
+    }
+  },
+  COLOGNE: {
+    name: 'Cologne',
+    location: {
+      latitude: 52.37403,
+      longitude: 4.88969,
+      zoom: 13
+    }
+  },
+  BRUSSELS: {
+    name: 'Brussels',
+    location: {
+      latitude: 52.37403,
+      longitude: 4.88969,
+      zoom: 13
+    }
+  },
+  HAMBURG: {
+    name: 'Hamburg',
+    location: {
+      latitude: 52.37403,
+      longitude: 4.88969,
+      zoom: 13
+    }
+  },
+  DUSSELDORF: {
+    name: 'Dusseldorf',
+    location: {
+      latitude: 52.37403,
+      longitude: 4.88969,
+      zoom: 13
+    }
   }
 };
 
@@ -35,4 +75,4 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export { STARS, UrlMarkers, city, OffersClassNames };
+export { STARS, UrlMarkers, OffersClassNames, Cities };
