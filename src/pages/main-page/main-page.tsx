@@ -1,11 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
-import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
+import { City, Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
 import { OffersClassNames } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import CitiesList from '../../components/cities-list/cities-list.tsx';
+import { changeCity } from '../../store/action.ts';
 
 type MainPageProps = {
   offers: Offer[];
@@ -16,6 +17,11 @@ type MainPageProps = {
 
 function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageProps): JSX.Element {
   const offersInCity = offers.filter((offer) => offer.city.name === store.getState().city.name);
+
+  const citiesListClickHandler = (city: City) => {
+    store.dispatch(changeCity(city));
+  };
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -52,7 +58,7 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CitiesList />
+            <CitiesList onCityClick={citiesListClickHandler}/>
           </section>
         </div>
         <div className="cities">
