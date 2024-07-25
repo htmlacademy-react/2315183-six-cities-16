@@ -4,6 +4,7 @@ import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.ts
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
 import { Cities, OffersClassNames } from '../../const.ts';
+import { store } from '../../store/index.ts';
 
 type MainPageProps = {
   offers: Offer[];
@@ -13,6 +14,7 @@ type MainPageProps = {
 }
 
 function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageProps): JSX.Element {
+  const offersInCity = offers.filter((offer) => offer.city.name === store.getState().city.name);
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -87,7 +89,7 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{offersInCity.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -104,7 +106,7 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
                 </ul>
               </form>
               <StayPlaceCards
-                offers={offers}
+                offers={offersInCity}
                 className={OffersClassNames.DEFAULT}
                 onOfferClick={onOfferClick}
                 onOfferHover={onOfferHover}
@@ -114,7 +116,7 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
               <section className="cities__map map">
                 <Map
                   city={Cities.AMSTERDAM}
-                  points={offers}
+                  points={offersInCity}
                   selectedOffer={selectedOffer}
                 />
               </section>
