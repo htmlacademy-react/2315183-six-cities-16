@@ -52,7 +52,7 @@ export const offers: Offer[] = [
     title: 'Amazing and Extremely Central Flat',
     type: 'house',
     price: 568,
-    previewImage: 'https://16.design.htmlacademy.pro/static/hotel/2.jpg',
+    previewImage: 'https://16.design.htmlacademy.pro/static/hotel/3.jpg',
     city: {
       name: 'Amsterdam',
       location: {
@@ -93,4 +93,50 @@ export const offers: Offer[] = [
     isPremium: false,
     rating: 3.2
   },
+  {
+    id: 'fee1475e-640b-4945-b3e8-135ec78',
+    title: 'Loft Studio in the Central Area',
+    type: 'apartment',
+    price: 2645,
+    previewImage: 'https://16.design.htmlacademy.pro/static/hotel/6.jpg',
+    city: {
+      name: 'Hamburg',
+      location: {
+        latitude: 52.37403,
+        longitude: 4.88969,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 52.3609556783508,
+      longitude: 4.939879706198,
+      zoom: 16
+    },
+    isFavorite: true,
+    isPremium: false,
+    rating: 4.2
+  },
+  {
+    id: '9c21555-fb07-4822-ac05-cb2da82ea586',
+    title: 'Loft Studio in the Central Area',
+    type: 'house',
+    price: 248,
+    previewImage: 'https://16.design.htmlacademy.pro/static/hotel/13.jpg',
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 48.868610000000004,
+      longitude: 2.342499,
+      zoom: 16
+    },
+    isFavorite: true,
+    isPremium: false,
+    rating: 3.2
+  }
 ];

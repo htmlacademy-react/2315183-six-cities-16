@@ -1,9 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
-import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
+import { City, Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
-import { city, OffersClassNames } from '../../const.ts';
+import { AppRoute, OffersClassNames } from '../../const.ts';
+import { store } from '../../store/index.ts';
+import CitiesList from '../../components/cities-list/cities-list.tsx';
+import { changeCity } from '../../store/action.ts';
+import { useAppDispatch } from '../../hooks/index.ts';
+import { useNavigate } from 'react-router-dom';
 
 type MainPageProps = {
   offers: Offer[];
@@ -13,6 +18,17 @@ type MainPageProps = {
 }
 
 function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageProps): JSX.Element {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const currentCity = store.getState().city;
+  const offersInCity = offers.filter((offer) => offer.city.name === currentCity.name);
+
+  const citiesListClickHandler = (city: City) => {
+    dispatch(changeCity(city));
+    navigate(AppRoute.Root);
+  };
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -49,45 +65,16 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <CitiesList
+              onCityClick={citiesListClickHandler}
+            />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{offersInCity.length} places to stay in {currentCity.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -104,7 +91,7 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
                 </ul>
               </form>
               <StayPlaceCards
-                offers={offers}
+                offers={offersInCity}
                 className={OffersClassNames.DEFAULT}
                 onOfferClick={onOfferClick}
                 onOfferHover={onOfferHover}
@@ -113,8 +100,8 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map
-                  city={city}
-                  points={offers}
+                  city={currentCity}
+                  points={offersInCity}
                   selectedOffer={selectedOffer}
                 />
               </section>
