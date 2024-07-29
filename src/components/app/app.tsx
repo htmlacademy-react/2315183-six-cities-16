@@ -9,16 +9,15 @@ import PrivateRoute from '../private-route/private-route.tsx';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offer } from '../../types/offer.ts';
 import { useState } from 'react';
+import { store } from '../../store/index.ts';
 
-type AppProps = {
-  offers: Offer[];
-}
-
-function App({offers}: AppProps): JSX.Element {
+function App(): JSX.Element {
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
     undefined
   );
+
+  const offers = store.getState().offers;
 
   const offerClickHandler = (id: string) => {
     setCurrentOffer({
@@ -28,9 +27,7 @@ function App({offers}: AppProps): JSX.Element {
   };
 
   const offerHoverHandler = (offerElement: Offer) => {
-    const currentPoint = offers.find((offer) =>
-      offer.title === offerElement.title,
-    );
+    const currentPoint = offerElement;
     setSelectedOffer(currentPoint);
   };
 
