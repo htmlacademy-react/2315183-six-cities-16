@@ -19,6 +19,8 @@ function OfferPage({offers, selectedOffer, onOfferClick, onOfferHover}: OfferPag
   const { id } = useParams();
 
   const offer: Offer | undefined = offers.find((element) => element.id === id);
+  const offersInCity = offers.filter((offerElement) =>
+    offerElement.id !== offer?.id && offerElement.city.name === offer?.city.name);
   const nearestOffers = offers.filter((offerElement) => offerElement.id !== offer?.id);
 
   if (offer !== undefined) {
@@ -191,7 +193,7 @@ function OfferPage({offers, selectedOffer, onOfferClick, onOfferHover}: OfferPag
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <StayPlaceCards
-                offers={offers.filter((offerElement) => offerElement.id !== offer?.id)}
+                offers={offersInCity}
                 className={OffersClassNames.NEAREST}
                 onOfferClick={onOfferClick}
                 onOfferHover={onOfferHover}
