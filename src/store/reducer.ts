@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Cities, Sorts } from '../const.ts';
 import { offers } from '../mocks/offers.ts';
-import { changeCity, changeSort, closeSorts, fillOffers, openSorts } from './action.ts';
+import { changeCity, changeSort, closeSorts, fillOffers, openSorts, resetSort } from './action.ts';
 import { sort } from '../utils/sort.ts';
 
 const initialState = {
@@ -28,6 +28,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(closeSorts, (state) => {
       state.isFiltersOpen = false;
+    })
+    .addCase(resetSort, (state) => {
+      state.sort = Sorts.POPULAR;
     });
 });
 

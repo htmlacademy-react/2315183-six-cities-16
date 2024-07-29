@@ -6,7 +6,8 @@ export const Action = {
   FILL_OFFERS: 'FILL_OFFERS',
   CHANGE_SORT: 'CHANGE_SORT',
   OPEN_SORTS: 'OPEN_SORTS',
-  CLOSE_SORTS: 'CLOSE_SORTS'
+  CLOSE_SORTS: 'CLOSE_SORTS',
+  RESET_SORT: 'RESET_SORT'
 };
 
 export const changeCity = createAction(Action.CHANGE_CITY, (selectedCity: City) => ({
@@ -23,3 +24,4 @@ export const changeSort = createAction(Action.CHANGE_SORT, (currentFilter: strin
 
 export const openSorts = createAction(Action.OPEN_SORTS);
 export const closeSorts = createAction(Action.CLOSE_SORTS);
+export const resetSort = createAction(Action.RESET_SORT);

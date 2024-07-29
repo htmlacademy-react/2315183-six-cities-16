@@ -6,7 +6,7 @@ import Map from '../../components/map/map.tsx';
 import { AppRoute, OffersClassNames } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import CitiesList from '../../components/cities-list/cities-list.tsx';
-import { changeCity } from '../../store/action.ts';
+import { changeCity, resetSort } from '../../store/action.ts';
 import { useAppDispatch } from '../../hooks/index.ts';
 import { useNavigate } from 'react-router-dom';
 import SortOptions from '../../components/sort-options/sort-options.tsx';
@@ -26,6 +26,7 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
 
   const citiesListClickHandler = (city: City) => {
     dispatch(changeCity(city));
+    dispatch(resetSort());
     navigate(AppRoute.Root);
   };
 

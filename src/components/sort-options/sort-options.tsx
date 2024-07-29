@@ -29,6 +29,9 @@ function SortOptions(): JSX.Element {
   return (
     <form className="places__sorting" action="#" method="get"
       onClick={sortFormClickHandler}
+      onMouseOver={() => {
+        dispatch(closeSorts());
+      }}
     >
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}>
