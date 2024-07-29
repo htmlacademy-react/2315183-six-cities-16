@@ -51,6 +51,13 @@ const Cities = {
   }
 };
 
+const Sorts = {
+  POPULAR: 'Popular',
+  PRICE_LOW_TO_HIGH: 'Price: low to high',
+  PRICE_HIGH_TO_LOW: 'Price: high to low',
+  TOP_RATED_FIRST: 'Top rated first'
+};
+
 const UrlMarkers = {
   URL_MARKER_DEFAULT: '../public/img/pin.svg',
   URL_MARKER_CURRENT: '../public/img/pin-active.svg'
@@ -75,4 +82,4 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export { STARS, UrlMarkers, OffersClassNames, Cities };
+export { STARS, UrlMarkers, OffersClassNames, Cities, Sorts };
