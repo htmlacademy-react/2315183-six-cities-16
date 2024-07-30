@@ -6,26 +6,29 @@ import Map from '../../components/map/map.tsx';
 import { AppRoute, OffersClassNames } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import CitiesList from '../../components/cities-list/cities-list.tsx';
-import { changeCity } from '../../store/action.ts';
+import { changeCity, resetSort } from '../../store/action.ts';
 import { useAppDispatch } from '../../hooks/index.ts';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import SortOptions from '../../components/sort-options/sort-options.tsx';
 
 type MainPageProps = {
-  offers: Offer[];
   onOfferClick: OfferClick;
   onOfferHover: OfferHover;
   selectedOffer: Offer | undefined;
 }
 
-function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageProps): JSX.Element {
+function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const currentCity = store.getState().city;
-  const offersInCity = offers.filter((offer) => offer.city.name === currentCity.name);
+  const offersInCity = store.getState().offers.filter((offer) => offer.city.name === currentCity.name);
+
+  const favoriteOffers = store.getState().offers.filter((offer) => offer.isFavorite === true);
 
   const citiesListClickHandler = (city: City) => {
     dispatch(changeCity(city));
+    dispatch(resetSort());
     navigate(AppRoute.Root);
   };
 
@@ -43,17 +46,17 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
+                    <span className="header__favorite-count">{favoriteOffers.length}</span>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <Link className="header__nav-link" to={AppRoute.Login}>
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -75,21 +78,7 @@ function MainPage({offers, onOfferClick, onOfferHover, selectedOffer}: MainPageP
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersInCity.length} places to stay in {currentCity.name}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
+              <SortOptions />
               <StayPlaceCards
                 offers={offersInCity}
                 className={OffersClassNames.DEFAULT}

@@ -21,7 +21,7 @@ function CommentForm() {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {STARS.map((star) => (
-          <>
+          <div key={star}>
             <input className="form__rating-input visually-hidden" name="rating" value={star} id={`${star}-stars`} type="radio"
               onChange={inputChangeHandler}
             />
@@ -30,7 +30,7 @@ function CommentForm() {
                 <use xlinkHref="#icon-star"></use>
               </svg>
             </label>
-          </>)
+          </div>)
         )}
       </div>
       <textarea className="reviews__textarea form__textarea"
