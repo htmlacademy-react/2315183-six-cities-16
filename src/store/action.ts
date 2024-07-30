@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { City, Offer } from '../types/offer';
+import { AuthorizationStatus } from '../const';
 
 export const Action = {
   CHANGE_CITY: 'CHANGE_CITY',
@@ -7,7 +8,8 @@ export const Action = {
   OPEN_SORTS: 'OPEN_SORTS',
   CLOSE_SORTS: 'CLOSE_SORTS',
   RESET_SORT: 'RESET_SORT',
-  LOAD_OFFERS: 'LOAD_OFFERS'
+  LOAD_OFFERS: 'LOAD_OFFERS',
+  REQUIRE_AUTH: 'REQUIRE_AUTH'
 };
 
 export const changeCity = createAction(Action.CHANGE_CITY, (selectedCity: City) => ({
@@ -23,3 +25,5 @@ export const closeSorts = createAction(Action.CLOSE_SORTS);
 export const resetSort = createAction(Action.RESET_SORT);
 
 export const loadOffers = createAction<Offer[]>(Action.LOAD_OFFERS);
+
+export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQUIRE_AUTH);
