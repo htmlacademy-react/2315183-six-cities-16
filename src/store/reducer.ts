@@ -1,12 +1,20 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Cities, Sorts } from '../const.ts';
-import { offers } from '../mocks/offers.ts';
 import { changeCity, changeSort, closeSorts, loadOffers, openSorts, requireAuthorization, resetSort } from './action.ts';
 import { sort } from '../utils/sort.ts';
+import { City, Offer } from '../types/offer.ts';
 
-const initialState = {
+type InitialState = {
+  city: City;
+  offers: Offer[];
+  sort: string;
+  isFiltersOpen: boolean;
+  authorizationStatus: AuthorizationStatus;
+};
+
+const initialState: InitialState = {
   city: Cities.PARIS,
-  offers: offers,
+  offers: [],
   sort: Sorts.POPULAR,
   isFiltersOpen: false,
   authorizationStatus: AuthorizationStatus.Unknown
@@ -19,7 +27,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeSort, (state, action) => {
       state.sort = action.payload;
-      state.offers = sort[action.payload]([...offers]);
+      state.offers = sort[action.payload]([]); /// [...offers]
     })
     .addCase(openSorts, (state) => {
       state.isFiltersOpen = true;
