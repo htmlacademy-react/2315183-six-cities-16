@@ -8,7 +8,7 @@ import { store } from '../../store/index.ts';
 import CitiesList from '../../components/cities-list/cities-list.tsx';
 import { changeCity, resetSort } from '../../store/action.ts';
 import { useAppDispatch } from '../../hooks/index.ts';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SortOptions from '../../components/sort-options/sort-options.tsx';
 
 type MainPageProps = {
@@ -23,6 +23,8 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
 
   const currentCity = store.getState().city;
   const offersInCity = store.getState().offers.filter((offer) => offer.city.name === currentCity.name);
+
+  const favoriteOffers = store.getState().offers.filter((offer) => offer.isFavorite === true);
 
   const citiesListClickHandler = (city: City) => {
     dispatch(changeCity(city));
@@ -44,17 +46,17 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
+                    <span className="header__favorite-count">{favoriteOffers.length}</span>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <Link className="header__nav-link" to={AppRoute.Login}>
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>

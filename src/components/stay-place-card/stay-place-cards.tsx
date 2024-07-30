@@ -18,7 +18,7 @@ function StayPlaceCards({offers, className, onOfferClick, onOfferHover, isFavori
   if (isFavoritePage) {
     return (
       <div className="favorites__places">
-        {offers.map((offer) => <FavoritesStayPlaceCardsWrapped key={offer.id} offer={offer} onOfferClick={onOfferClick}/>)}
+        {offers.map((offer) => <FavoritesStayPlaceCardsWrapped key={offer.id + offer.title} offer={offer} onOfferClick={onOfferClick}/>)}
       </div>
     );
   }
@@ -29,7 +29,7 @@ function StayPlaceCards({offers, className, onOfferClick, onOfferHover, isFavori
       {
         offers.map((offer) => (
           <AllStayPlaceCardsWrapped
-            key={offer.id}
+            key={offer.id + offer.title}
             offer={offer}
             onOfferClick={onOfferClick}
             onOfferHover={onOfferHover}

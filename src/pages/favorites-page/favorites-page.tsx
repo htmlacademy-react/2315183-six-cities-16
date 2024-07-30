@@ -10,6 +10,7 @@ type FavoritesPageProps = {
 }
 
 function FavoritesPage({offers, onOfferClick, onOfferHover}: FavoritesPageProps): JSX.Element {
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite === true);
   return (
     <div className="page">
       <Helmet>
@@ -56,7 +57,7 @@ function FavoritesPage({offers, onOfferClick, onOfferHover}: FavoritesPageProps)
                   </div>
                 </div>
                 <StayPlaceCards
-                  offers={offers}
+                  offers={favoriteOffers}
                   onOfferClick={onOfferClick}
                   onOfferHover={onOfferHover}
                   isFavoritePage
