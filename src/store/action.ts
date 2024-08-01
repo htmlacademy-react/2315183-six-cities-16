@@ -33,8 +33,6 @@ export const resetSort = createAction(Action.RESET_SORT);
 export const loadOffers = createAction<Offer[]>(Action.LOAD_OFFERS);
 export const loadUserData = createAction<UserData>(Action.LOAD_USER_DATA);
 
-//export const unloadUserData = createAction(Action.UNLOAD_USER_DATA);
-
 export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQUIRE_AUTH);
 
 export const setOffersDataLoadingStatus = createAction<boolean>(Action.SET_OFFERS_DATA_LOADING_STATUS);
