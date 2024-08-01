@@ -1,14 +1,25 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Cities, Sorts } from '../const.ts';
-import { offers } from '../mocks/offers.ts';
-import { changeCity, changeSort, closeSorts, fillOffers, openSorts, resetSort } from './action.ts';
+import { AuthorizationStatus, Cities, Sorts } from '../const.ts';
+import { changeCity, changeSort, closeSorts, loadOffers, openSorts, requireAuthorization, resetSort, setOffersDataLoadingStatus } from './action.ts';
 import { sort } from '../utils/sort.ts';
+import { City, Offer } from '../types/offer.ts';
 
-const initialState = {
+type InitialState = {
+  city: City;
+  offers: Offer[];
+  sort: string;
+  isFiltersOpen: boolean;
+  authorizationStatus: AuthorizationStatus;
+  isOffersDataLoading: boolean;
+};
+
+const initialState: InitialState = {
   city: Cities.PARIS,
-  offers: offers,
+  offers: [],
   sort: Sorts.POPULAR,
-  isFiltersOpen: false
+  isFiltersOpen: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isOffersDataLoading: false
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -16,12 +27,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;
     })
-    .addCase(fillOffers, (state, action) => {
-      state.offers = action.payload;
-    })
     .addCase(changeSort, (state, action) => {
       state.sort = action.payload;
-      state.offers = sort[action.payload]([...offers]);
+      state.offers = sort[action.payload]([...state.offers]);
     })
     .addCase(openSorts, (state) => {
       state.isFiltersOpen = true;
@@ -31,6 +39,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(resetSort, (state) => {
       state.sort = Sorts.POPULAR;
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     });
 });
 
