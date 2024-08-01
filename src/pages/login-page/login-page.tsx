@@ -19,8 +19,10 @@ function LoginPage(): JSX.Element {
     if(emailRef.current !== null && passwordRef !== null) {
       dispatch(loginAction({
         email: emailRef.current.value,
-        password: passwordRef.current.value
+        password: passwordRef.current?.value
       }));
+
+      navigate(AppRoute.Root);
     }
   };
 
@@ -63,7 +65,6 @@ function LoginPage(): JSX.Element {
               </div>
               <button
                 className="login__submit form__submit button" type="submit"
-                onClick={() => navigate(AppRoute.Root)}
               >
                 Sign in
               </button>

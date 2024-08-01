@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/index.ts';
 import { Link, useNavigate } from 'react-router-dom';
 import SortOptions from '../../components/sort-options/sort-options.tsx';
 import Loader from '../../components/loader/loader.tsx';
+import StayPlaceCardsEmpty from '../../components/stay-place-card/stay-place-cards-empty.tsx';
 
 type MainPageProps = {
   onOfferClick: OfferClick;
@@ -77,35 +78,42 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersInCity.length} places to stay in {currentCity.name}</b>
-              {
-                isOffersDataLoading
-                  ? <Loader />
-                  :
-                  <>
-                    <SortOptions />
-                    <StayPlaceCards
-                      offers={offersInCity}
-                      className={OffersClassNames.DEFAULT}
-                      onOfferClick={onOfferClick}
-                      onOfferHover={onOfferHover}
-                    />
-                  </>
-              }
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map
-                  city={currentCity}
-                  points={offersInCity}
-                  selectedOffer={selectedOffer}
-                />
-              </section>
-            </div>
-          </div>
+          {
+            offersInCity.length === 0
+              ? <StayPlaceCardsEmpty currentCity={currentCity}/>
+              : (
+                <div className="cities__places-container container">
+                  <section className="cities__places places">
+                    <h2 className="visually-hidden">Places</h2>
+                    <b className="places__found">{offersInCity.length} places to stay in {currentCity.name}</b>
+                    {
+                      isOffersDataLoading
+                        ? <Loader />
+                        :
+                        <>
+                          <SortOptions />
+                          <StayPlaceCards
+                            offers={offersInCity}
+                            className={OffersClassNames.DEFAULT}
+                            onOfferClick={onOfferClick}
+                            onOfferHover={onOfferHover}
+                          />
+                        </>
+                    }
+                  </section>
+                  <div className="cities__right-section">
+                    <section className="cities__map map">
+                      <Map
+                        city={currentCity}
+                        points={offersInCity}
+                        selectedOffer={selectedOffer}
+                      />
+                    </section>
+                  </div>
+                </div>
+              )
+          }
+
         </div>
       </main>
     </div>
