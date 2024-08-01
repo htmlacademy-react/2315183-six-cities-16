@@ -51,6 +51,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadUserData, (state, action) => {
       state.user = action.payload;
     })
+    // .addCase(unloadUserData, (state) => {
+    //   state.user = null;
+    // })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })

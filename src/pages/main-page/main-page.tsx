@@ -12,6 +12,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import SortOptions from '../../components/sort-options/sort-options.tsx';
 import Loader from '../../components/loader/loader.tsx';
 import StayPlaceCardsEmpty from '../../components/stay-place-card/stay-place-cards-empty.tsx';
+import { logoutAction } from '../../store/api-actions.ts';
 
 type MainPageProps = {
   onOfferClick: OfferClick;
@@ -65,7 +66,14 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
                           </Link>
                         </li>
                         <li className="header__nav-item">
-                          <Link className="header__nav-link" to={AppRoute.Login}>
+                          <Link
+                            className="header__nav-link"
+                            to={AppRoute.Login}
+                            onClick={(evt) => {
+                              evt.preventDefault();
+                              dispatch(logoutAction());
+                            }}
+                          >
                             <span className="header__signout">Sign out</span>
                           </Link>
                         </li>
@@ -73,7 +81,10 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
                     )
                     : (
                       <li className="header__nav-item">
-                        <Link className="header__nav-link" to={AppRoute.Login}>
+                        <Link
+                          className="header__nav-link"
+                          to={AppRoute.Login}
+                        >
                           <span className="header__signout">Sign in</span>
                         </Link>
                       </li>
