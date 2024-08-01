@@ -10,7 +10,8 @@ export const Action = {
   RESET_SORT: 'RESET_SORT',
   LOAD_OFFERS: 'LOAD_OFFERS',
   REQUIRE_AUTH: 'REQUIRE_AUTH',
-  SET_OFFERS_DATA_LOADING_STATUS: 'SET_OFFERS_DATA_LOADING_STATUS'
+  SET_OFFERS_DATA_LOADING_STATUS: 'SET_OFFERS_DATA_LOADING_STATUS',
+  SET_ERROR: 'SET_ERROR'
 };
 
 export const changeCity = createAction(Action.CHANGE_CITY, (selectedCity: City) => ({
@@ -30,3 +31,5 @@ export const loadOffers = createAction<Offer[]>(Action.LOAD_OFFERS);
 export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQUIRE_AUTH);
 
 export const setOffersDataLoadingStatus = createAction<boolean>(Action.SET_OFFERS_DATA_LOADING_STATUS);
+
+export const setError = createAction<string | null>(Action.SET_ERROR);
