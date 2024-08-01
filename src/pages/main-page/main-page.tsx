@@ -3,7 +3,7 @@ import Logo from '../../components/logo/logo.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 import { City, Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
-import { AppRoute, OffersClassNames } from '../../const.ts';
+import { AppRoute, AuthorizationStatus, OffersClassNames } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import CitiesList from '../../components/cities-list/cities-list.tsx';
 import { changeCity, resetSort } from '../../store/action.ts';
@@ -23,12 +23,15 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
   const currentCity = store.getState().city;
   const offersInCity = store.getState().offers.filter((offer) => offer.city.name === currentCity.name);
 
   const favoriteOffers = store.getState().offers.filter((offer) => offer.isFavorite === true);
+
+  const userData = store.getState().user;
 
   const citiesListClickHandler = (city: City) => {
     dispatch(changeCity(city));
@@ -49,19 +52,33 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">{favoriteOffers.length}</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={AppRoute.Login}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
+                {
+                  authorizationStatus === AuthorizationStatus.Auth
+                    ? (
+                      <>
+                        <li className="header__nav-item user">
+                          <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+                            <div className="header__avatar-wrapper user__avatar-wrapper">
+                            </div>
+                            <span className="header__user-name user__name">{userData?.email}</span>
+                            <span className="header__favorite-count">{favoriteOffers.length}</span>
+                          </Link>
+                        </li>
+                        <li className="header__nav-item">
+                          <Link className="header__nav-link" to={AppRoute.Login}>
+                            <span className="header__signout">Sign out</span>
+                          </Link>
+                        </li>
+                      </>
+                    )
+                    : (
+                      <li className="header__nav-item">
+                        <Link className="header__nav-link" to={AppRoute.Login}>
+                          <span className="header__signout">Sign in</span>
+                        </Link>
+                      </li>
+                    )
+                }
               </ul>
             </nav>
           </div>
