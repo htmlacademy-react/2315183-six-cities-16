@@ -29,7 +29,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeSort, (state, action) => {
       state.sort = action.payload;
-      state.offers = sort[action.payload]([]); /// [...offers]
+      state.offers = sort[action.payload]([...state.offers]);
     })
     .addCase(openSorts, (state) => {
       state.isFiltersOpen = true;
