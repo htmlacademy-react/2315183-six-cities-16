@@ -49,7 +49,9 @@ export const fetchCurrentOfferAction = createAsyncThunk<void, Offer, {
 }>(
   APIAction.FETCH_CURRENT_OFFER,
   async ({id}, {dispatch, extra: api}) => {
+    dispatch(setOffersDataLoadingStatus(true));
     const { data } = await api.get<CurrentOffer>(`${APIRoute.Offers}/${id}`);
+    dispatch(setOffersDataLoadingStatus(false));
     dispatch(loadCurrentOffer(data));
   }
 );

@@ -8,6 +8,9 @@ import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.ts
 import Map from '../../components/map/map.tsx';
 import { Cities, OffersClassNames, STARS } from '../../const.ts';
 import { store } from '../../store/index.ts';
+import { useAppSelector } from '../../hooks/index.ts';
+import Loader from '../../components/loader/loader.tsx';
+import { fetchCurrentOfferAction } from '../../store/api-actions.ts';
 
 type OfferPageProps = {
   selectedOffer: Offer | undefined;
@@ -17,11 +20,20 @@ type OfferPageProps = {
 
 function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps): JSX.Element {
   const { id: currentId } = useParams();
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
   const offers = store.getState().offers;
+  const offer: Offer | undefined = offers.find((element) => element.id === currentId);
   const currentOffer = store.getState().currentOffer;
 
-  const offer: Offer | undefined = offers.find((element) => element.id === currentId);
+  // if (selectedOffer === undefined && offer) {
+  //   store.dispatch(fetchCurrentOfferAction(offer));
+  // }
+
+  if (isOffersDataLoading) {
+    return <Loader />;
+  }
+
   const offersInCity = offers.filter((offerElement) =>
     offerElement.id !== offer?.id && offerElement.city.name === offer?.city.name);
   const nearestOffers = offers.filter((offerElement) => offerElement.id !== offer?.id);
@@ -186,7 +198,7 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
       </div>
     );
   }
-  return <NotFoundPage />;
+  // return <NotFoundPage />;
 }
 
 export default OfferPage;
