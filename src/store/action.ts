@@ -10,6 +10,7 @@ export const Action = {
   CLOSE_SORTS: 'CLOSE_SORTS',
   RESET_SORT: 'RESET_SORT',
   LOAD_OFFERS: 'LOAD_OFFERS',
+  LOAD_CURRENT_OFFER: 'LOAD_CURRENT_OFFER',
   LOAD_USER_DATA: 'LOAD_USER_DATA',
   UNLOAD_USER_DATA: 'UNLOAD_USER_DATA',
   REQUIRE_AUTH: 'REQUIRE_AUTH',
@@ -31,6 +32,7 @@ export const closeSorts = createAction(Action.CLOSE_SORTS);
 export const resetSort = createAction(Action.RESET_SORT);
 
 export const loadOffers = createAction<Offer[]>(Action.LOAD_OFFERS);
+export const loadCurrentOffer = createAction<Offer>(Action.LOAD_CURRENT_OFFER);
 export const loadUserData = createAction<UserData>(Action.LOAD_USER_DATA);
 
 export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQUIRE_AUTH);
