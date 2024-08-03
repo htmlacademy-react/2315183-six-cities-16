@@ -10,7 +10,6 @@ import { Cities, OffersClassNames, STARS } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import { useAppSelector } from '../../hooks/index.ts';
 import Loader from '../../components/loader/loader.tsx';
-import { fetchCurrentOfferAction } from '../../store/api-actions.ts';
 
 type OfferPageProps = {
   selectedOffer: Offer | undefined;
@@ -25,10 +24,6 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
   const offers = store.getState().offers;
   const offer: Offer | undefined = offers.find((element) => element.id === currentId);
   const currentOffer = store.getState().currentOffer;
-
-  // if (selectedOffer === undefined && offer) {
-  //   store.dispatch(fetchCurrentOfferAction(offer));
-  // }
 
   if (isOffersDataLoading) {
     return <Loader />;
@@ -172,7 +167,7 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
                     </p>
                   </div>
                 </div>
-                <ReviewsList offer={currentOffer}/>
+                <ReviewsList />
               </div>
             </div>
             <section className="offer__map map">
@@ -198,7 +193,7 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
       </div>
     );
   }
-  // return <NotFoundPage />;
+  return <NotFoundPage />;
 }
 
 export default OfferPage;

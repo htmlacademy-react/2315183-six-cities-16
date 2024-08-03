@@ -1,15 +1,10 @@
-import { comments } from '../../mocks/comments.ts';
-import { Comment } from '../../types/comments.ts';
-import { Offer } from '../../types/offer.ts';
+import { store } from '../../store/index.ts';
 import CommentForm from '../comment-form/comment-form.tsx';
 import ReviewItem from './reviews-item.tsx';
 
-type ReviewsListProps = {
-  offer: Offer;
-}
 
-function ReviewsList({offer}: ReviewsListProps): JSX.Element {
-  const currentComments: Comment[] = comments.filter((comment) => comment.id === offer.id);
+function ReviewsList(): JSX.Element {
+  const currentComments = store.getState().comments;
   return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">

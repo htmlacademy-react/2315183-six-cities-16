@@ -2,6 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { City, CurrentOffer, Offer } from '../types/offer';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { UserData } from '../types/user-data';
+import { Comment } from '../types/comments';
 
 export const Action = {
   CHANGE_CITY: 'CHANGE_CITY',
@@ -11,6 +12,7 @@ export const Action = {
   RESET_SORT: 'RESET_SORT',
   LOAD_OFFERS: 'LOAD_OFFERS',
   LOAD_CURRENT_OFFER: 'LOAD_CURRENT_OFFER',
+  LOAD_COMMENTS: 'LOAD_COMMENTS',
   LOAD_USER_DATA: 'LOAD_USER_DATA',
   UNLOAD_USER_DATA: 'UNLOAD_USER_DATA',
   REQUIRE_AUTH: 'REQUIRE_AUTH',
@@ -33,6 +35,9 @@ export const resetSort = createAction(Action.RESET_SORT);
 
 export const loadOffers = createAction<Offer[]>(Action.LOAD_OFFERS);
 export const loadCurrentOffer = createAction<CurrentOffer>(Action.LOAD_CURRENT_OFFER);
+
+export const loadComments = createAction<Comment[]>(Action.LOAD_COMMENTS);
+
 export const loadUserData = createAction<UserData>(Action.LOAD_USER_DATA);
 
 export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQUIRE_AUTH);
