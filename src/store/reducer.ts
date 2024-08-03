@@ -2,13 +2,13 @@ import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Cities, Sorts } from '../const.ts';
 import { changeCity, changeSort, closeSorts, loadCurrentOffer, loadOffers, loadUserData, openSorts, requireAuthorization, resetSort, setError, setOffersDataLoadingStatus } from './action.ts';
 import { sort } from '../utils/sort.ts';
-import { City, Offer } from '../types/offer.ts';
+import { City, CurrentOffer, Offer } from '../types/offer.ts';
 import { UserData } from '../types/user-data.ts';
 
 type InitialState = {
   city: City;
   offers: Offer[];
-  currentOffer: Offer | null;
+  currentOffer: CurrentOffer | null;
   user: UserData | null;
   sort: string;
   isFiltersOpen: boolean;

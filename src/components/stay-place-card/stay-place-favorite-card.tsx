@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Offer } from '../../types/offer.ts';
+import { Offer, OfferClick } from '../../types/offer.ts';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const.ts';
 
 type StayPlaceFavoriteCardProps = {
   offer: Offer;
-  onOfferClick: (id: string) => void;
+  onOfferClick: OfferClick;
 }
 
 function StayPlaceFavoriteCard({offer, onOfferClick}: StayPlaceFavoriteCardProps): JSX.Element {
@@ -20,7 +20,7 @@ function StayPlaceFavoriteCard({offer, onOfferClick}: StayPlaceFavoriteCardProps
           ...currentOffer,
           id: id
         });
-        onOfferClick(currentOffer.id);
+        onOfferClick(currentOffer);
       }}
     >
       { isPremium ?

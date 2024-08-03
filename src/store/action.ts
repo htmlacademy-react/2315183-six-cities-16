@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { City, Offer } from '../types/offer';
+import { City, CurrentOffer, Offer } from '../types/offer';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { UserData } from '../types/user-data';
 
@@ -32,7 +32,7 @@ export const closeSorts = createAction(Action.CLOSE_SORTS);
 export const resetSort = createAction(Action.RESET_SORT);
 
 export const loadOffers = createAction<Offer[]>(Action.LOAD_OFFERS);
-export const loadCurrentOffer = createAction<Offer>(Action.LOAD_CURRENT_OFFER);
+export const loadCurrentOffer = createAction<CurrentOffer>(Action.LOAD_CURRENT_OFFER);
 export const loadUserData = createAction<UserData>(Action.LOAD_USER_DATA);
 
 export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQUIRE_AUTH);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const.ts';
+import { AppRoute, STARS } from '../../const.ts';
 
 type StayPlaceCardProps = {
   offer: Offer;
@@ -10,8 +10,10 @@ type StayPlaceCardProps = {
 }
 
 function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps): JSX.Element {
-  const {id, title, type, price, previewImage, isFavorite, isPremium} = offer;
+  const {id, title, type, price, previewImage, isFavorite, isPremium, rating} = offer;
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
+
+  const starsPercent = rating * 100 / STARS.length;
 
   return (
     <article className="cities__card place-card"
@@ -21,7 +23,7 @@ function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps):
           ...currentOffer,
           id: id
         });
-        onOfferClick(currentOffer.id);
+        onOfferClick(offer);
       }}
       onMouseEnter={() => onOfferHover(offer)}
     >
@@ -53,7 +55,7 @@ function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps):
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${starsPercent}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
