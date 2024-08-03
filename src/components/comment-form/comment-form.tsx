@@ -13,14 +13,26 @@ function CommentForm() {
   const currentOffer = store.getState().currentOffer;
 
   const inputChangeHandler = (evt: ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
-    const {name, value} = evt.target;
-
-    if (currentOffer) {
-      setCommentData({
-        ...commentData,
-        id: currentOffer.id,
-        [name]: value
-      });
+    const {name} = evt.target;
+    if (name === 'comment') {
+      const {value} = evt.target;
+      if (currentOffer) {
+        setCommentData({
+          ...commentData,
+          id: currentOffer.id,
+          [name]: value
+        });
+      }
+    }
+    if (name === 'rating') {
+      const value = Number(evt.target.value);
+      if (currentOffer) {
+        setCommentData({
+          ...commentData,
+          id: currentOffer.id,
+          [name]: value
+        });
+      }
     }
   };
 
