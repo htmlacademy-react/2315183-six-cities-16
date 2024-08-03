@@ -1,23 +1,36 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { STARS } from '../../const';
+import { store } from '../../store';
+import { postCommentAction } from '../../store/api-actions';
+import { Comment } from '../../types/comments';
 
 function CommentForm() {
   const [commentData, setCommentData] = useState({
     rating: 5,
     comment: 'Tell how was your stay, what you like and what can be improved'
-  });
+  } as Comment);
+
+  const currentOffer = store.getState().currentOffer;
 
   const inputChangeHandler = (evt: ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
 
-    setCommentData({
-      ...commentData,
-      [name]: value
-    });
+    if (currentOffer) {
+      setCommentData({
+        ...commentData,
+        id: currentOffer.id,
+        [name]: value
+      });
+    }
+  };
+
+  const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    store.dispatch(postCommentAction(commentData));
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" method="post" onSubmit={formSubmitHandler}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {STARS.map((star) => (
@@ -31,10 +44,10 @@ function CommentForm() {
               </svg>
             </label>
           </div>)
-        )}
+        ).reverse()}
       </div>
       <textarea className="reviews__textarea form__textarea"
-        id="review" name="review"
+        id="review" name="comment"
         placeholder={commentData.comment}
         onChange={inputChangeHandler}
       >
@@ -43,7 +56,7 @@ function CommentForm() {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit">Submit</button>
       </div>
     </form>
   );

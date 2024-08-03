@@ -7,7 +7,7 @@ export type User = {
 export type Comment = {
   id: string;
   comment: string;
-  date: Date;
+  date?: Date;
   rating: number;
-  user: User;
+  user?: User;
 }

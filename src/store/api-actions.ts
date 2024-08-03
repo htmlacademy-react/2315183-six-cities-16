@@ -14,6 +14,7 @@ export const APIAction = {
   FETCH_OFFERS: 'FETCH_OFFERS',
   FETCH_CURRENT_OFFER: 'FETCH_CURRENT_OFFER',
   FETCH_COMMENTS: 'FETCH_COMMENTS',
+  POST_COMMENT: 'POST_COMMENT',
   CHECK_AUTH: 'CHECK_AUTH',
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
@@ -67,6 +68,18 @@ export const fetchCommentsAction = createAsyncThunk<void, Offer, {
   async ({id}, {dispatch, extra: api}) => {
     const { data } = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
     dispatch(loadComments(data));
+  }
+);
+
+export const postCommentAction = createAsyncThunk<void, Comment, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}
+>(
+  APIAction.POST_COMMENT,
+  async ({comment, rating, id}, {extra: api}) => {
+    await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
   }
 );
 
