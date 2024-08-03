@@ -1,6 +1,8 @@
-const STARS = [1, 2, 3, 4, 5];
+export const TIMEOUT_SHOW_ERROR = 2000;
 
-const Cities = {
+export const STARS = [1, 2, 3, 4, 5];
+
+export const Cities = {
   PARIS: {
     name: 'Paris',
     location: {
@@ -51,19 +53,19 @@ const Cities = {
   }
 };
 
-const Sorts = {
+export const Sorts = {
   POPULAR: 'Popular',
   PRICE_LOW_TO_HIGH: 'Price: low to high',
   PRICE_HIGH_TO_LOW: 'Price: high to low',
   TOP_RATED_FIRST: 'Top rated first'
 };
 
-const UrlMarkers = {
+export const UrlMarkers = {
   URL_MARKER_DEFAULT: '../public/img/pin.svg',
   URL_MARKER_CURRENT: '../public/img/pin-active.svg'
 };
 
-const OffersClassNames = {
+export const OffersClassNames = {
   DEFAULT: 'cities__places-list places__list tabs__content',
   NEAREST: 'near-places__list places__list'
 };
@@ -89,5 +91,3 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout'
 }
-
-export { STARS, UrlMarkers, OffersClassNames, Cities, Sorts };

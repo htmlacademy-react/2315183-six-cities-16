@@ -22,6 +22,7 @@ function StayPlaceCards({offers, className, onOfferClick, onOfferHover, isFavori
       </div>
     );
   }
+
   return (
     <div
       className={className}
