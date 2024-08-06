@@ -86,7 +86,6 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
                 </div>
               )
           }
-
         </div>
       </main>
     </div>

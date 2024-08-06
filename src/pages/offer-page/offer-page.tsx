@@ -10,6 +10,8 @@ import { store } from '../../store/index.ts';
 import { useAppSelector } from '../../hooks/index.ts';
 import Loader from '../../components/loader/loader.tsx';
 import Header from '../../components/header/header.tsx';
+import { fetchCommentsAction, fetchCurrentOfferAction } from '../../store/api-actions.ts';
+import { useEffect } from 'react';
 
 type OfferPageProps = {
   selectedOffer: Offer | undefined;
@@ -19,6 +21,16 @@ type OfferPageProps = {
 
 function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps): JSX.Element {
   const { id: currentId } = useParams();
+
+  useEffect(() => {
+    const offers = store.getState().offers;
+    const offer: Offer | undefined = offers.find((element) => element.id === currentId);
+    if (offer) {
+      store.dispatch(fetchCurrentOfferAction(offer));
+      store.dispatch(fetchCommentsAction(offer));
+    }
+  }, []);
+
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
   const offers = store.getState().offers;

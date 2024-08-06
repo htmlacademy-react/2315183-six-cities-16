@@ -13,7 +13,6 @@ import { store } from '../../store/index.ts';
 import { useAppSelector } from '../../hooks/index.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
-import { fetchCommentsAction, fetchCurrentOfferAction } from '../../store/api-actions.ts';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
@@ -26,9 +25,6 @@ function App(): JSX.Element {
   const offers = store.getState().offers;
 
   const offerClickHandler = (offer: Offer) => {
-    store.dispatch(fetchCurrentOfferAction(offer));
-    store.dispatch(fetchCommentsAction(offer));
-
     setCurrentOffer({
       ...currentOffer,
       id: offer.id

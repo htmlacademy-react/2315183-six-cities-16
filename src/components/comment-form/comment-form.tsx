@@ -1,14 +1,17 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { STARS } from '../../const';
+import { AppRoute, STARS } from '../../const';
 import { store } from '../../store';
 import { postCommentAction } from '../../store/api-actions';
 import { Comment } from '../../types/comments';
+import { useNavigate } from 'react-router-dom';
 
 function CommentForm() {
   const [commentData, setCommentData] = useState({
     rating: 5,
     comment: 'Tell how was your stay, what you like and what can be improved'
   } as Comment);
+
+  const navigate = useNavigate();
 
   const currentOffer = store.getState().currentOffer;
 
@@ -39,6 +42,7 @@ function CommentForm() {
   const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     store.dispatch(postCommentAction(commentData));
+    navigate(`${AppRoute.Offer}${currentOffer?.id}`);
   };
 
   return (
