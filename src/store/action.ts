@@ -11,6 +11,7 @@ export const Action = {
   CLOSE_SORTS: 'CLOSE_SORTS',
   RESET_SORT: 'RESET_SORT',
   LOAD_OFFERS: 'LOAD_OFFERS',
+  LOAD_FAVORITE_OFFERS: 'LOAD_FAVORITE_OFFERS',
   LOAD_CURRENT_OFFER: 'LOAD_CURRENT_OFFER',
   LOAD_NEAREST_OFFERS: 'LOAD_NEAREST_OFFERS',
   LOAD_COMMENTS: 'LOAD_COMMENTS',
@@ -34,6 +35,7 @@ export const closeSorts = createAction(Action.CLOSE_SORTS);
 export const resetSort = createAction(Action.RESET_SORT);
 
 export const loadOffers = createAction<Offer[]>(Action.LOAD_OFFERS);
+export const loadFavoriteOffers = createAction<Offer[]>(Action.LOAD_FAVORITE_OFFERS);
 export const loadCurrentOffer = createAction<CurrentOffer>(Action.LOAD_CURRENT_OFFER);
 export const loadNearestOffers = createAction<Offer[]>(Action.LOAD_NEAREST_OFFERS);
 

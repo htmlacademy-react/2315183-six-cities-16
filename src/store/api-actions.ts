@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { loadComments, loadCurrentOffer, loadNearestOffers, loadOffers, loadUserData, redirectToRoute, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
+import { loadComments, loadCurrentOffer, loadFavoriteOffers, loadNearestOffers, loadOffers, loadUserData, redirectToRoute, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
 import { CurrentOffer, Offer } from '../types/offer';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const APIAction = {
   FETCH_OFFERS: 'FETCH_OFFERS',
+  FETCH_FAVORITE_OFFERS: 'FETCH_FAVORITE_OFFERS',
   FETCH_CURRENT_OFFER: 'FETCH_CURRENT_OFFER',
   FETCH_NEAREST_OFFERS: 'FETCH_NEAREST_OFFERS',
   FETCH_COMMENTS: 'FETCH_COMMENTS',
@@ -44,6 +45,20 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
     const { data } = await api.get<Offer[]>(APIRoute.Offers);
     dispatch(setOffersDataLoadingStatus(false));
     dispatch(loadOffers(data));
+  }
+);
+
+export const fetchFavoriteOffersAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  APIAction.FETCH_OFFERS,
+  async (_arg, {dispatch, extra: api}) => {
+    dispatch(setOffersDataLoadingStatus(true));
+    const { data } = await api.get<Offer[]>(APIRoute.Favorite);
+    dispatch(setOffersDataLoadingStatus(false));
+    dispatch(loadFavoriteOffers(data));
   }
 );
 

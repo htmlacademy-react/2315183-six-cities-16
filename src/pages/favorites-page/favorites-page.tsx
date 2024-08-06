@@ -1,16 +1,17 @@
 import { Helmet } from 'react-helmet-async';
-import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
+import { OfferClick, OfferHover } from '../../types/offer.ts';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 import Header from '../../components/header/header.tsx';
+import { useAppSelector } from '../../hooks/index.ts';
+import { Cities } from '../../const.ts';
 
 type FavoritesPageProps = {
-  offers: Offer[];
   onOfferClick: OfferClick;
   onOfferHover: OfferHover;
 }
 
-function FavoritesPage({offers, onOfferClick, onOfferHover}: FavoritesPageProps): JSX.Element {
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite === true);
+function FavoritesPage({onOfferClick, onOfferHover}: FavoritesPageProps): JSX.Element {
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   return (
     <div className="page">
       <Helmet>
@@ -22,23 +23,34 @@ function FavoritesPage({offers, onOfferClick, onOfferHover}: FavoritesPageProps)
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <StayPlaceCards
-                  offers={favoriteOffers}
-                  onOfferClick={onOfferClick}
-                  onOfferHover={onOfferHover}
-                  isFavoritePage
-                />
-              </li>
-            </ul>
+            {
+              favoriteOffers.length !== 0
+                ? (
+                  <ul className="favorites__list">
+                    {
+                      Object.values(Cities).map((city) => (
+                        <li className="favorites__locations-items" key={city.name}>
+                          <div className="favorites__locations locations locations--current">
+                            <div className="locations__item">
+                              <a className="locations__item-link" href="#">
+                                <span>{city.name}</span>
+                              </a>
+                            </div>
+                          </div>
+                          <StayPlaceCards
+                            offers={favoriteOffers.filter((offer) => offer.city.name === city.name)}
+                            onOfferClick={onOfferClick}
+                            onOfferHover={onOfferHover}
+                            isFavoritePage
+                          />
+                        </li>
+                      ))
+                    }
+                  </ul>
+                )
+                : ''
+            }
+
           </section>
         </div>
       </main>

@@ -26,8 +26,7 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
   const currentCity = store.getState().city;
-  const offersInCity = store.getState().offers.filter((offer) => offer.city.name === currentCity.name);
-
+  const offersInCity = useAppSelector((state) => state.offers).filter((offer) => offer.city.name === currentCity.name);
 
   const citiesListClickHandler = (city: City) => {
     dispatch(changeCity(city));

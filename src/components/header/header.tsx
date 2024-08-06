@@ -9,7 +9,7 @@ function Header(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const dispatch = useAppDispatch();
 
-  const favoriteOffers = store.getState().offers.filter((offer) => offer.isFavorite === true);
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   const userData = store.getState().user;
 
   return (
