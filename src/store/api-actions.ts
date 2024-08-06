@@ -18,6 +18,7 @@ export const APIAction = {
   FETCH_NEAREST_OFFERS: 'FETCH_NEAREST_OFFERS',
   FETCH_COMMENTS: 'FETCH_COMMENTS',
   POST_COMMENT: 'POST_COMMENT',
+  UPDATE_OFFER_FAVORITE_STATUS: 'UPDATE_OFFER_FAVORITE_STATUS',
   CHECK_AUTH: 'CHECK_AUTH',
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
@@ -114,6 +115,18 @@ export const postCommentAction = createAsyncThunk<void, Comment, {
   APIAction.POST_COMMENT,
   async ({comment, rating, id}, {extra: api}) => {
     await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
+  }
+);
+
+export const updateOfferFavoriteStatusAction = createAsyncThunk<void, Offer, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  APIAction.UPDATE_OFFER_FAVORITE_STATUS,
+  async ({isFavorite, id}, {extra: api}) => {
+    const status = isFavorite ? 0 : 1;
+    await api.post(`${APIRoute.Favorite}/${id}/${status}`);
   }
 );
 

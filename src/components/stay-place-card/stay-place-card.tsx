@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import { Link } from 'react-router-dom';
 import { AppRoute, STARS } from '../../const.ts';
+import { store } from '../../store/index.ts';
+import { updateOfferFavoriteStatusAction } from '../../store/api-actions.ts';
 
 type StayPlaceCardProps = {
   offer: Offer;
@@ -14,6 +16,10 @@ function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps):
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
 
   const starsPercent = rating * 100 / STARS.length;
+
+  const favoriteButtonClickHandler = () => {
+    store.dispatch(updateOfferFavoriteStatusAction(offer));
+  };
 
   return (
     <article className="cities__card place-card"
@@ -46,6 +52,7 @@ function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps):
             ${isFavorite ?
       'place-card__bookmark-button--active'
       : ''}`} type="button"
+          onClick={favoriteButtonClickHandler}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
