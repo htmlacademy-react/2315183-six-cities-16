@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { loadComments, loadCurrentOffer, loadOffers, loadUserData, redirectToRoute, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
+import { loadComments, loadCurrentOffer, loadNearestOffers, loadOffers, loadUserData, redirectToRoute, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
 import { CurrentOffer, Offer } from '../types/offer';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
@@ -13,6 +13,7 @@ import { Comment } from '../types/comments';
 export const APIAction = {
   FETCH_OFFERS: 'FETCH_OFFERS',
   FETCH_CURRENT_OFFER: 'FETCH_CURRENT_OFFER',
+  FETCH_NEAREST_OFFERS: 'FETCH_NEAREST_OFFERS',
   FETCH_COMMENTS: 'FETCH_COMMENTS',
   POST_COMMENT: 'POST_COMMENT',
   CHECK_AUTH: 'CHECK_AUTH',
@@ -40,8 +41,8 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     dispatch(setOffersDataLoadingStatus(true));
     const { data } = await api.get<Offer[]>(APIRoute.Offers);
-    dispatch(setOffersDataLoadingStatus(false));
     dispatch(loadOffers(data));
+    dispatch(setOffersDataLoadingStatus(false));
   }
 );
 
@@ -54,8 +55,20 @@ export const fetchCurrentOfferAction = createAsyncThunk<void, Offer, {
   async ({id}, {dispatch, extra: api}) => {
     dispatch(setOffersDataLoadingStatus(true));
     const { data } = await api.get<CurrentOffer>(`${APIRoute.Offers}/${id}`);
-    dispatch(setOffersDataLoadingStatus(false));
     dispatch(loadCurrentOffer(data));
+    dispatch(setOffersDataLoadingStatus(false));
+  }
+);
+
+export const fetchNearestOfferAction = createAsyncThunk<void, Offer, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  APIAction.FETCH_NEAREST_OFFERS,
+  async ({id}, {dispatch, extra: api}) => {
+    const { data } = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+    dispatch(loadNearestOffers(data));
   }
 );
 

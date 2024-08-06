@@ -5,12 +5,12 @@ import ReviewsList from '../../components/reviews/reviews-list.tsx';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 import Map from '../../components/map/map.tsx';
-import { Cities, OffersClassNames, STARS } from '../../const.ts';
+import { OffersClassNames, STARS } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import { useAppSelector } from '../../hooks/index.ts';
 import Loader from '../../components/loader/loader.tsx';
 import Header from '../../components/header/header.tsx';
-import { fetchCommentsAction, fetchCurrentOfferAction } from '../../store/api-actions.ts';
+import { fetchCommentsAction, fetchCurrentOfferAction, fetchNearestOfferAction } from '../../store/api-actions.ts';
 import { useEffect } from 'react';
 
 type OfferPageProps = {
@@ -21,29 +21,25 @@ type OfferPageProps = {
 
 function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps): JSX.Element {
   const { id: currentId } = useParams();
-
   useEffect(() => {
     const offers = store.getState().offers;
     const offer: Offer | undefined = offers.find((element) => element.id === currentId);
     if (offer) {
       store.dispatch(fetchCurrentOfferAction(offer));
       store.dispatch(fetchCommentsAction(offer));
+      store.dispatch(fetchNearestOfferAction(offer));
     }
   }, []);
 
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-  const offers = store.getState().offers;
-  const offer: Offer | undefined = offers.find((element) => element.id === currentId);
-  const currentOffer = store.getState().currentOffer;
-
   if (isOffersDataLoading) {
     return <Loader />;
   }
 
-  const offersInCity = offers.filter((offerElement) =>
-    offerElement.id !== offer?.id && offerElement.city.name === offer?.city.name);
-  const nearestOffers = offers.filter((offerElement) => offerElement.id !== offer?.id);
+  const currentCity = store.getState().city;
+  const currentOffer = store.getState().currentOffer;
+  const nearestOffers = store.getState().nearestOffers;
 
   if (currentOffer) {
     const {
@@ -159,7 +155,7 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
             </div>
             <section className="offer__map map">
               <Map
-                city={Cities.AMSTERDAM}
+                city={currentCity}
                 points={nearestOffers}
                 selectedOffer={selectedOffer}
               />
@@ -169,7 +165,7 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <StayPlaceCards
-                offers={offersInCity}
+                offers={nearestOffers}
                 className={OffersClassNames.NEAREST}
                 onOfferClick={onOfferClick}
                 onOfferHover={onOfferHover}

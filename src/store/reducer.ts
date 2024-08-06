@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Cities, Sorts } from '../const.ts';
-import { changeCity, changeSort, closeSorts, loadComments, loadCurrentOffer, loadOffers, loadUserData, openSorts, requireAuthorization, resetSort, setError, setOffersDataLoadingStatus } from './action.ts';
+import { changeCity, changeSort, closeSorts, loadComments, loadCurrentOffer, loadNearestOffers, loadOffers, loadUserData, openSorts, requireAuthorization, resetSort, setError, setOffersDataLoadingStatus } from './action.ts';
 import { sort } from '../utils/sort.ts';
 import { City, CurrentOffer, Offer } from '../types/offer.ts';
 import { UserData } from '../types/user-data.ts';
@@ -10,6 +10,7 @@ type InitialState = {
   city: City;
   offers: Offer[];
   currentOffer: CurrentOffer | null;
+  nearestOffers: Offer[];
   comments: Comment[];
   user: UserData | null;
   sort: string;
@@ -23,6 +24,7 @@ const initialState: InitialState = {
   city: Cities.PARIS,
   offers: [],
   currentOffer: null,
+  nearestOffers: [],
   comments: [],
   user: null,
   sort: Sorts.POPULAR,
@@ -55,6 +57,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadCurrentOffer, (state, action) => {
       state.currentOffer = action.payload;
+    })
+    .addCase(loadNearestOffers, (state, action) => {
+      state.nearestOffers = action.payload;
     })
     .addCase(loadComments, (state, action) => {
       state.comments = action.payload;
