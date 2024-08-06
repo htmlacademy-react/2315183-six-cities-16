@@ -1,95 +1,83 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { AppRoute } from '../../const';
 import { store } from '../../store';
 import { postCommentAction } from '../../store/api-actions';
 import { Comment } from '../../types/comments';
-import { useNavigate } from 'react-router-dom';
 
-function CommentForm() {
+type CommentFormProps = {
+  onFormSubmit: () => void;
+}
+
+function CommentForm({onFormSubmit}: CommentFormProps) {
   const [commentData, setCommentData] = useState({
     rating: 5,
     comment: 'Tell how was your stay, what you like and what can be improved'
   } as Comment);
 
-  const navigate = useNavigate();
-
   const currentOffer = store.getState().currentOffer;
 
-  const inputChangeHandler = (evt: ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
-    const {name} = evt.target;
-    if (name === 'comment') {
-      const {value} = evt.target;
-      if (currentOffer) {
-        setCommentData({
-          ...commentData,
-          id: currentOffer.id,
-          [name]: value
-        });
-      }
-    }
-    if (name === 'rating') {
-      const value = Number(evt.target.value);
-      if (currentOffer) {
-        setCommentData({
-          ...commentData,
-          id: currentOffer.id,
-          [name]: value
-        });
-      }
+  const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+    const {name, value} = evt.target;
+    if (currentOffer) {
+      setCommentData({
+        ...commentData,
+        id: currentOffer.id,
+        [name]: value
+      });
     }
   };
 
-  const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    store.dispatch(postCommentAction(commentData));
-    navigate(`${AppRoute.Offer}/${currentOffer?.id}`);
+  const inputStarsCountChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
+    const {name} = evt.target;
+    const value = Number(evt.target.value);
+    if (currentOffer) {
+      setCommentData({
+        ...commentData,
+        id: currentOffer.id,
+        [name]: value
+      });
+    }
   };
 
   return (
-    <form className="reviews__form form" method="post" onSubmit={formSubmitHandler}>
+    <form className="reviews__form form" method="post" action={`${AppRoute.Offer}/${currentOffer?.id}`}
+      onSubmit={(evt) => {
+        evt.preventDefault();
+        store.dispatch(postCommentAction(commentData));
+        onFormSubmit();
+      }}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {/* {STARS.map((star) => (
-          <div key={star}>
-            <input className="form__rating-input visually-hidden" name="rating" value={star} id={`${star}-stars`} type="radio"
-              onChange={inputChangeHandler}
-            />
-            <label htmlFor={`${star}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
-              <svg className="form__star-image" width="37" height="33">
-                <use xlinkHref="#icon-star"></use>
-              </svg>
-            </label>
-          </div>)
-        ).reverse()} */}
-        <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
+        <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" onChange={inputStarsCountChangeHandler}/>
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
 
-        <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
+        <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" onChange={inputStarsCountChangeHandler}/>
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
 
-        <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
+        <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" onChange={inputStarsCountChangeHandler}/>
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
 
-        <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
+        <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" onChange={inputStarsCountChangeHandler}/>
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
 
-        <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
+        <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" onChange={inputStarsCountChangeHandler}/>
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
@@ -99,7 +87,7 @@ function CommentForm() {
       <textarea className="reviews__textarea form__textarea"
         id="review" name="comment"
         placeholder={commentData.comment}
-        onChange={inputChangeHandler}
+        onChange={textareaChangeHandler}
       >
       </textarea>
       <div className="reviews__button-wrapper">

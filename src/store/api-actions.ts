@@ -113,8 +113,12 @@ export const postCommentAction = createAsyncThunk<void, Comment, {
 }
 >(
   APIAction.POST_COMMENT,
-  async ({comment, rating, id}, {extra: api}) => {
+  async ({comment, rating, id}, {dispatch, extra: api}) => {
     await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
+    const navigate = useNavigate();
+    const { data } = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
+    dispatch(loadComments(data));
+    navigate(`${AppRoute.Offer}/${id}`);
   }
 );
 
