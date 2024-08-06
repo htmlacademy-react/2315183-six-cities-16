@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import { useParams } from 'react-router-dom';
 import ReviewsList from '../../components/reviews/reviews-list.tsx';
-import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 import Map from '../../components/map/map.tsx';
 import { OffersClassNames, STARS } from '../../const.ts';
@@ -21,25 +20,24 @@ type OfferPageProps = {
 
 function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps): JSX.Element {
   const { id: currentId } = useParams();
+
   useEffect(() => {
-    const offers = store.getState().offers;
-    const offer: Offer | undefined = offers.find((element) => element.id === currentId);
-    if (offer) {
-      store.dispatch(fetchCurrentOfferAction(offer));
-      store.dispatch(fetchCommentsAction(offer));
-      store.dispatch(fetchNearestOfferAction(offer));
+    if (currentId) {
+      store.dispatch(fetchCommentsAction(currentId));
+      store.dispatch(fetchNearestOfferAction(currentId));
+      store.dispatch(fetchCurrentOfferAction(currentId));
     }
-  }, []);
+  }, [currentId]);
+
+  const currentCity = useAppSelector((state) => state.city);
+  const currentOffer = useAppSelector((state) => state.currentOffer);
+  const nearestOffers = useAppSelector((state) => state.nearestOffers);
 
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
   if (isOffersDataLoading) {
     return <Loader />;
   }
-
-  const currentCity = store.getState().city;
-  const currentOffer = store.getState().currentOffer;
-  const nearestOffers = store.getState().nearestOffers;
 
   if (currentOffer) {
     const {
@@ -176,7 +174,7 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
       </div>
     );
   }
-  return <NotFoundPage />;
+  return (<div></div>);
 }
 
 export default OfferPage;
