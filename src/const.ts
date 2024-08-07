@@ -2,6 +2,14 @@ export const TIMEOUT_SHOW_ERROR = 2000;
 
 export const STARS = [1, 2, 3, 4, 5];
 
+export const StarTitles = {
+  1: 'terribly',
+  2: 'badly',
+  3: 'not bad',
+  4: 'good',
+  5: 'perfect'
+};
+
 export const Cities = {
   PARIS: {
     name: 'Paris',

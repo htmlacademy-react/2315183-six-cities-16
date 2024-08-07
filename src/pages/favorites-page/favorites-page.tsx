@@ -1,69 +1,56 @@
 import { Helmet } from 'react-helmet-async';
-import Logo from '../../components/logo/logo.tsx';
-import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
+import { OfferClick, OfferHover } from '../../types/offer.ts';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
+import Header from '../../components/header/header.tsx';
+import { useAppSelector } from '../../hooks/index.ts';
+import { Cities } from '../../const.ts';
 
 type FavoritesPageProps = {
-  offers: Offer[];
   onOfferClick: OfferClick;
   onOfferHover: OfferHover;
 }
 
-function FavoritesPage({offers, onOfferClick, onOfferHover}: FavoritesPageProps): JSX.Element {
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite === true);
+function FavoritesPage({onOfferClick, onOfferHover}: FavoritesPageProps): JSX.Element {
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   return (
     <div className="page">
       <Helmet>
         <title>6 cities. Favorites</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <StayPlaceCards
-                  offers={favoriteOffers}
-                  onOfferClick={onOfferClick}
-                  onOfferHover={onOfferHover}
-                  isFavoritePage
-                />
-              </li>
-            </ul>
+            {
+              favoriteOffers.length !== 0
+                ? (
+                  <ul className="favorites__list">
+                    {
+                      Object.values(Cities).map((city) => (
+                        <li className="favorites__locations-items" key={city.name}>
+                          <div className="favorites__locations locations locations--current">
+                            <div className="locations__item">
+                              <a className="locations__item-link" href="#">
+                                <span>{city.name}</span>
+                              </a>
+                            </div>
+                          </div>
+                          <StayPlaceCards
+                            offers={favoriteOffers.filter((offer) => offer.city.name === city.name)}
+                            onOfferClick={onOfferClick}
+                            onOfferHover={onOfferHover}
+                            isFavoritePage
+                          />
+                        </li>
+                      ))
+                    }
+                  </ul>
+                )
+                : ''
+            }
+
           </section>
         </div>
       </main>

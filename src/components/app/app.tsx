@@ -9,7 +9,6 @@ import PrivateRoute from '../private-route/private-route.tsx';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offer } from '../../types/offer.ts';
 import { useState } from 'react';
-import { store } from '../../store/index.ts';
 import { useAppSelector } from '../../hooks/index.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
@@ -22,12 +21,10 @@ function App(): JSX.Element {
     undefined
   );
 
-  const offers = store.getState().offers;
-
-  const offerClickHandler = (id: string) => {
+  const offerClickHandler = (offer: Offer) => {
     setCurrentOffer({
       ...currentOffer,
-      id: id
+      id: offer.id
     });
   };
 
@@ -61,7 +58,6 @@ function App(): JSX.Element {
                 authorizationStatus={authorizationStatus}
               >
                 <FavoritesPage
-                  offers={offers}
                   onOfferClick={offerClickHandler}
                   onOfferHover={offerHoverHandler}
                 />
@@ -75,7 +71,6 @@ function App(): JSX.Element {
               path={AppRoute.OfferId}
               element={
                 <OfferPage
-                  offers={offers}
                   onOfferClick={offerClickHandler}
                   onOfferHover={offerHoverHandler}
                   selectedOffer={selectedOffer}

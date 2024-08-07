@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const.ts';
+import { AppRoute, STARS } from '../../const.ts';
+import { store } from '../../store/index.ts';
+import { updateOfferFavoriteStatusAction } from '../../store/api-actions.ts';
 
 type StayPlaceCardProps = {
   offer: Offer;
@@ -10,8 +12,14 @@ type StayPlaceCardProps = {
 }
 
 function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps): JSX.Element {
-  const {id, title, type, price, previewImage, isFavorite, isPremium} = offer;
+  const {id, title, type, price, previewImage, isFavorite, isPremium, rating} = offer;
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
+
+  const starsPercent = rating * 100 / STARS.length;
+
+  const favoriteButtonClickHandler = () => {
+    store.dispatch(updateOfferFavoriteStatusAction(offer));
+  };
 
   return (
     <article className="cities__card place-card"
@@ -21,7 +29,7 @@ function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps):
           ...currentOffer,
           id: id
         });
-        onOfferClick(currentOffer.id);
+        onOfferClick(offer);
       }}
       onMouseEnter={() => onOfferHover(offer)}
     >
@@ -44,6 +52,7 @@ function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps):
             ${isFavorite ?
       'place-card__bookmark-button--active'
       : ''}`} type="button"
+          onClick={favoriteButtonClickHandler}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -53,7 +62,7 @@ function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps):
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${starsPercent}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

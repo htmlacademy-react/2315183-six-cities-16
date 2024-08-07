@@ -1,13 +1,19 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Cities, Sorts } from '../const.ts';
-import { changeCity, changeSort, closeSorts, loadOffers, loadUserData, openSorts, requireAuthorization, resetSort, setError, setOffersDataLoadingStatus } from './action.ts';
+import { changeCity, changeSort, closeSorts, loadComments, loadCurrentOffer, loadFavoriteOffers, loadNearestOffers, loadNewComment, loadOffers, loadUserData, openSorts, requireAuthorization, resetSort, setError, setOffersDataLoadingStatus } from './action.ts';
 import { sort } from '../utils/sort.ts';
-import { City, Offer } from '../types/offer.ts';
+import { City, CurrentOffer, Offer } from '../types/offer.ts';
 import { UserData } from '../types/user-data.ts';
+import { Comment } from '../types/comments.ts';
 
 type InitialState = {
   city: City;
   offers: Offer[];
+  favoriteOffers: Offer[];
+  currentOffer: CurrentOffer | null;
+  nearestOffers: Offer[];
+  comments: Comment[];
+  newComment: Comment | null;
   user: UserData | null;
   sort: string;
   isFiltersOpen: boolean;
@@ -19,6 +25,11 @@ type InitialState = {
 const initialState: InitialState = {
   city: Cities.PARIS,
   offers: [],
+  favoriteOffers: [],
+  currentOffer: null,
+  nearestOffers: [],
+  comments: [],
+  newComment: null,
   user: null,
   sort: Sorts.POPULAR,
   isFiltersOpen: false,
@@ -47,6 +58,21 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(loadFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload;
+    })
+    .addCase(loadCurrentOffer, (state, action) => {
+      state.currentOffer = action.payload;
+    })
+    .addCase(loadNearestOffers, (state, action) => {
+      state.nearestOffers = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(loadNewComment, (state, action) => {
+      state.newComment = action.payload; //удалить если не понадобилось
     })
     .addCase(loadUserData, (state, action) => {
       state.user = action.payload;
