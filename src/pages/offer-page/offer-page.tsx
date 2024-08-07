@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ReviewsList from '../../components/reviews/reviews-list.tsx';
 import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
 import Map from '../../components/map/map.tsx';
-import { AppRoute, OffersClassNames, STARS } from '../../const.ts';
+import { OffersClassNames, STARS } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import { useAppSelector } from '../../hooks/index.ts';
 import Loader from '../../components/loader/loader.tsx';
@@ -21,7 +21,6 @@ type OfferPageProps = {
 
 function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps): JSX.Element {
   const { id: currentId } = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (currentId) {
@@ -30,10 +29,6 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
       store.dispatch(fetchCurrentOfferAction(currentId));
     }
   }, [currentId]);
-
-  const formSubmitHandler = () => {
-    navigate(`${AppRoute.Offer}/${currentId}`);
-  };
 
   const currentCity = useAppSelector((state) => state.city);
   const currentOffer = useAppSelector((state) => state.currentOffer);
@@ -154,7 +149,7 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
                     </p>
                   </div>
                 </div>
-                <ReviewsList onFormSubmit={formSubmitHandler}/>
+                <ReviewsList />
               </div>
             </div>
             <section className="offer__map map">

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { loadComments, loadCurrentOffer, loadFavoriteOffers, loadNearestOffers, loadOffers, loadUserData, redirectToRoute, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
+import { loadComments, loadCurrentOffer, loadFavoriteOffers, loadNearestOffers, loadNewComment, loadOffers, loadUserData, redirectToRoute, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
 import { CurrentOffer, Offer } from '../types/offer';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
@@ -114,11 +114,14 @@ export const postCommentAction = createAsyncThunk<void, Comment, {
 >(
   APIAction.POST_COMMENT,
   async ({comment, rating, id}, {dispatch, extra: api}) => {
-    await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
-    const navigate = useNavigate();
-    const { data } = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
-    dispatch(loadComments(data));
-    navigate(`${AppRoute.Offer}/${id}`);
+    try {
+      await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
+      const { data } = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
+      dispatch(loadComments(data));
+      dispatch(loadNewComment(data[data.length - 1]));
+    } catch {
+      dispatch(loadNewComment(null));
+    }
   }
 );
 

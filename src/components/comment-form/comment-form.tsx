@@ -1,20 +1,31 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { AppRoute } from '../../const';
-import { store } from '../../store';
-import { postCommentAction } from '../../store/api-actions';
 import { Comment } from '../../types/comments';
+import { useAppSelector } from '../../hooks';
 
 type CommentFormProps = {
-  onFormSubmit: () => void;
+  onFormSubmit: (commentData: Comment) => void;
 }
 
 function CommentForm({onFormSubmit}: CommentFormProps) {
   const [commentData, setCommentData] = useState({
-    rating: 5,
+    rating: 0,
     comment: 'Tell how was your stay, what you like and what can be improved'
   } as Comment);
 
-  const currentOffer = store.getState().currentOffer;
+  const currentOffer = useAppSelector((state) => state.currentOffer);
+
+  useEffect(() => {
+    const clearInputs = () => {
+      setCommentData({
+        ...commentData,
+        rating: 0,
+        comment: ''
+      });
+    };
+
+    clearInputs();
+  }, []);
 
   const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
@@ -43,8 +54,12 @@ function CommentForm({onFormSubmit}: CommentFormProps) {
     <form className="reviews__form form" method="post" action={`${AppRoute.Offer}/${currentOffer?.id}`}
       onSubmit={(evt) => {
         evt.preventDefault();
-        store.dispatch(postCommentAction(commentData));
-        onFormSubmit();
+        onFormSubmit(commentData);
+        setCommentData({
+          ...commentData,
+          rating: 0,
+          comment: ''
+        });
       }}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
