@@ -1,24 +1,24 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import { AppRoute } from '../../const';
-import { Comment } from '../../types/comments';
+import { ChangeEvent, Fragment, useEffect, useState } from 'react';
+import { AppRoute, StarTitles } from '../../const';
+import { CommentToSend } from '../../types/comments';
 import { useAppSelector } from '../../hooks';
 
 type CommentFormProps = {
-  onFormSubmit: (commentData: Comment) => void;
+  onFormSubmit: (commentData: CommentToSend) => Promise<void>;
 }
 
 function CommentForm({onFormSubmit}: CommentFormProps) {
-  const [commentData, setCommentData] = useState({
+  const currentOffer = useAppSelector((state) => state.currentOffer);
+  const [formData, setFormData] = useState({
+    id: currentOffer?.id,
     rating: 0,
     comment: 'Tell how was your stay, what you like and what can be improved'
-  } as Comment);
-
-  const currentOffer = useAppSelector((state) => state.currentOffer);
+  } as CommentToSend);
 
   useEffect(() => {
     const clearInputs = () => {
-      setCommentData({
-        ...commentData,
+      setFormData({
+        ...formData,
         rating: 0,
         comment: ''
       });
@@ -28,24 +28,21 @@ function CommentForm({onFormSubmit}: CommentFormProps) {
   }, []);
 
   const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    const {name, value} = evt.target;
+    const {value} = evt.target;
     if (currentOffer) {
-      setCommentData({
-        ...commentData,
-        id: currentOffer.id,
-        [name]: value
+      setFormData({
+        ...formData,
+        comment: value
       });
     }
   };
 
   const inputStarsCountChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
-    const {name} = evt.target;
     const value = Number(evt.target.value);
     if (currentOffer) {
-      setCommentData({
-        ...commentData,
-        id: currentOffer.id,
-        [name]: value
+      setFormData({
+        ...formData,
+        rating: value
       });
     }
   };
@@ -54,9 +51,9 @@ function CommentForm({onFormSubmit}: CommentFormProps) {
     <form className="reviews__form form" method="post" action={`${AppRoute.Offer}/${currentOffer?.id}`}
       onSubmit={(evt) => {
         evt.preventDefault();
-        onFormSubmit(commentData);
-        setCommentData({
-          ...commentData,
+        onFormSubmit(formData);
+        setFormData({
+          ...formData,
           rating: 0,
           comment: ''
         });
@@ -64,45 +61,24 @@ function CommentForm({onFormSubmit}: CommentFormProps) {
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" onChange={inputStarsCountChangeHandler}/>
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" onChange={inputStarsCountChangeHandler}/>
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" onChange={inputStarsCountChangeHandler}/>
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" onChange={inputStarsCountChangeHandler}/>
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" onChange={inputStarsCountChangeHandler}/>
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {Object.entries(StarTitles).map((star) => (
+          <Fragment key={star[0]}>
+            <input className="form__rating-input visually-hidden" name="rating" value={star[0]} id={`${star[0]}-stars`} type="radio"
+              onChange={inputStarsCountChangeHandler} checked={formData.rating === Number(star[0])}
+            />
+            <label htmlFor={`${star[0]}-stars`} className="reviews__rating-label form__rating-label" title={star[1]}>
+              <svg className="form__star-image" width="37" height="33">
+                <use xlinkHref="#icon-star"></use>
+              </svg>
+            </label>
+          </Fragment>)
+        ).reverse()}
       </div>
       <textarea className="reviews__textarea form__textarea"
         id="review" name="comment"
-        placeholder={commentData.comment}
+        placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={textareaChangeHandler}
+        value={formData.comment}
       >
       </textarea>
       <div className="reviews__button-wrapper">

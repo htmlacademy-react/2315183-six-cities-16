@@ -8,7 +8,7 @@ import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
-import { Comment } from '../types/comments';
+import { Comment, CommentToSend } from '../types/comments';
 import { useNavigate } from 'react-router-dom';
 
 export const APIAction = {
@@ -106,7 +106,7 @@ export const fetchCommentsAction = createAsyncThunk<void, string, {
   }
 );
 
-export const postCommentAction = createAsyncThunk<void, Comment, {
+export const postCommentAction = createAsyncThunk<Comment | void, CommentToSend, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -115,10 +115,8 @@ export const postCommentAction = createAsyncThunk<void, Comment, {
   APIAction.POST_COMMENT,
   async ({comment, rating, id}, {dispatch, extra: api}) => {
     try {
-      await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
-      const { data } = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
-      dispatch(loadComments(data));
-      dispatch(loadNewComment(data[data.length - 1]));
+      const {data} = await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
+      return data;
     } catch {
       dispatch(loadNewComment(null));
     }
