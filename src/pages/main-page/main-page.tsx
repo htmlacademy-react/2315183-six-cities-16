@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
+import StayPlaceCardList from '../../components/stay-place-card/stay-place-card-list.tsx';
 import { City, Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
 import { AppRoute, OffersClassNames } from '../../const.ts';
@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/index.ts';
 import { useNavigate } from 'react-router-dom';
 import SortOptions from '../../components/sort-options/sort-options.tsx';
 import Loader from '../../components/loader/loader.tsx';
-import StayPlaceCardsEmpty from '../../components/stay-place-card/stay-place-cards-empty.tsx';
+import StayPlaceCardEmptyList from '../../components/stay-place-card/stay-place-card-empty-list.tsx';
 import Header from '../../components/header/header.tsx';
 
 type MainPageProps = {
@@ -52,7 +52,7 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
         <div className="cities">
           {
             offersInCity.length === 0
-              ? <StayPlaceCardsEmpty currentCity={currentCity}/>
+              ? <StayPlaceCardEmptyList currentCity={currentCity}/>
               : (
                 <div className="cities__places-container container">
                   <section className="cities__places places">
@@ -64,7 +64,7 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
                         :
                         <>
                           <SortOptions />
-                          <StayPlaceCards
+                          <StayPlaceCardList
                             offers={offersInCity}
                             className={OffersClassNames.DEFAULT}
                             onOfferClick={onOfferClick}
