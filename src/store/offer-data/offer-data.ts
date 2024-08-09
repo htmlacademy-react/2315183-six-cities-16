@@ -8,7 +8,8 @@ const initialState: OffersData = {
   favoriteOffers: [],
   currentOffer: null,
   nearestOffers: [],
-  isOffersDataLoading: false
+  isOffersDataLoading: false,
+  hasError: false
 };
 
 export const offerData = createSlice({
@@ -19,27 +20,48 @@ export const offerData = createSlice({
     builder
       .addCase(fetchOffersAction.pending, (state) => {
         state.isOffersDataLoading = true;
+        state.hasError = false;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;
         state.isOffersDataLoading = false;
       })
+      .addCase(fetchOffersAction.rejected, (state) => {
+        state.isOffersDataLoading = false;
+        state.hasError = true;
+      })
       .addCase(fetchCurrentOfferAction.pending, (state) => {
         state.isOffersDataLoading = true;
+        state.hasError = false;
       })
       .addCase(fetchCurrentOfferAction.fulfilled, (state, action) => {
         state.currentOffer = action.payload;
         state.isOffersDataLoading = false;
       })
+      .addCase(fetchCurrentOfferAction.rejected, (state) => {
+        state.isOffersDataLoading = false;
+        state.hasError = true;
+      })
       .addCase(fetchFavoriteOffersAction.pending, (state) => {
         state.isOffersDataLoading = true;
+        state.hasError = false;
       })
       .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {
         state.favoriteOffers = action.payload;
         state.isOffersDataLoading = false;
       })
+      .addCase(fetchFavoriteOffersAction.rejected, (state) => {
+        state.isOffersDataLoading = false;
+        state.hasError = true;
+      })
+      .addCase(fetchNearestOfferAction.pending, (state) => {
+        state.hasError = false;
+      })
       .addCase(fetchNearestOfferAction.fulfilled, (state, action) => {
         state.nearestOffers = action.payload;
+      })
+      .addCase(fetchNearestOfferAction.rejected, (state) => {
+        state.hasError = true;
       });
   }
 });
