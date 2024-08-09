@@ -12,9 +12,10 @@ import { useState } from 'react';
 import { useAppSelector } from '../../hooks/index.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
+import { getAuthorizationStatus } from '../../store/user-process/selectors.ts';
 
 function App(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(

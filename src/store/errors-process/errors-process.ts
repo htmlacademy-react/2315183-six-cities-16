@@ -10,9 +10,10 @@ export const errorsProcess = createSlice({
   name: NameSpace.Errors,
   initialState,
   reducers: {
-    setError: (state, action: PayloadAction<{error: string}>) => {
-      const { error } = action.payload;
-      state.error = error;
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
     }
   }
 });
+
+export const { setError } = errorsProcess.actions;

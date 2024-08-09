@@ -1,16 +1,16 @@
 import { AppRoute, Sorts } from '../../const';
-import { store } from '../../store';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
-import { changeSort, closeSorts, openSorts } from '../../store/action';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getActiveSort, getOpenedStatus } from '../../store/sort-process/selectors';
+import { changeSort, closeSorts, openSorts } from '../../store/sort-process/sort-process';
 
 function SortOptions(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const isOpened = store.getState().isFiltersOpen;
+  const isOpened = useAppSelector(getOpenedStatus);
 
-  const activeSort = store.getState().sort;
+  const activeSort = useAppSelector(getActiveSort);
 
   const sortFormClickHandler = () => {
     if (isOpened) {

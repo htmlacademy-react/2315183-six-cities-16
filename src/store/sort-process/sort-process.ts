@@ -13,10 +13,9 @@ export const sortProcess = createSlice({
   name: NameSpace.Sort,
   initialState,
   reducers: {
-    changeSort: (state, action: PayloadAction<{sortType: string}>) => {
-      const { sortType } = action.payload;
-      state.sort = sortType;
-      state.offers = sort[sortType]([...state.offers]);
+    changeSort: (state, action: PayloadAction<string>) => {
+      state.sort = action.payload;
+      state.offers = sort[action.payload]([...state.offers]);
     },
     openSorts: (state) => {
       state.isFiltersOpen = true;
@@ -29,3 +28,5 @@ export const sortProcess = createSlice({
     }
   }
 });
+
+export const { changeSort, openSorts, closeSorts, resetSort } = sortProcess.actions;

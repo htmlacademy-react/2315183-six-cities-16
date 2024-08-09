@@ -9,6 +9,7 @@ import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
 import { Comment, CommentToSend } from '../types/comments';
+import { setError } from './errors-process/errors-process';
 
 export const APIAction = {
   FETCH_OFFERS: 'FETCH_OFFERS',
@@ -51,7 +52,7 @@ export const fetchFavoriteOffersAction = createAsyncThunk<Offer[], undefined, {
   state: State;
   extra: AxiosInstance;
 }>(
-  APIAction.FETCH_OFFERS,
+  APIAction.FETCH_FAVORITE_OFFERS,
   async (_arg, {extra: api}) => {
     const { data } = await api.get<Offer[]>(APIRoute.Favorite);
     return data;
