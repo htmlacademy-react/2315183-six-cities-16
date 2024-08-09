@@ -13,7 +13,7 @@ import Header from '../../components/header/header.tsx';
 import { getOffers, getOffersDataLoadingStatus } from '../../store/offer-data/selectors.ts';
 import { getCurrentCity } from '../../store/city-process/selectors.ts';
 import { changeCity } from '../../store/city-process/city-process.ts';
-import { resetSort } from '../../store/sort-process/sort-process.ts';
+import { closeSorts, resetSort } from '../../store/sort-process/sort-process.ts';
 
 type MainPageProps = {
   onOfferClick: OfferClick;
@@ -33,6 +33,7 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
   const citiesListClickHandler = (changedCity: City) => {
     dispatch(changeCity(changedCity));
     dispatch(resetSort());
+    dispatch(closeSorts());
     navigate(AppRoute.Root);
   };
 

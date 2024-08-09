@@ -22,7 +22,6 @@ export type CommentsData = {
 };
 
 export type SortProcess = {
-  offers: Offer[];
   sort: string;
   isFiltersOpen: boolean;
 };

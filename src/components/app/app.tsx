@@ -9,13 +9,15 @@ import PrivateRoute from '../private-route/private-route.tsx';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offer } from '../../types/offer.ts';
 import { useState } from 'react';
-import { useAppSelector } from '../../hooks/index.ts';
+import { useAppDispatch, useAppSelector } from '../../hooks/index.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
 import { getAuthorizationStatus } from '../../store/user-process/selectors.ts';
+import { closeSorts } from '../../store/sort-process/sort-process.ts';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const dispatch = useAppDispatch();
 
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
@@ -23,6 +25,7 @@ function App(): JSX.Element {
   );
 
   const offerClickHandler = (offer: Offer) => {
+    dispatch(closeSorts());
     setCurrentOffer({
       ...currentOffer,
       id: offer.id
