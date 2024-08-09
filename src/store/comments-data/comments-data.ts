@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit/dist/createSlice';
+import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { CommentsData } from '../../types/state';
 import { fetchCommentsAction } from '../api-actions';

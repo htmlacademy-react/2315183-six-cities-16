@@ -1,7 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit/dist/createSlice';
 import { NameSpace, Sorts } from '../../const';
 import { SortProcess } from '../../types/state';
-import { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { sort } from '../../utils/sort';
 
 const initialState: SortProcess = {

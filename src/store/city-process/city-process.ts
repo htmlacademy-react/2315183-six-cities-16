@@ -1,7 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit/dist/createSlice';
 import { Cities, NameSpace } from '../../const';
 import { CityProcess } from '../../types/state';
-import { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { City } from '../../types/offer';
 
 const initialState: CityProcess = {
