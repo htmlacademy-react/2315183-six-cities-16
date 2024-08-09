@@ -12,6 +12,8 @@ import { fetchCommentsAction, fetchCurrentOfferAction, fetchNearestOfferAction }
 import { useEffect } from 'react';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import Reviews from '../../components/reviews/reviews.tsx';
+import { getCurrentCity } from '../../store/city-process/selectors.ts';
+import { getCurrentOffer, getNearestOffers, getOffersDataLoadingStatus } from '../../store/offer-data/selectors.ts';
 
 type OfferPageProps = {
   selectedOffer: Offer | undefined;
@@ -30,11 +32,11 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
     }
   }, [currentId]);
 
-  const currentCity = useAppSelector((state) => state.city);
-  const currentOffer = useAppSelector((state) => state.currentOffer);
-  const nearestOffers = useAppSelector((state) => state.nearestOffers);
+  const currentCity = useAppSelector(getCurrentCity);
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const nearestOffers = useAppSelector(getNearestOffers);
 
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
 
   if (isOffersDataLoading) {
     return <Loader />;

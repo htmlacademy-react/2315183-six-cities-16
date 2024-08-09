@@ -6,6 +6,7 @@ import { useAppSelector } from '../../hooks/index.ts';
 import { Cities } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import { fetchFavoriteOffersAction } from '../../store/api-actions.ts';
+import { getFavoriteOffers } from '../../store/offer-data/selectors.ts';
 
 store.dispatch(fetchFavoriteOffersAction());
 
@@ -15,7 +16,7 @@ type FavoritesPageProps = {
 }
 
 function FavoritesPage({onOfferClick, onOfferHover}: FavoritesPageProps): JSX.Element {
-  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
   return (
     <div className="page">
       <Helmet>

@@ -2,13 +2,14 @@ import { ChangeEvent, Fragment, useEffect, useState } from 'react';
 import { AppRoute, StarTitles } from '../../const';
 import { CommentToSend } from '../../types/comments';
 import { useAppSelector } from '../../hooks';
+import { getCurrentOffer } from '../../store/offer-data/selectors';
 
 type CommentFormProps = {
   onFormSubmit: (commentData: CommentToSend) => Promise<void>;
 }
 
 function CommentForm({onFormSubmit}: CommentFormProps) {
-  const currentOffer = useAppSelector((state) => state.currentOffer);
+  const currentOffer = useAppSelector(getCurrentOffer);
   const [formData, setFormData] = useState({
     id: currentOffer?.id,
     rating: 0,

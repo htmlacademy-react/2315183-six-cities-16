@@ -7,12 +7,14 @@ import { Comment, CommentToSend } from '../../types/comments.ts';
 import { store } from '../../store/index.ts';
 import { postCommentAction } from '../../store/api-actions.ts';
 import { convertToComment } from '../../utils/list.ts';
+import { getComments } from '../../store/comments-data/selectors.ts';
+import { getAuthorizationStatus } from '../../store/user-process/selectors.ts';
 
 function Reviews(): JSX.Element {
   const [comments, setComments] = useState<Comment[]>([]);
 
-  const currentComments = useAppSelector((state) => state.comments);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const currentComments = useAppSelector(getComments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
     setComments(currentComments);
@@ -33,10 +35,10 @@ function Reviews(): JSX.Element {
       <h2 className="reviews__title">
         Reviews &middot;
         <span className="reviews__amount">
-          { comments.length }
+          { comments?.length }
         </span>
       </h2>
-      {comments.length ? <ReviewList comments={comments}/> : ''}
+      {comments?.length ? <ReviewList comments={comments}/> : ''}
       {authorizationStatus === AuthorizationStatus.Auth ? <CommentForm onFormSubmit={addCommentHandler}/> : ''}
     </section>
   );
