@@ -15,7 +15,6 @@ export type OffersData = {
   currentOffer: CurrentOffer | null;
   nearestOffers: Offer[];
   isOffersDataLoading: boolean;
-  hasError: boolean;
 };
 
 export type CommentsData = {

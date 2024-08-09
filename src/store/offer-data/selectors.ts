@@ -12,5 +12,3 @@ export const getNearestOffers = (state: State) =>
 
 export const getOffersDataLoadingStatus = (state: State) =>
   state[NameSpace.Offers].isOffersDataLoading;
-
-export const getErrorStatus = (state: State): boolean => state[NameSpace.Offers].hasError;
