@@ -3,12 +3,12 @@ import { Offer, OfferClick } from '../../types/offer.ts';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const.ts';
 
-type StayPlaceFavoriteCardProps = {
+type StayPlaceFavoriteCardItemProps = {
   offer: Offer;
   onOfferClick: OfferClick;
 }
 
-function StayPlaceFavoriteCard({offer, onOfferClick}: StayPlaceFavoriteCardProps): JSX.Element {
+function StayPlaceFavoriteCardItem({offer, onOfferClick}: StayPlaceFavoriteCardItemProps): JSX.Element {
   const {id, title, type, price, previewImage, isFavorite, isPremium} = offer;
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
 
@@ -66,4 +66,4 @@ function StayPlaceFavoriteCard({offer, onOfferClick}: StayPlaceFavoriteCardProps
   );
 }
 
-export default StayPlaceFavoriteCard;
+export default StayPlaceFavoriteCardItem;

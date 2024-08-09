@@ -1,11 +1,11 @@
 import { City } from '../../types/offer.ts';
 import './stay-place-card.css';
 
-type StayPlaceCardsEmptyProps = {
+type StayPlaceCardListEmptyProps = {
   currentCity: City;
 }
 
-function StayPlaceCardsEmpty({currentCity}: StayPlaceCardsEmptyProps): JSX.Element {
+function StayPlaceCardEmptyList({currentCity}: StayPlaceCardListEmptyProps): JSX.Element {
   return (
     <div className="cities__places-container cities__places-container--empty container">
       <section className="cities__no-places">
@@ -19,4 +19,4 @@ function StayPlaceCardsEmpty({currentCity}: StayPlaceCardsEmptyProps): JSX.Eleme
   );
 }
 
-export default StayPlaceCardsEmpty;
+export default StayPlaceCardEmptyList;

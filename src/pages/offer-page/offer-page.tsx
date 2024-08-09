@@ -1,8 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import { useParams } from 'react-router-dom';
-import ReviewsList from '../../components/reviews/reviews-list.tsx';
-import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
+import StayPlaceCardList from '../../components/stay-place-card/stay-place-card-list.tsx';
 import Map from '../../components/map/map.tsx';
 import { OffersClassNames, STARS } from '../../const.ts';
 import { store } from '../../store/index.ts';
@@ -12,6 +11,9 @@ import Header from '../../components/header/header.tsx';
 import { fetchCommentsAction, fetchCurrentOfferAction, fetchNearestOfferAction } from '../../store/api-actions.ts';
 import { useEffect } from 'react';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
+import Reviews from '../../components/reviews/reviews.tsx';
+import { getCurrentCity } from '../../store/city-process/selectors.ts';
+import { getCurrentOffer, getNearestOffers, getOffersDataLoadingStatus } from '../../store/offer-data/selectors.ts';
 
 type OfferPageProps = {
   selectedOffer: Offer | undefined;
@@ -30,11 +32,11 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
     }
   }, [currentId]);
 
-  const currentCity = useAppSelector((state) => state.city);
-  const currentOffer = useAppSelector((state) => state.currentOffer);
-  const nearestOffers = useAppSelector((state) => state.nearestOffers);
+  const currentCity = useAppSelector(getCurrentCity);
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const nearestOffers = useAppSelector(getNearestOffers);
 
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
 
   if (isOffersDataLoading) {
     return <Loader />;
@@ -149,7 +151,7 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
                     </p>
                   </div>
                 </div>
-                <ReviewsList />
+                <Reviews />
               </div>
             </div>
             <section className="offer__map map">
@@ -163,7 +165,7 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <StayPlaceCards
+              <StayPlaceCardList
                 offers={nearestOffers}
                 className={OffersClassNames.NEAREST}
                 onOfferClick={onOfferClick}

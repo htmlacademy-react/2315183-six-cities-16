@@ -1,5 +1,5 @@
 import { ComponentType } from 'react';
-import StayPlaceCard from '../components/stay-place-card/stay-place-card';
+import StayPlaceCardItem from '../components/stay-place-card/stay-place-card-item';
 import { Offer, OfferClick, OfferHover } from '../types/offer';
 
 type HOCProps = {
@@ -15,7 +15,7 @@ function withStayPlaceCard<T>(Component: ComponentType<T>)
       <Component
         {...props as T}
         renderCard={(offer: Offer, onOfferClick: OfferClick, onOfferHover: OfferHover) => (
-          <StayPlaceCard
+          <StayPlaceCardItem
             offer={offer}
             onOfferClick={onOfferClick}
             onOfferHover={onOfferHover}

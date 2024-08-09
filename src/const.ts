@@ -83,7 +83,7 @@ export enum AppRoute {
   Favorites = '/favorites',
   Offer = '/offer',
   OfferId = ':id',
-  Root = '/',
+  Root = '/'
 }
 
 export enum AuthorizationStatus {
@@ -98,4 +98,13 @@ export enum APIRoute {
   Comments = '/comments',
   Login = '/login',
   Logout = '/logout'
+}
+
+export enum NameSpace {
+  User = 'USER',
+  Offers = 'OFFERS',
+  Comments = 'COMMENTS',
+  Sort = 'SORT',
+  City = 'CITY',
+  Errors = 'ERRORS'
 }
