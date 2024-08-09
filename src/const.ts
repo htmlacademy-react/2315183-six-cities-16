@@ -104,5 +104,7 @@ export enum NameSpace {
   User = 'USER',
   Offers = 'OFFERS',
   Comments = 'COMMENTS',
-  Sort = 'SORT'
+  Sort = 'SORT',
+  City = 'CITY',
+  Errors = 'ERRORS'
 }
