@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { loadComments, loadCurrentOffer, loadFavoriteOffers, loadNearestOffers, loadNewComment, loadOffers, loadUserData, redirectToRoute, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
+import { loadComments, loadCurrentOffer, loadFavoriteOffers, loadNearestOffers, loadOffers, loadUserData, redirectToRoute, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
 import { CurrentOffer, Offer } from '../types/offer';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
@@ -113,13 +113,9 @@ export const postCommentAction = createAsyncThunk<Comment | void, CommentToSend,
 }
 >(
   APIAction.POST_COMMENT,
-  async ({comment, rating, id}, {dispatch, extra: api}) => {
-    try {
-      const {data} = await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
-      return data;
-    } catch {
-      dispatch(loadNewComment(null));
-    }
+  async ({comment, rating, id}, {extra: api}) => {
+    const {data} = await api.post<Comment>(`${APIRoute.Comments}/${id}`, {comment, rating});
+    return data;
   }
 );
 

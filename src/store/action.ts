@@ -15,7 +15,6 @@ export const Action = {
   LOAD_CURRENT_OFFER: 'LOAD_CURRENT_OFFER',
   LOAD_NEAREST_OFFERS: 'LOAD_NEAREST_OFFERS',
   LOAD_COMMENTS: 'LOAD_COMMENTS',
-  LOAD_NEW_COMMENT: 'LOAD_NEW_COMMENT',
   LOAD_USER_DATA: 'LOAD_USER_DATA',
   REQUIRE_AUTH: 'REQUIRE_AUTH',
   SET_OFFERS_DATA_LOADING_STATUS: 'SET_OFFERS_DATA_LOADING_STATUS',
@@ -41,7 +40,6 @@ export const loadCurrentOffer = createAction<CurrentOffer>(Action.LOAD_CURRENT_O
 export const loadNearestOffers = createAction<Offer[]>(Action.LOAD_NEAREST_OFFERS);
 
 export const loadComments = createAction<Comment[]>(Action.LOAD_COMMENTS);
-export const loadNewComment = createAction<Comment | null>(Action.LOAD_NEW_COMMENT);
 
 export const loadUserData = createAction<UserData>(Action.LOAD_USER_DATA);
 
