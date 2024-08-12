@@ -1,9 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 import { OfferClick, OfferHover } from '../../types/offer.ts';
-import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
+import StayPlaceCardList from '../../components/stay-place-card/stay-place-card-list.tsx';
 import Header from '../../components/header/header.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import { Cities } from '../../const.ts';
+import { store } from '../../store/index.ts';
+import { fetchFavoriteOffersAction } from '../../store/api-actions.ts';
+import { getFavoriteOffers } from '../../store/offer-data/selectors.ts';
+
+store.dispatch(fetchFavoriteOffersAction());
 
 type FavoritesPageProps = {
   onOfferClick: OfferClick;
@@ -11,7 +16,7 @@ type FavoritesPageProps = {
 }
 
 function FavoritesPage({onOfferClick, onOfferHover}: FavoritesPageProps): JSX.Element {
-  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
   return (
     <div className="page">
       <Helmet>
@@ -37,7 +42,7 @@ function FavoritesPage({onOfferClick, onOfferHover}: FavoritesPageProps): JSX.El
                               </a>
                             </div>
                           </div>
-                          <StayPlaceCards
+                          <StayPlaceCardList
                             offers={favoriteOffers.filter((offer) => offer.city.name === city.name)}
                             onOfferClick={onOfferClick}
                             onOfferHover={onOfferHover}

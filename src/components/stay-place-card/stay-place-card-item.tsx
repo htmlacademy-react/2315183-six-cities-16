@@ -5,13 +5,13 @@ import { AppRoute, STARS } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import { updateOfferFavoriteStatusAction } from '../../store/api-actions.ts';
 
-type StayPlaceCardProps = {
+type StayPlaceCardItemProps = {
   offer: Offer;
   onOfferClick: OfferClick;
   onOfferHover: OfferHover;
 }
 
-function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps): JSX.Element {
+function StayPlaceCardItem({offer, onOfferClick, onOfferHover}: StayPlaceCardItemProps): JSX.Element {
   const {id, title, type, price, previewImage, isFavorite, isPremium, rating} = offer;
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
 
@@ -77,4 +77,4 @@ function StayPlaceCard({offer, onOfferClick, onOfferHover}: StayPlaceCardProps):
   );
 }
 
-export default StayPlaceCard;
+export default StayPlaceCardItem;

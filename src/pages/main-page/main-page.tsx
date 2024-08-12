@@ -1,17 +1,20 @@
 import { Helmet } from 'react-helmet-async';
-import StayPlaceCards from '../../components/stay-place-card/stay-place-cards.tsx';
+import StayPlaceCardList from '../../components/stay-place-card/stay-place-card-list.tsx';
 import { City, Offer, OfferClick, OfferHover } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
 import { AppRoute, OffersClassNames } from '../../const.ts';
-import { store } from '../../store/index.ts';
 import CitiesList from '../../components/cities-list/cities-list.tsx';
-import { changeCity, resetSort } from '../../store/action.ts';
 import { useAppDispatch, useAppSelector } from '../../hooks/index.ts';
 import { useNavigate } from 'react-router-dom';
 import SortOptions from '../../components/sort-options/sort-options.tsx';
 import Loader from '../../components/loader/loader.tsx';
-import StayPlaceCardsEmpty from '../../components/stay-place-card/stay-place-cards-empty.tsx';
+import StayPlaceCardEmptyList from '../../components/stay-place-card/stay-place-card-empty-list.tsx';
 import Header from '../../components/header/header.tsx';
+import { getOffers, getOffersDataLoadingStatus } from '../../store/offer-data/selectors.ts';
+import { getCurrentCity } from '../../store/city-process/selectors.ts';
+import { changeCity } from '../../store/city-process/city-process.ts';
+import { closeSorts } from '../../store/sort-process/sort-process.ts';
+import { resetSort } from '../../store/offer-data/offer-data.ts';
 
 type MainPageProps = {
   onOfferClick: OfferClick;
@@ -23,14 +26,15 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
 
-  const currentCity = store.getState().city;
-  const offersInCity = useAppSelector((state) => state.offers).filter((offer) => offer.city.name === currentCity.name);
+  const currentCity = useAppSelector(getCurrentCity);
+  const offersInCity = useAppSelector(getOffers).filter((offer) => offer.city.name === currentCity.name);
 
-  const citiesListClickHandler = (city: City) => {
-    dispatch(changeCity(city));
+  const citiesListClickHandler = (changedCity: City) => {
+    dispatch(changeCity(changedCity));
     dispatch(resetSort());
+    dispatch(closeSorts());
     navigate(AppRoute.Root);
   };
 
@@ -52,7 +56,7 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
         <div className="cities">
           {
             offersInCity.length === 0
-              ? <StayPlaceCardsEmpty currentCity={currentCity}/>
+              ? <StayPlaceCardEmptyList currentCity={currentCity}/>
               : (
                 <div className="cities__places-container container">
                   <section className="cities__places places">
@@ -64,7 +68,7 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
                         :
                         <>
                           <SortOptions />
-                          <StayPlaceCards
+                          <StayPlaceCardList
                             offers={offersInCity}
                             className={OffersClassNames.DEFAULT}
                             onOfferClick={onOfferClick}

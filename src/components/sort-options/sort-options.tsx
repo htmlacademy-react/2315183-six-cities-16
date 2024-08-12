@@ -1,16 +1,17 @@
 import { AppRoute, Sorts } from '../../const';
-import { store } from '../../store';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
-import { changeSort, closeSorts, openSorts } from '../../store/action';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getOpenedStatus } from '../../store/sort-process/selectors';
+import { closeSorts, openSorts } from '../../store/sort-process/sort-process';
+import { changeSort } from '../../store/offer-data/offer-data';
+import { getActiveSort } from '../../store/offer-data/selectors';
 
 function SortOptions(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const isOpened = store.getState().isFiltersOpen;
-
-  const activeSort = store.getState().sort;
+  const isOpened = useAppSelector(getOpenedStatus);
+  const activeSort = useAppSelector(getActiveSort);
 
   const sortFormClickHandler = () => {
     if (isOpened) {
@@ -21,17 +22,14 @@ function SortOptions(): JSX.Element {
     navigate(AppRoute.Root);
   };
 
-  const sortFormChangeHandler = (filter: string) => {
-    dispatch(changeSort(filter));
+  const sortFormChangeHandler = (sortType: string) => {
+    dispatch(changeSort(sortType));
     navigate(AppRoute.Root);
   };
 
   return (
     <form className="places__sorting" action="#" method="get"
       onClick={sortFormClickHandler}
-      onMouseOver={() => {
-        dispatch(closeSorts());
-      }}
     >
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}>
@@ -43,16 +41,16 @@ function SortOptions(): JSX.Element {
       <ul className={`places__options places__options--custom ${isOpened ? 'places__options--opened' : ''}`}>
         {
           Object.values(Sorts)
-            .map((filter) => (
+            .map((sort) => (
               <li
-                className={`places__option ${filter === activeSort ? 'places__option--active' : ''}`}
+                className={`places__option ${sort === activeSort ? 'places__option--active' : ''}`}
                 tabIndex={0}
-                key={filter}
+                key={sort}
                 onClick={() => {
-                  sortFormChangeHandler(filter);
+                  sortFormChangeHandler(sort);
                 }}
               >
-                {filter}
+                {sort}
               </li>)
             )
         }
