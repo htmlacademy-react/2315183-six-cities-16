@@ -166,7 +166,6 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <StayPlaceCardList
-                offers={nearestOffers}
                 className={OffersClassNames.NEAREST}
                 onOfferClick={onOfferClick}
                 onOfferHover={onOfferHover}

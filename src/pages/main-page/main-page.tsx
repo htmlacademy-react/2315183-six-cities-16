@@ -69,7 +69,6 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
                     <b className="places__found">{offersInCity.length} places to stay in {currentCity.name}</b>
                     <SortOptions />
                     <StayPlaceCardList
-                      offers={offersInCity}
                       className={OffersClassNames.DEFAULT}
                       onOfferClick={onOfferClick}
                       onOfferHover={onOfferHover}

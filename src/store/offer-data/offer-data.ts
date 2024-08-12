@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, Sorts } from '../../const';
 import { OffersData } from '../../types/state';
-import { fetchCurrentOfferAction, fetchFavoriteOffersAction, fetchNearestOfferAction, fetchOffersAction } from '../api-actions';
+import { fetchCurrentOfferAction, fetchFavoriteOffersAction, fetchNearestOfferAction, fetchOffersAction, updateOfferFavoriteStatusAction } from '../api-actions';
 import { sort } from '../../utils/sort';
 
 const initialState: OffersData = {
@@ -50,6 +50,9 @@ export const offerData = createSlice({
       })
       .addCase(fetchNearestOfferAction.fulfilled, (state, action) => {
         state.nearestOffers = action.payload;
+      })
+      .addCase(updateOfferFavoriteStatusAction.fulfilled, (state, action) => {
+        state.offers = action.payload;
       });
   }
 });
