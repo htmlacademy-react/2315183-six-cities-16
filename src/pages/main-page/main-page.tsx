@@ -21,22 +21,22 @@ type MainPageProps = {
   onOfferHover: OfferHover;
   selectedOffer: Offer | undefined;
 }
-
 function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
-
   const currentCity = useAppSelector(getCurrentCity);
   const offersInCity = useAppSelector(getOffers).filter((offer) => offer.city.name === currentCity.name);
-
   const citiesListClickHandler = (changedCity: City) => {
     dispatch(changeCity(changedCity));
     dispatch(resetSort());
     dispatch(closeSorts());
     navigate(AppRoute.Root);
   };
+
+  if (isOffersDataLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -57,25 +57,19 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
           {
             offersInCity.length === 0
               ? <StayPlaceCardEmptyList currentCity={currentCity}/>
-              : (
+              :
+              (
                 <div className="cities__places-container container">
                   <section className="cities__places places">
                     <h2 className="visually-hidden">Places</h2>
                     <b className="places__found">{offersInCity.length} places to stay in {currentCity.name}</b>
-                    {
-                      isOffersDataLoading
-                        ? <Loader />
-                        :
-                        <>
-                          <SortOptions />
-                          <StayPlaceCardList
-                            offers={offersInCity}
-                            className={OffersClassNames.DEFAULT}
-                            onOfferClick={onOfferClick}
-                            onOfferHover={onOfferHover}
-                          />
-                        </>
-                    }
+                    <SortOptions />
+                    <StayPlaceCardList
+                      offers={offersInCity}
+                      className={OffersClassNames.DEFAULT}
+                      onOfferClick={onOfferClick}
+                      onOfferHover={onOfferHover}
+                    />
                   </section>
                   <div className="cities__right-section">
                     <section className="cities__map map">
@@ -86,13 +80,11 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
                       />
                     </section>
                   </div>
-                </div>
-              )
-          }
+                </div>)
+          })
         </div>
       </main>
     </div>
   );
 }
-
 export default MainPage;
