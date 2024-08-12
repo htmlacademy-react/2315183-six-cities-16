@@ -1,16 +1,16 @@
 import { AppRoute, Sorts } from '../../const';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getActiveSort, getOpenedStatus } from '../../store/sort-process/selectors';
-import { changeSort, closeSorts, openSorts } from '../../store/sort-process/sort-process';
-import { getOffers } from '../../store/offer-data/selectors';
+import { getOpenedStatus } from '../../store/sort-process/selectors';
+import { closeSorts, openSorts } from '../../store/sort-process/sort-process';
+import { changeSort } from '../../store/offer-data/offer-data';
+import { getActiveSort } from '../../store/offer-data/selectors';
 
 function SortOptions(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const isOpened = useAppSelector(getOpenedStatus);
-  const offers = useAppSelector(getOffers);
   const activeSort = useAppSelector(getActiveSort);
 
   const sortFormClickHandler = () => {
@@ -23,7 +23,7 @@ function SortOptions(): JSX.Element {
   };
 
   const sortFormChangeHandler = (sortType: string) => {
-    dispatch(changeSort({sortType, offers}));
+    dispatch(changeSort(sortType));
     navigate(AppRoute.Root);
   };
 

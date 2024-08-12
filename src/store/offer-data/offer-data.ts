@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
+import { NameSpace, Sorts } from '../../const';
 import { OffersData } from '../../types/state';
 import { fetchCurrentOfferAction, fetchFavoriteOffersAction, fetchNearestOfferAction, fetchOffersAction } from '../api-actions';
-import { Offer } from '../../types/offer';
+import { sort } from '../../utils/sort';
 
 const initialState: OffersData = {
   offers: [],
   favoriteOffers: [],
   currentOffer: null,
   nearestOffers: [],
+  sort: Sorts.POPULAR,
   isOffersDataLoading: false
 };
 
@@ -16,8 +17,12 @@ export const offerData = createSlice({
   name: NameSpace.Offers,
   initialState,
   reducers: {
-    sortOffers: (state, action: PayloadAction<Offer[]>) => {
-      state.offers = action.payload;
+    changeSort: (state, action: PayloadAction<string>) => {
+      state.offers = sort[action.payload]([...state.offers]);
+      state.sort = action.payload;
+    },
+    resetSort: (state) => {
+      state.sort = Sorts.POPULAR;
     }
   },
   extraReducers(builder) {
@@ -49,4 +54,4 @@ export const offerData = createSlice({
   }
 });
 
-export const { sortOffers } = offerData.actions;
+export const { changeSort, resetSort } = offerData.actions;

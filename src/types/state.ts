@@ -14,6 +14,7 @@ export type OffersData = {
   favoriteOffers: Offer[];
   currentOffer: CurrentOffer | null;
   nearestOffers: Offer[];
+  sort: string;
   isOffersDataLoading: boolean;
 };
 
@@ -22,7 +23,6 @@ export type CommentsData = {
 };
 
 export type SortProcess = {
-  sort: string;
   isFiltersOpen: boolean;
 };
 

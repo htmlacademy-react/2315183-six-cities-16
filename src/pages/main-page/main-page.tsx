@@ -13,7 +13,8 @@ import Header from '../../components/header/header.tsx';
 import { getOffers, getOffersDataLoadingStatus } from '../../store/offer-data/selectors.ts';
 import { getCurrentCity } from '../../store/city-process/selectors.ts';
 import { changeCity } from '../../store/city-process/city-process.ts';
-import { closeSorts, resetSort } from '../../store/sort-process/sort-process.ts';
+import { closeSorts } from '../../store/sort-process/sort-process.ts';
+import { resetSort } from '../../store/offer-data/offer-data.ts';
 
 type MainPageProps = {
   onOfferClick: OfferClick;

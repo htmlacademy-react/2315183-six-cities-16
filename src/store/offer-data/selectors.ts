@@ -12,3 +12,6 @@ export const getNearestOffers = (state: State) =>
 
 export const getOffersDataLoadingStatus = (state: State) =>
   state[NameSpace.Offers].isOffersDataLoading;
+
+export const getActiveSort = (state: State) =>
+  state[NameSpace.Offers].sort;
