@@ -7,8 +7,7 @@ import { Cities } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import { fetchFavoriteOffersAction } from '../../store/api-actions.ts';
 import { getFavoriteOffers } from '../../store/offer-data/selectors.ts';
-
-store.dispatch(fetchFavoriteOffersAction());
+import { useEffect } from 'react';
 
 type FavoritesPageProps = {
   onOfferClick: OfferClick;
@@ -17,6 +16,11 @@ type FavoritesPageProps = {
 
 function FavoritesPage({onOfferClick, onOfferHover}: FavoritesPageProps): JSX.Element {
   const favoriteOffers = useAppSelector(getFavoriteOffers);
+
+  useEffect(() => {
+    store.dispatch(fetchFavoriteOffersAction());
+  }, []);
+
   return (
     <div className="page">
       <Helmet>
@@ -33,23 +37,28 @@ function FavoritesPage({onOfferClick, onOfferHover}: FavoritesPageProps): JSX.El
                 ? (
                   <ul className="favorites__list">
                     {
-                      Object.values(Cities).map((city) => (
-                        <li className="favorites__locations-items" key={city.name}>
-                          <div className="favorites__locations locations locations--current">
-                            <div className="locations__item">
-                              <a className="locations__item-link" href="#">
-                                <span>{city.name}</span>
-                              </a>
-                            </div>
-                          </div>
-                          <StayPlaceCardList
-                            offers={favoriteOffers.filter((offer) => offer.city.name === city.name)}
-                            onOfferClick={onOfferClick}
-                            onOfferHover={onOfferHover}
-                            isFavoritePage
-                          />
-                        </li>
-                      ))
+                      Object.values(Cities).map((city) => {
+                        const favoriteOffersByCity = favoriteOffers.filter((offer) => offer.city.name === city.name);
+                        if (favoriteOffersByCity.length) {
+                          return (
+                            <li className="favorites__locations-items" key={city.name}>
+                              <div className="favorites__locations locations locations--current">
+                                <div className="locations__item">
+                                  <a className="locations__item-link" href="#">
+                                    <span>{city.name}</span>
+                                  </a>
+                                </div>
+                              </div>
+                              <StayPlaceCardList
+                                favoriteOffers={favoriteOffersByCity}
+                                onOfferClick={onOfferClick}
+                                onOfferHover={onOfferHover}
+                                isFavoritePage
+                              />
+                            </li>
+                          );
+                        }
+                      })
                     }
                   </ul>
                 )
