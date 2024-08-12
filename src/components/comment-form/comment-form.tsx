@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment, useEffect, useState } from 'react';
+import { ChangeEvent, Fragment, memo, useEffect, useState } from 'react';
 import { AppRoute, StarTitles } from '../../const';
 import { CommentToSend } from '../../types/comments';
 import { useAppSelector } from '../../hooks';
@@ -92,4 +92,4 @@ function CommentForm({onFormSubmit}: CommentFormProps) {
   );
 }
 
-export default CommentForm;
+export default memo(CommentForm);
