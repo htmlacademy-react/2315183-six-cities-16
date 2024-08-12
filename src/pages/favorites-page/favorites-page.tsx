@@ -19,7 +19,7 @@ function FavoritesPage({onOfferClick, onOfferHover}: FavoritesPageProps): JSX.El
 
   useEffect(() => {
     store.dispatch(fetchFavoriteOffersAction());
-  }, [favoriteOffers]);
+  }, []);
 
   return (
     <div className="page">

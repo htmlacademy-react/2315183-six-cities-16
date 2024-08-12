@@ -1,38 +1,44 @@
 import { useState } from 'react';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
-import { Link } from 'react-router-dom';
-import { AppRoute, STARS } from '../../const.ts';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus, STARS } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import { updateOfferFavoriteStatusAction } from '../../store/api-actions.ts';
 import { setError } from '../../store/errors-process/errors-process.ts';
+import { useAppSelector } from '../../hooks/index.ts';
+import { getAuthorizationStatus } from '../../store/user-process/selectors.ts';
 
 type StayPlaceCardItemProps = {
   offer: Offer;
   onOfferClick: OfferClick;
   onOfferHover: OfferHover;
 }
-
 function StayPlaceCardItem({offer, onOfferClick, onOfferHover}: StayPlaceCardItemProps): JSX.Element {
   const {id, title, type, price, previewImage, isFavorite, isPremium, rating} = offer;
-
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
   const [favoriteStatus, setFavoriteStatus] = useState<boolean>(isFavorite);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const navigate = useNavigate();
 
   const starsPercent = rating * 100 / STARS.length;
 
   const toggleFavoriteStatusHandler = () => {
     try {
-      setIsUpdating(true);
-      store.dispatch(updateOfferFavoriteStatusAction({offer, favoriteStatus}));
-      setFavoriteStatus(!favoriteStatus);
+      if (authorizationStatus === AuthorizationStatus.Auth) {
+        setIsUpdating(true);
+        store.dispatch(updateOfferFavoriteStatusAction({offer, favoriteStatus}));
+        setFavoriteStatus(!favoriteStatus);
+      } else {
+        navigate(AppRoute.Login);
+      }
     } catch (err) {
       setError('Cant update status');
     } finally {
       setIsUpdating(false);
     }
   };
-
   return (
     <article className="cities__card place-card"
       id={`offer-${id}`}
