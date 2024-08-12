@@ -18,6 +18,7 @@ function StayPlaceFavoriteCardItem({offer, onOfferClick}: StayPlaceFavoriteCardI
   const [favoriteStatus, setFavoriteStatus] = useState<boolean>(isFavorite);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
+
   const toggleFavoriteStatusHandler = () => {
     try {
       setIsUpdating(true);

@@ -53,6 +53,7 @@ export const offerData = createSlice({
       })
       .addCase(updateOfferFavoriteStatusAction.fulfilled, (state, action) => {
         state.offers = action.payload;
+        state.favoriteOffers = action.payload.filter((offer) => offer.isFavorite === true);
       });
   }
 });
