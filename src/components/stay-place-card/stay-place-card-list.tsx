@@ -1,20 +1,25 @@
 import withStayPlaceCard from '../../hocs/with-stay-place-card.tsx';
-import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
+import { useAppSelector } from '../../hooks/index.ts';
+import { getOffers } from '../../store/offer-data/selectors.ts';
+import { OfferClick, OfferHover } from '../../types/offer.ts';
 import StayPlaceCardItem from './stay-place-card-item.tsx';
 import StayPlaceFavoriteCardItem from './stay-place-favorite-card-item.tsx';
+import { getCurrentCity } from '../../store/city-process/selectors.ts';
 
 const AllStayPlaceCardsWrapped = withStayPlaceCard(StayPlaceCardItem);
 const FavoritesStayPlaceCardsWrapped = withStayPlaceCard(StayPlaceFavoriteCardItem);
 
 type StayPlaceCardListProps = {
-  offers: Offer[];
   className?: string;
   onOfferClick: OfferClick;
   onOfferHover: OfferHover;
   isFavoritePage?: boolean;
 }
 
-function StayPlaceCardList({offers, className, onOfferClick, onOfferHover, isFavoritePage}: StayPlaceCardListProps): JSX.Element {
+function StayPlaceCardList({className, onOfferClick, onOfferHover, isFavoritePage}: StayPlaceCardListProps): JSX.Element {
+  const currentCity = useAppSelector(getCurrentCity);
+  const offers = useAppSelector(getOffers).filter((offer) => offer.city.name === currentCity.name);
+
   if (isFavoritePage) {
     return (
       <div className="favorites__places">
@@ -22,7 +27,6 @@ function StayPlaceCardList({offers, className, onOfferClick, onOfferHover, isFav
       </div>
     );
   }
-
   return (
     <div
       className={className}
@@ -40,5 +44,4 @@ function StayPlaceCardList({offers, className, onOfferClick, onOfferHover, isFav
     </div>
   );
 }
-
 export default StayPlaceCardList;

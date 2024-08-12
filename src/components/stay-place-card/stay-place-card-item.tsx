@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, STARS } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import { updateOfferFavoriteStatusAction } from '../../store/api-actions.ts';
+import { setError } from '../../store/errors-process/errors-process.ts';
 
 type StayPlaceCardItemProps = {
   offer: Offer;
@@ -13,12 +14,23 @@ type StayPlaceCardItemProps = {
 
 function StayPlaceCardItem({offer, onOfferClick, onOfferHover}: StayPlaceCardItemProps): JSX.Element {
   const {id, title, type, price, previewImage, isFavorite, isPremium, rating} = offer;
+
   const [currentOffer, setCurrentOffer] = useState<Offer>({} as Offer);
+  const [favoriteStatus, setFavoriteStatus] = useState<boolean>(isFavorite);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   const starsPercent = rating * 100 / STARS.length;
 
-  const favoriteButtonClickHandler = () => {
-    store.dispatch(updateOfferFavoriteStatusAction(offer));
+  const toggleFavoriteStatusHandler = () => {
+    try {
+      setIsUpdating(true);
+      store.dispatch(updateOfferFavoriteStatusAction({offer, favoriteStatus}));
+      setFavoriteStatus(!favoriteStatus);
+    } catch (err) {
+      setError('Cant update status');
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   return (
@@ -49,15 +61,16 @@ function StayPlaceCardItem({offer, onOfferClick, onOfferHover}: StayPlaceCardIte
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className={`place-card__bookmark-button button
-            ${isFavorite ?
+            ${favoriteStatus ?
       'place-card__bookmark-button--active'
       : ''}`} type="button"
-          onClick={favoriteButtonClickHandler}
+          onClick={toggleFavoriteStatusHandler}
+          disabled={isUpdating}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
+            <span className="visually-hidden">{favoriteStatus ? 'In bookmarks' : 'To bookmarks'}</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -76,5 +89,4 @@ function StayPlaceCardItem({offer, onOfferClick, onOfferHover}: StayPlaceCardIte
     </article>
   );
 }
-
 export default StayPlaceCardItem;
