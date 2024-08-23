@@ -1,31 +1,22 @@
-import { City, Location, Offer } from '../types/offer';
+import { Cities } from '../const';
+import { Offer } from '../types/offer';
 import { datatype, internet, name } from 'faker';
 
-export const makeFakeOffers = (): Offer[] => {
-  const testOffers: Offer[] = new Array(3).fill(null).map(() => ({
-    id: name.title(),
-    title: name.title(),
-    type: name.title(),
-    price: datatype.number(),
-    previewImage: internet.avatar(),
-    city: new Array(3).fill(null).map(() => ({
-      name: name.title(),
-      location: new Array(3).fill(null).map(() => ({
-        latitude: datatype.number(),
-        longitude: datatype.number(),
-        zoom: datatype.number(),
-      }) as Location)
-    }) as unknown as City),
-    location: new Array(3).fill(null).map(() => ({
-      latitude: datatype.number(),
-      longitude: datatype.number(),
-      zoom: datatype.number(),
-    }) as Location),
-    isFavorite: datatype.number() > datatype.number(),
-    isPremium: datatype.number() < datatype.number(),
-    rating: datatype.number(),
-  }) as unknown as Offer);
+export const makeFakeOffer = (): Offer => ({
+  id: name.title(),
+  title: name.title(),
+  type: name.title(),
+  price: datatype.number(),
+  previewImage: internet.avatar(),
+  city: Object.values(Cities)[Math.floor(Math.random() * Object.entries(Cities).length)],
+  location: {
+    latitude: datatype.number(),
+    longitude: datatype.number(),
+    zoom: datatype.number(),
+  },
+  isFavorite: datatype.number() > datatype.number(),
+  isPremium: datatype.number() < datatype.number(),
+  rating: datatype.number(),
+} as Offer);
 
-  return testOffers;
-};
-
+export const makeFakeOffers = (): Offer[] => new Array(50).fill(null).map(() => makeFakeOffer());
