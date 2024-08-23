@@ -3,7 +3,7 @@ import { State } from '../../types/state';
 import { makeFakeOffers } from '../../utils/mocks';
 import { getActiveSort, getCurrentOffer, getFavoriteOffers, getNearestOffers, getOffers, getOffersDataLoadingStatus } from './selectors';
 
-describe('OfferProcess selectors', () => {
+describe('OfferData selectors', () => {
   const state: Pick<State, NameSpace.Offers> = {
     [NameSpace.Offers]: {
       offers: makeFakeOffers(),
