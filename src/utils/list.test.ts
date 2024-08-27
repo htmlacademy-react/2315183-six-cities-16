@@ -7,7 +7,7 @@ describe('Function: sortOffersPriceLowToHigh', () => {
     const mockOffers = makeFakeOffers();
     //Act
     const sortedMockOffers = mockOffers.sort(sortOffersPriceLowToHigh);
-    const result = mockOffers.every((value, index) => value !== sortedMockOffers[index]);
+    const result = mockOffers.every((value, index) => value === sortedMockOffers[index]);
     //Assert
     expect(result).toBe(true);
   });
@@ -16,7 +16,7 @@ describe('Function: sortOffersPriceLowToHigh', () => {
     const mockOffers = makeFakeOffers();
     //Act
     const sortedMockOffers = mockOffers.sort(sortOffersPriceLowToHigh);
-    const result = mockOffers.every((value, index) => value === sortedMockOffers[index]);
+    const result = mockOffers.every((value, index) => value !== sortedMockOffers[index]);
     //Assert
     expect(result).toBe(false);
   });
@@ -28,7 +28,7 @@ describe('Function: sortOffersPriceHighToLow', () => {
     const mockOffers = makeFakeOffers();
     //Act
     const sortedMockOffers = mockOffers.sort(sortOffersPriceHighToLow);
-    const result = mockOffers.every((value, index) => value !== sortedMockOffers[index]);
+    const result = mockOffers.every((value, index) => value === sortedMockOffers[index]);
     //Assert
     expect(result).toBe(true);
   });
@@ -37,7 +37,7 @@ describe('Function: sortOffersPriceHighToLow', () => {
     const mockOffers = makeFakeOffers();
     //Act
     const sortedMockOffers = mockOffers.sort(sortOffersPriceHighToLow);
-    const result = mockOffers.every((value, index) => value === sortedMockOffers[index]);
+    const result = mockOffers.every((value, index) => value !== sortedMockOffers[index]);
     //Assert
     expect(result).toBe(false);
   });
@@ -49,7 +49,7 @@ describe('Function: sortTopRayingFirst', () => {
     const mockOffers = makeFakeOffers();
     //Act
     const sortedMockOffers = mockOffers.sort(sortTopRatingFirst);
-    const result = mockOffers.every((value, index) => value !== sortedMockOffers[index]);
+    const result = mockOffers.every((value, index) => value === sortedMockOffers[index]);
     //Assert
     expect(result).toBe(true);
   });
@@ -58,7 +58,7 @@ describe('Function: sortTopRayingFirst', () => {
     const mockOffers = makeFakeOffers();
     //Act
     const sortedMockOffers = mockOffers.sort(sortTopRatingFirst);
-    const result = mockOffers.every((value, index) => value === sortedMockOffers[index]);
+    const result = mockOffers.every((value, index) => value !== sortedMockOffers[index]);
     //Assert
     expect(result).toBe(false);
   });

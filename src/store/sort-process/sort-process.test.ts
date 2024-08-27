@@ -1,4 +1,4 @@
-import { openSorts, sortProcess } from './sort-process';
+import { closeSorts, openSorts, sortProcess } from './sort-process';
 
 describe('SortProcess Slice', () => {
   it('should return initial state with empty action', () => {
@@ -32,7 +32,7 @@ describe('SortProcess Slice', () => {
     const initialState = { isSortsOpen: true };
     const expectedState = { isSortsOpen: false };
 
-    const result = sortProcess.reducer(initialState, openSorts);
+    const result = sortProcess.reducer(initialState, closeSorts);
 
     expect(result).toEqual(expectedState);
   });

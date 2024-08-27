@@ -22,9 +22,9 @@ describe('CityProcess Slice', () => {
 
   it('should change city with "changeCity" action', () => {
     const initialState = { city: Cities.AMSTERDAM };
-    const expectedState = { city: Cities.DUSSELDORF };
+    const expectedState = { city: Cities.PARIS };
 
-    const result = cityProcess.reducer(initialState, changeCity);
+    const result = cityProcess.reducer(initialState, changeCity(expectedState.city));
 
     expect(result).toEqual(expectedState);
   });

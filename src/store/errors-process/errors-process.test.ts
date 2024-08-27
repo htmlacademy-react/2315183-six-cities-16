@@ -12,7 +12,7 @@ describe('ErrorsProcess Slice', () => {
 
   it('should return default initial state with empty action and undefined state', () => {
     const emptyAction = { type: '' };
-    const expectedState = { error: 'error' };
+    const expectedState = { error: null };
 
     const result = errorsProcess.reducer(undefined, emptyAction);
 
@@ -23,7 +23,7 @@ describe('ErrorsProcess Slice', () => {
     const initialState = { error: null };
     const expectedState = { error: 'error2' };
 
-    const result = errorsProcess.reducer(initialState, setError);
+    const result = errorsProcess.reducer(initialState, setError(expectedState.error));
 
     expect(result).toEqual(expectedState);
   });
