@@ -34,9 +34,9 @@ describe('Redirect middleware', () => {
     expect(browserHistory.location.pathname).toBe(AppRoute.Login);
   });
 
-  it('should redirect to "/" with redirectToRoute action', () => {
-    const redirectAction = redirectToRoute(AppRoute.Root);
-    store.dispatch(redirectAction);
-    expect(browserHistory.location.pathname).toBe(AppRoute.Root);
+  it('should not redirect to "/" with empty action', () => {
+    const emptyAction = { type: '', payload: AppRoute.Root};
+    store.dispatch(emptyAction);
+    expect(browserHistory.location.pathname).not.toBe(AppRoute.Root);
   });
 });
