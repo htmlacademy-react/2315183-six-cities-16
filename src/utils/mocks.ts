@@ -2,6 +2,12 @@ import { Cities } from '../const';
 import { CurrentOffer, Offer } from '../types/offer';
 import { datatype, internet, name } from 'faker';
 import { UserData } from '../types/user-data';
+import { Action } from '@reduxjs/toolkit';
+import { ThunkDispatch } from 'redux-thunk';
+import { State } from '../types/state';
+import { createAPI } from '../services/api';
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
 export const makeFakeUser = (): UserData => ({
   email: internet.email(),
@@ -56,3 +62,5 @@ export const makeFakeOffer = (): Offer => ({
 });
 
 export const makeFakeOffers = (): Offer[] => new Array(50).fill(null).map(() => makeFakeOffer());
+
+export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({type}) => type);
