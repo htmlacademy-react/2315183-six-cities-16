@@ -3,7 +3,7 @@ import { SortProcess } from '../../types/state';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: SortProcess = {
-  isFiltersOpen: false
+  isSortsOpen: false
 };
 
 export const sortProcess = createSlice({
@@ -11,10 +11,10 @@ export const sortProcess = createSlice({
   initialState,
   reducers: {
     openSorts: (state) => {
-      state.isFiltersOpen = true;
+      state.isSortsOpen = true;
     },
     closeSorts: (state) => {
-      state.isFiltersOpen = false;
+      state.isSortsOpen = false;
     }
   }
 });

@@ -23,7 +23,7 @@ export type CommentsData = {
 };
 
 export type SortProcess = {
-  isFiltersOpen: boolean;
+  isSortsOpen: boolean;
 };
 
 export type CityProcess = {
