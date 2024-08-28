@@ -49,6 +49,7 @@ function LoginPage(): JSX.Element {
                 <input
                   className="login__input form__input" type="email" name="email" placeholder="Email" required
                   ref={emailRef}
+                  data-testid="emailElement"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -56,6 +57,7 @@ function LoginPage(): JSX.Element {
                 <input
                   className="login__input form__input" type="password" name="password" placeholder="Password" required
                   ref={passwordRef}
+                  data-testid="passwordElement"
                 />
               </div>
               <button

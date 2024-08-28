@@ -24,9 +24,11 @@ type MainPageProps = {
 function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
   const currentCity = useAppSelector(getCurrentCity);
   const offersInCity = useAppSelector(getOffers).filter((offer) => offer.city.name === currentCity.name);
+
   const citiesListClickHandler = (changedCity: City) => {
     dispatch(changeCity(changedCity));
     dispatch(resetSort());

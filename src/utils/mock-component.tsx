@@ -10,6 +10,12 @@ import { AppThunkDispatch } from './mocks';
 import { Provider } from 'react-redux';
 import { Action } from '@reduxjs/toolkit';
 
+type ComponentWithMockStore = {
+  withStoreComponent: JSX.Element;
+  mockStore: MockStore;
+  mockAxiosAdapter: MockAdapter;
+}
+
 export function withHistory(component: JSX.Element, history?: MemoryHistory) {
   const memoryHistory = history ?? createMemoryHistory();
 
@@ -20,12 +26,6 @@ export function withHistory(component: JSX.Element, history?: MemoryHistory) {
       </HelmetProvider>
     </HistoryRouter>
   );
-}
-
-type ComponentWithMockStore = {
-  withStoreComponent: JSX.Element;
-  mockStore: MockStore;
-  mockAxiosAdapter: MockAdapter;
 }
 
 export function withStore(
