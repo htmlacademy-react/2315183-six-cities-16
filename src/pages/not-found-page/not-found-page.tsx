@@ -4,7 +4,7 @@ import Logo from '../../components/logo/logo.tsx';
 
 function NotFoundPage(): JSX.Element {
   return (
-    <section className="game">
+    <section className="game" data-testid="not-found-page">
       <Helmet>
         <title>404 Not Found</title>
       </Helmet>
