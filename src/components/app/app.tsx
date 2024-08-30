@@ -10,8 +10,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Offer } from '../../types/offer.ts';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/index.ts';
-import HistoryRouter from '../history-route/history-route.tsx';
-import browserHistory from '../../browser-history.ts';
 import { getAuthorizationStatus } from '../../store/user-process/selectors.ts';
 import { closeSorts } from '../../store/sort-process/sort-process.ts';
 
@@ -39,55 +37,53 @@ function App(): JSX.Element {
 
   return (
     <HelmetProvider>
-      <HistoryRouter history={browserHistory}>
-        <Routes>
+      <Routes>
+        <Route
+          path={AppRoute.Root}
+          element={
+            <MainPage
+              onOfferClick={offerClickHandler}
+              onOfferHover={offerHoverHandler}
+              selectedOffer={selectedOffer}
+            />
+          }
+        />
+        <Route
+          path={AppRoute.Login}
+          element={<LoginPage />}
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute
+              authorizationStatus={authorizationStatus}
+            >
+              <FavoritesPage
+                onOfferClick={offerClickHandler}
+                onOfferHover={offerHoverHandler}
+              />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Offer}
+        >
           <Route
-            path={AppRoute.Root}
+            path={AppRoute.OfferId}
             element={
-              <MainPage
+              <OfferPage
                 onOfferClick={offerClickHandler}
                 onOfferHover={offerHoverHandler}
                 selectedOffer={selectedOffer}
               />
             }
           />
-          <Route
-            path={AppRoute.Login}
-            element={<LoginPage />}
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute
-                authorizationStatus={authorizationStatus}
-              >
-                <FavoritesPage
-                  onOfferClick={offerClickHandler}
-                  onOfferHover={offerHoverHandler}
-                />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Offer}
-          >
-            <Route
-              path={AppRoute.OfferId}
-              element={
-                <OfferPage
-                  onOfferClick={offerClickHandler}
-                  onOfferHover={offerHoverHandler}
-                  selectedOffer={selectedOffer}
-                />
-              }
-            />
-          </Route>
-          <Route
-            path="*"
-            element={<NotFoundPage />}
-          />
-        </Routes>
-      </HistoryRouter>
+        </Route>
+        <Route
+          path="*"
+          element={<NotFoundPage />}
+        />
+      </Routes>
     </HelmetProvider>
   );
 }

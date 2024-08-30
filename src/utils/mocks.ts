@@ -1,4 +1,4 @@
-import { Cities } from '../const';
+import { AuthorizationStatus, Cities } from '../const';
 import { CurrentOffer, Offer } from '../types/offer';
 import { datatype, internet, name } from 'faker';
 import { UserData } from '../types/user-data';
@@ -64,3 +64,38 @@ export const makeFakeOffer = (): Offer => ({
 export const makeFakeOffers = (): Offer[] => new Array(50).fill(null).map(() => makeFakeOffer());
 
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({type}) => type);
+
+export const makeFakeStore = (initialState?: Partial<State>): State => ({
+  USER: {
+    authorizationStatus: AuthorizationStatus.NoAuth,
+    user: null
+  },
+  OFFERS: {
+    offers: [],
+    favoriteOffers: [],
+    currentOffer: null,
+    nearestOffers: [],
+    sort: '',
+    isOffersDataLoading: false
+  },
+  COMMENTS: {
+    comments: []
+  },
+  SORT: {
+    isSortsOpen: false
+  },
+  CITY: {
+    city: {
+      name: '',
+      location: {
+        latitude: 0,
+        longitude: 0,
+        zoom: 0
+      }
+    }
+  },
+  ERRORS: {
+    error: null
+  },
+  ...initialState ?? {},
+});
