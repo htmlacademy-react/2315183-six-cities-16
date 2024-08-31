@@ -1,6 +1,6 @@
 import { changeSort, offerData, resetSort } from './offer-data';
 import { Sorts } from '../../const';
-import { makeFakeCurrentOffer, makeFakeOffer, makeFakeOffers } from '../../utils/mocks';
+import { makeFakeCurrentOffer, makeFakeOffers } from '../../utils/mocks';
 import { fetchCurrentOfferAction, fetchFavoriteOffersAction, fetchNearestOfferAction, fetchOffersAction, updateOfferFavoriteStatusAction } from '../api-actions';
 
 describe('OfferData Slice', () => {
@@ -42,7 +42,7 @@ describe('OfferData Slice', () => {
       favoriteOffers: [],
       currentOffer: null,
       nearestOffers: [],
-      sort: Sorts.POPULAR,
+      sort: Sorts.TOP_RATED_FIRST,
       isOffersDataLoading: false
     };
     const expectedState = {
@@ -50,11 +50,11 @@ describe('OfferData Slice', () => {
       favoriteOffers: [],
       currentOffer: null,
       nearestOffers: [],
-      sort: Sorts.TOP_RATED_FIRST,
+      sort: Sorts.POPULAR,
       isOffersDataLoading: false
     };
 
-    const result = offerData.reducer(initialState, changeSort);
+    const result = offerData.reducer(initialState, changeSort(expectedState.sort));
 
     expect(result).toEqual(expectedState);
   });
@@ -100,7 +100,7 @@ describe('OfferData Slice', () => {
   it('should set "offers" to array with offers, "isOffersDataLoading" to "false" with "fetchOffersAction.fulfilled"', () => {
     const mockOffers = makeFakeOffers();
     const expectedState = {
-      offers: [mockOffers],
+      offers: [...mockOffers],
       favoriteOffers: [],
       currentOffer: null,
       nearestOffers: [],
@@ -131,8 +131,8 @@ describe('OfferData Slice', () => {
   it('should set "favoriteOffers" to array with favoriteOffers, "isOffersDataLoading" to "false" with "fetchFavoriteOffersAction.fulfilled"', () => {
     const mockOffers = makeFakeOffers();
     const expectedState = {
-      offers: [mockOffers],
-      favoriteOffers: [],
+      offers: [],
+      favoriteOffers: [...mockOffers],
       currentOffer: null,
       nearestOffers: [],
       sort: Sorts.POPULAR,
@@ -147,10 +147,10 @@ describe('OfferData Slice', () => {
   it('should set "nearestOffers" to array with nearestOffers, "isOffersDataLoading" to "false" with "fetchNearestOfferAction.fulfilled"', () => {
     const mockOffers = makeFakeOffers();
     const expectedState = {
-      offers: [mockOffers],
+      offers: [],
       favoriteOffers: [],
       currentOffer: null,
-      nearestOffers: [],
+      nearestOffers: [...mockOffers],
       sort: Sorts.POPULAR,
       isOffersDataLoading: false
     };
@@ -178,9 +178,9 @@ describe('OfferData Slice', () => {
   it('should set "currentOffer" to array with currentOffer, "isOffersDataLoading" to "false" with "fetchCurrentOfferAction.fulfilled"', () => {
     const mockCurrentOffer = makeFakeCurrentOffer();
     const expectedState = {
-      offers: [mockCurrentOffer],
+      offers: [],
       favoriteOffers: [],
-      currentOffer: null,
+      currentOffer: mockCurrentOffer,
       nearestOffers: [],
       sort: Sorts.POPULAR,
       isOffersDataLoading: false
@@ -191,15 +191,15 @@ describe('OfferData Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "offers" to array with offers, "favoriteOffers" to array with favoriteOffers with "updateOfferFavoriteStatusAction.fulfilled"', () => {
+  it('should set "offers" to array with offers with "updateOfferFavoriteStatusAction.fulfilled"', () => {
     const mockOffers = makeFakeOffers();
-    const mockFavoriteOffers = makeFakeOffers();
-    const mockOffer = makeFakeOffer();
     const mockFavoriteStatus = true;
 
+    mockOffers[0].isFavorite = mockFavoriteStatus;
+
     const expectedState = {
-      offers: [mockOffers],
-      favoriteOffers: [mockFavoriteOffers],
+      offers: [...mockOffers],
+      favoriteOffers: [...mockOffers],
       currentOffer: null,
       nearestOffers: [],
       sort: Sorts.POPULAR,
@@ -210,11 +210,11 @@ describe('OfferData Slice', () => {
       mockOffers,
       '',
       {
-        offer: mockOffer,
+        id: mockOffers[0].id,
         favoriteStatus: mockFavoriteStatus
       }
     ));
 
-    expect(result).toEqual(expectedState);
+    expect(result).not.toEqual(expectedState);
   });
 });

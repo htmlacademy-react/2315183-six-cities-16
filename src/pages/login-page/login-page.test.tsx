@@ -2,24 +2,17 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoginPage from './login-page';
 import HistoryRouter from '../../components/history-route/history-route';
-import { MemoryHistory } from 'history';
 import { HelmetProvider } from 'react-helmet-async';
-import { AppRoute } from '../../const';
 import { Action } from '@reduxjs/toolkit';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { State } from '../../types/state';
 import { AppThunkDispatch, makeFakeStore } from '../../utils/mocks';
 import { Provider } from 'react-redux';
+import { createMemoryHistory } from 'history';
 
 describe('Component: LoginPage', () => {
   const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>();
   const mockStore = mockStoreCreator(makeFakeStore());
-
-  let mockHistory: MemoryHistory;
-
-  beforeAll(() => {
-    mockHistory.push(AppRoute.Login);
-  });
 
   it('should render correctly', () => {
     const emailText = 'E-mail';
@@ -27,7 +20,7 @@ describe('Component: LoginPage', () => {
 
     render(
       <Provider store={mockStore}>
-        <HistoryRouter history={mockHistory}>
+        <HistoryRouter history={createMemoryHistory()}>
           <HelmetProvider>
             <LoginPage />
           </HelmetProvider>
@@ -47,7 +40,7 @@ describe('Component: LoginPage', () => {
 
     render(
       <Provider store={mockStore}>
-        <HistoryRouter history={mockHistory}>
+        <HistoryRouter history={createMemoryHistory()}>
           <HelmetProvider>
             <LoginPage />
           </HelmetProvider>

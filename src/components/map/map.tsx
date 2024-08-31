@@ -52,7 +52,7 @@ function Map({city, points, selectedOffer}: MapProps): JSX.Element {
         map.setView(new LatLng(city.location.latitude, city.location.longitude), city.location.zoom);
       };
     }
-  }, [map, points, selectedOffer]);
+  }, [city.location.latitude, city.location.longitude, city.location.zoom, currentCustomIcon, defaultCustomIcon, map, markers, points, selectedOffer]);
 
   return (
     <div
