@@ -41,6 +41,7 @@ function StayPlaceCardItem({offer, onOfferClick, onOfferHover}: StayPlaceCardIte
   };
   return (
     <article className="cities__card place-card"
+      data-testid="stayPlaceCardItem"
       id={`offer-${id}`}
       onClick={() => {
         setCurrentOffer({

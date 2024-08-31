@@ -7,7 +7,7 @@ type ReviewsProps = {
 
 function ReviewsList({comments}: ReviewsProps): JSX.Element {
   return (
-    <ul className="reviews__list">
+    <ul className="reviews__list" data-testid="reviewsList">
       {
         comments.map((comment) =>
           <ReviewsItem comment={comment} key={comment.id + comment.user.name}/>

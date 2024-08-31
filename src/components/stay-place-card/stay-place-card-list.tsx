@@ -22,14 +22,14 @@ function StayPlaceCardList({favoriteOffers, className, onOfferClick, onOfferHove
 
   if (isFavoritePage && favoriteOffers) {
     return (
-      <div className="favorites__places">
+      <div className="favorites__places" data-testid="stayPlaceCardList">
         {favoriteOffers.map((offer) => <FavoritesStayPlaceCardsWrapped key={offer.id + offer.title} offer={offer} onOfferClick={onOfferClick}/>)}
       </div>
     );
   }
   return (
     <div
-      className={className}
+      className={className} data-testid="stayPlaceCardList"
     >
       {
         offers.map((offer) => (

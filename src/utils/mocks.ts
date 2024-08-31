@@ -4,7 +4,7 @@ import { datatype, internet, name } from 'faker';
 import { UserData } from '../types/user-data';
 import { Action } from '@reduxjs/toolkit';
 import { ThunkDispatch } from 'redux-thunk';
-import { State } from '../types/state';
+import { CommentsData, State } from '../types/state';
 import { createAPI } from '../services/api';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
@@ -15,6 +15,16 @@ export const makeFakeUser = (): UserData => ({
   name: name.title(),
   avatarUrl: internet.avatar(),
   isPro: true
+});
+
+export const makeFakeComments = (): CommentsData => ({
+  comments: new Array(3).fill(null).map(() => ({
+    id: name.title(),
+    comment: name.title(),
+    date: new Date(),
+    rating: datatype.number(),
+    user: makeFakeUser()
+  }))
 });
 
 export const makeFakeCurrentOffer = (): CurrentOffer => ({
@@ -67,13 +77,13 @@ export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({
 
 export const makeFakeStore = (initialState?: Partial<State>): State => ({
   USER: {
-    authorizationStatus: AuthorizationStatus.NoAuth,
+    authorizationStatus: AuthorizationStatus.Auth,
     user: null
   },
   OFFERS: {
     offers: [],
     favoriteOffers: [],
-    currentOffer: null,
+    currentOffer: makeFakeCurrentOffer(),
     nearestOffers: [],
     sort: '',
     isOffersDataLoading: false
@@ -86,16 +96,16 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
   },
   CITY: {
     city: {
-      name: '',
+      name: 'Paris',
       location: {
-        latitude: 0,
-        longitude: 0,
-        zoom: 0
+        latitude: Cities.PARIS.location.latitude,
+        longitude: Cities.PARIS.location.longitude,
+        zoom: Cities.PARIS.location.zoom
       }
     }
   },
   ERRORS: {
-    error: null
+    error: 'error'
   },
   ...initialState ?? {},
 });

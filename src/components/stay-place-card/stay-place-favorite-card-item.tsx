@@ -31,6 +31,7 @@ function StayPlaceFavoriteCardItem({offer, onOfferClick}: StayPlaceFavoriteCardI
 
   return (
     <article className="favorites__card place-card"
+      data-testid="stayPlaceFavoriteCardItem"
       id={`offer-${id}`}
       onClick={() => {
         setCurrentOffer({
