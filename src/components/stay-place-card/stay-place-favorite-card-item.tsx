@@ -20,7 +20,7 @@ function StayPlaceFavoriteCardItem({offer, onOfferClick}: StayPlaceFavoriteCardI
   const toggleFavoriteStatusHandler = () => {
     try {
       setIsUpdating(true);
-      store.dispatch(updateOfferFavoriteStatusAction({offer, favoriteStatus}));
+      store.dispatch(updateOfferFavoriteStatusAction({id: offer.id, favoriteStatus}));
       setFavoriteStatus(!favoriteStatus);
     } catch (err) {
       setError('Cant update status');
