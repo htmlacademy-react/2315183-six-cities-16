@@ -1,17 +1,19 @@
 import { render, screen } from '@testing-library/react';
-import NotFoundPage from './not-found-page';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../history-route/history-route';
 import { createMemoryHistory } from 'history';
 import { HelmetProvider } from 'react-helmet-async';
+import StayPlaceCardEmptyList from './stay-place-card-empty-list';
+import { Cities } from '../../const';
 
-describe('Component: NotFoundPage', () => {
-  it('should render correctly', () => {
-    const expectedTestId = 'not-found-page';
+describe('Component: StayPlaceCardEmptyList', () => {
+
+  it ('should render correctly', () => {
+    const expectedTestId = 'stayPlaceCardEmptyList';
 
     render(
       <HistoryRouter history={createMemoryHistory()}>
         <HelmetProvider>
-          <NotFoundPage />
+          <StayPlaceCardEmptyList currentCity={Cities.AMSTERDAM} />
         </HelmetProvider>
       </HistoryRouter>
     );

@@ -34,7 +34,7 @@ function Reviews(): JSX.Element {
   );
 
   return (
-    <section className="offer__reviews reviews">
+    <section className="offer__reviews reviews" data-testid="reviews">
       <h2 className="reviews__title">
         Reviews &middot;
         <span className="reviews__amount">

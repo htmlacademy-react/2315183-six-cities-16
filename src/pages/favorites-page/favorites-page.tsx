@@ -26,7 +26,7 @@ function FavoritesPage({onOfferClick, onOfferHover}: FavoritesPageProps): JSX.El
   }
 
   return (
-    <div className="page">
+    <div className="page" data-testid="favoritesPage">
 
       <Helmet>
         <title>6 cities. Favorites</title>

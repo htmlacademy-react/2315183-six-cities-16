@@ -41,7 +41,7 @@ function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): J
   }
 
   return (
-    <div className="page page--gray page--main">
+    <div className="page page--gray page--main" data-testid="mainPage">
       <Helmet>
         <title>6 cities</title>
       </Helmet>

@@ -1,16 +1,39 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { withHistory, withStore } from '../../utils/mock-component';
 import LoginPage from './login-page';
+import HistoryRouter from '../../components/history-route/history-route';
+import { MemoryHistory } from 'history';
+import { HelmetProvider } from 'react-helmet-async';
+import { AppRoute } from '../../const';
+import { Action } from '@reduxjs/toolkit';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { State } from '../../types/state';
+import { AppThunkDispatch, makeFakeStore } from '../../utils/mocks';
+import { Provider } from 'react-redux';
 
 describe('Component: LoginPage', () => {
+  const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>();
+  const mockStore = mockStoreCreator(makeFakeStore());
+
+  let mockHistory: MemoryHistory;
+
+  beforeAll(() => {
+    mockHistory.push(AppRoute.Login);
+  });
+
   it('should render correctly', () => {
     const emailText = 'E-mail';
     const passwordText = 'Password';
-    const { withStoreComponent } = withStore(<LoginPage />, {});
-    const preparedComponent = withHistory(withStoreComponent);
 
-    render(preparedComponent);
+    render(
+      <Provider store={mockStore}>
+        <HistoryRouter history={mockHistory}>
+          <HelmetProvider>
+            <LoginPage />
+          </HelmetProvider>
+        </HistoryRouter>
+      </Provider>
+    );
 
     expect(screen.getByText(emailText)).toBeInTheDocument();
     expect(screen.getByText(passwordText)).toBeInTheDocument();
@@ -21,10 +44,16 @@ describe('Component: LoginPage', () => {
     const passwordElementTestId = 'passwordElement';
     const expectedEmailValue = 'keks@mail.ru';
     const expectedPasswordValue = '123456';
-    const { withStoreComponent } = withStore(<LoginPage />, {});
-    const preparedComponent = withHistory(withStoreComponent);
 
-    render(preparedComponent);
+    render(
+      <Provider store={mockStore}>
+        <HistoryRouter history={mockHistory}>
+          <HelmetProvider>
+            <LoginPage />
+          </HelmetProvider>
+        </HistoryRouter>
+      </Provider>
+    );
 
     await userEvent.type(
       screen.getByTestId(emailElementTestId),

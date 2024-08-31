@@ -1,9 +1,9 @@
+import { createAPI } from '../services/api';
 import { MemoryHistory, createMemoryHistory } from 'history';
 import HistoryRouter from '../components/history-route/history-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { configureMockStore, MockStore } from '@jedmao/redux-mock-store';
 import MockAdapter from 'axios-mock-adapter';
-import { createAPI } from '../services/api';
 import thunk from 'redux-thunk';
 import { State } from '../types/state';
 import { AppThunkDispatch } from './mocks';

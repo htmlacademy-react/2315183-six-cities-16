@@ -13,6 +13,7 @@ function CitiesItem({city, onCityClick}: CitiesItemProps): JSX.Element {
     <li className="locations__item" key={city.name} onClick={() => {
       onCityClick(city);
     }}
+    data-testid='citiesItem'
     >
       <a className={`locations__item-link tabs__item ${cityName.name === city.name ? 'tabs__item--active' : ''}`} href="#">
         <span>{city.name}</span>

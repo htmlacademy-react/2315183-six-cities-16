@@ -1,13 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import Logo from './logo';
-import { withHistory } from '../../utils/mock-component';
+import HistoryRouter from '../history-route/history-route';
+import { createMemoryHistory } from 'history';
 
 describe('Component: Logo', () => {
   it('should render correctly', () => {
     const expectedAltText = '6 cities logo';
-    const preparedComponent = withHistory(<Logo />);
 
-    render(preparedComponent);
+    render(
+      <HistoryRouter history={createMemoryHistory()}>
+        <Logo />
+      </HistoryRouter>
+    );
 
     expect(screen.getByAltText(expectedAltText)).toBeInTheDocument();
   });

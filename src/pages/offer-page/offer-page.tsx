@@ -62,7 +62,7 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
     const starsPercent = rating * 100 / STARS.length;
 
     return (
-      <div className="page">
+      <div className="page" data-testid="offerPage">
         <Helmet>
           <title>6 cities. Offer</title>
         </Helmet>

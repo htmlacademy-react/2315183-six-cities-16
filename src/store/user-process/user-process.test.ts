@@ -7,7 +7,9 @@ describe('UserProcess Slice', () => {
   it('should return initial state with empty action', () => {
     const mockUser = makeFakeUser();
     const emptyAction = { type: '' };
-    const expectedState = { authorizationStatus: AuthorizationStatus.Auth, user: mockUser };
+    const expectedState = {
+      authorizationStatus: AuthorizationStatus.Auth,
+      user: mockUser };
 
     const result = userProcess.reducer(expectedState, emptyAction);
 
@@ -16,7 +18,9 @@ describe('UserProcess Slice', () => {
 
   it('should return default initial state with empty action', () => {
     const emptyAction = { type: '' };
-    const expectedState = { authorizationStatus: AuthorizationStatus.Unknown, user: null };
+    const expectedState = {
+      authorizationStatus: AuthorizationStatus.Unknown,
+      user: null };
 
     const result = userProcess.reducer(undefined, emptyAction);
 
@@ -25,8 +29,12 @@ describe('UserProcess Slice', () => {
 
   it('should set "Auth" with "checkAuthAction.fulfilled" action', () => {
     const mockUser = makeFakeUser();
-    const initialState = { authorizationStatus: AuthorizationStatus.NoAuth, user: null };
-    const expectedState = { authorizationStatus: AuthorizationStatus.Auth, user: mockUser };
+    const initialState = {
+      authorizationStatus: AuthorizationStatus.NoAuth,
+      user: null };
+    const expectedState = {
+      authorizationStatus: AuthorizationStatus.Auth,
+      user: mockUser };
 
     const result = userProcess.reducer(initialState, checkAuthAction.fulfilled);
 
@@ -35,8 +43,12 @@ describe('UserProcess Slice', () => {
 
   it('should set "NoAuth" with "checkAuthAction.rejected" action', () => {
     const mockUser = makeFakeUser();
-    const initialState = { authorizationStatus: AuthorizationStatus.Auth, user: mockUser };
-    const expectedState = { authorizationStatus: AuthorizationStatus.NoAuth, user: null };
+    const initialState = {
+      authorizationStatus: AuthorizationStatus.Auth,
+      user: mockUser };
+    const expectedState = {
+      authorizationStatus: AuthorizationStatus.NoAuth,
+      user: null };
 
     const result = userProcess.reducer(initialState, checkAuthAction.rejected);
 
@@ -45,7 +57,9 @@ describe('UserProcess Slice', () => {
 
   it('should set "Auth" with "loginAction.fulfilled" action', () => {
     const mockUser = makeFakeUser();
-    const initialState = { authorizationStatus: AuthorizationStatus.NoAuth, user: null };
+    const initialState = {
+      authorizationStatus: AuthorizationStatus.NoAuth,
+      user: null };
     const expectedState = {
       authorizationStatus: AuthorizationStatus.Auth,
       user: mockUser
@@ -57,8 +71,12 @@ describe('UserProcess Slice', () => {
   });
 
   it('should set "NoAuth" with "loginAction.rejected" action', () => {
-    const initialState = { authorizationStatus: AuthorizationStatus.Auth, user: null };
-    const expectedState = { authorizationStatus: AuthorizationStatus.NoAuth, user: null };
+    const initialState = {
+      authorizationStatus: AuthorizationStatus.Auth,
+      user: null };
+    const expectedState = {
+      authorizationStatus: AuthorizationStatus.NoAuth,
+      user: null };
 
     const result = userProcess.reducer(initialState, loginAction.rejected);
 

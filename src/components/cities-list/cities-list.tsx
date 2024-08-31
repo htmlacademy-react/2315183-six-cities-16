@@ -8,7 +8,7 @@ type CitiesListProps = {
 
 function CitiesList({onCityClick}: CitiesListProps): JSX.Element {
   return (
-    <ul className="locations__list tabs__list">
+    <ul className="locations__list tabs__list" data-testid="citiesList">
       {Object.values(Cities)
         .map((city) => (
           <CitiesItem city={city} onCityClick={onCityClick} key={city.name}/>
