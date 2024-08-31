@@ -3,7 +3,7 @@ import { MemoryHistory, createMemoryHistory } from 'history';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import App from './app';
 import { withHistory, withStore } from '../../utils/mock-component';
-import { makeFakeStore, makeFakeUser } from '../../utils/mocks';
+import { makeFakeOffer, makeFakeStore, makeFakeUser } from '../../utils/mocks';
 
 describe('Application Routing', () => {
   let mockHistory: MemoryHistory;
@@ -48,11 +48,12 @@ describe('Application Routing', () => {
   it('should render "OfferPage" when user navigate to "/offer"', () => {
     const withHistoryComponent = withHistory(<App />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore());
-    mockHistory.push(`${AppRoute.Offer}/7264294sfsdfs`);
+    const fakeOffer = makeFakeOffer();
+    mockHistory.push(`${AppRoute.Offer}/${fakeOffer.id}`);
 
     render(withStoreComponent);
 
-    expect(screen.getByText('404. Page not found')).toBeInTheDocument();
+    expect(screen.getByTestId('offerPage')).toBeInTheDocument();
   });
 
   it('should render "NotFoundPage" when user navigate to non-existent route', () => {
