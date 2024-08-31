@@ -25,16 +25,16 @@ export const APIAction = {
   CLEAR_ERROR: 'CLEAR_ERROR'
 };
 
-export const clearErrorAction = createAsyncThunk(
-  APIAction.CLEAR_ERROR,
-  () => {
-    const dispatch = useAppDispatch();
-    setTimeout(
-      () => dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR
-    );
-  }
-);
+// export const clearErrorAction = createAsyncThunk(
+//   APIAction.CLEAR_ERROR,
+//   () => {
+//     const dispatch = useAppDispatch();
+//     setTimeout(
+//       () => dispatch(setError(null)),
+//       TIMEOUT_SHOW_ERROR
+//     );
+//   }
+// );
 
 export const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
   dispatch: AppDispatch;
