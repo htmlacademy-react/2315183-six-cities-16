@@ -7,9 +7,9 @@ import { CurrentOffer, Offer } from '../types/offer';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
-import { store } from '.';
 import { Comment, CommentToSend } from '../types/comments';
 import { setError } from './errors-process/errors-process';
+import { useAppDispatch } from '../hooks';
 
 export const APIAction = {
   FETCH_OFFERS: 'FETCH_OFFERS',
@@ -28,8 +28,9 @@ export const APIAction = {
 export const clearErrorAction = createAsyncThunk(
   APIAction.CLEAR_ERROR,
   () => {
+    const dispatch = useAppDispatch();
     setTimeout(
-      () => store.dispatch(setError(null)),
+      () => dispatch(setError(null)),
       TIMEOUT_SHOW_ERROR
     );
   }
