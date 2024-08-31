@@ -3,12 +3,17 @@ import Logo from '../../components/logo/logo.tsx';
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks/index.ts';
 import { loginAction } from '../../store/api-actions.ts';
+import { Link } from 'react-router-dom';
+import { Cities } from '../../const.ts';
+import { changeCity } from '../../store/city-process/city-process.ts';
 
 function LoginPage(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
+
+  const randomCity = Object.values(Cities)[Math.floor(Math.random() * Object.entries(Cities).length)];
 
   const submitFormHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -69,9 +74,12 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to="/" onClick={() => {
+                dispatch(changeCity(randomCity));
+              }}
+              >
+                <span>{randomCity.name}</span>
+              </Link>
             </div>
           </section>
         </div>
