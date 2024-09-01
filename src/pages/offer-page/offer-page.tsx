@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 import { Offer, OfferClick, OfferHover } from '../../types/offer.ts';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import StayPlaceCardList from '../../components/stay-place-card/stay-place-card-list.tsx';
 import Map from '../../components/map/map.tsx';
-import { OffersClassNames, STARS } from '../../const.ts';
+import { AppRoute, AuthorizationStatus, OffersClassNames, STARS } from '../../const.ts';
 import { store } from '../../store/index.ts';
 import { useAppSelector } from '../../hooks/index.ts';
 import Loader from '../../components/loader/loader.tsx';
@@ -14,6 +14,7 @@ import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import Reviews from '../../components/reviews/reviews.tsx';
 import { getCurrentCity } from '../../store/city-process/selectors.ts';
 import { getCurrentOffer, getNearestOffers, getOffersDataLoadingStatus } from '../../store/offer-data/selectors.ts';
+import { getAuthorizationStatus } from '../../store/user-process/selectors.ts';
 
 type OfferPageProps = {
   selectedOffer: Offer | undefined;
@@ -23,6 +24,8 @@ type OfferPageProps = {
 
 function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps): JSX.Element {
   const { id: currentId } = useParams();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (currentId) {
@@ -71,7 +74,11 @@ function OfferPage({selectedOffer, onOfferClick, onOfferHover}: OfferPageProps):
       setFavoriteStatus(!favoriteStatus);
       try {
         setIsUpdating(true);
-        store.dispatch(updateOfferFavoriteStatusAction({ id, favoriteStatus: favoriteStatus ? favoriteStatus : false }));
+        if (authorizationStatus === AuthorizationStatus.Auth) {
+          store.dispatch(updateOfferFavoriteStatusAction({ id, favoriteStatus: favoriteStatus ? favoriteStatus : false }));
+        } else {
+          navigate(AppRoute.Login);
+        }
       } catch (error) {
         setFavoriteStatus(!favoriteStatus);
       } finally {
