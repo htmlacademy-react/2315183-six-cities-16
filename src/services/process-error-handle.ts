@@ -1,12 +1,12 @@
 import { TIMEOUT_SHOW_ERROR } from '../const.ts';
-import { store } from '../store';
 import { setError } from '../store/errors-process/errors-process.ts';
+import { AppDispatch } from '../types/state.ts';
 
-export const processErrorHandle = (message: string) => {
-  store.dispatch(setError(message));
+export const processErrorHandle = (message: string, dispatch: AppDispatch) => {
+  dispatch(setError(message));
 
   setTimeout(
-    () => store.dispatch(setError(null)),
+    () => dispatch(setError(null)),
     TIMEOUT_SHOW_ERROR
   );
 };

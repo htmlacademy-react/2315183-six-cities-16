@@ -10,13 +10,15 @@ type CitiesItemProps = {
 
 function CitiesItem({city, onCityClick}: CitiesItemProps): JSX.Element {
   const cityName = useAppSelector(getCurrentCity);
+
   return (
-    <li className="locations__item" key={city.name} onClick={() => {
-      onCityClick(city);
-    }}
-    data-testid='citiesItem'
+    <li className="locations__item" key={city.name}
+      data-testid='citiesItem'
     >
-      <Link className={`locations__item-link tabs__item ${cityName.name === city.name ? 'tabs__item--active' : ''}`} to="">
+      <Link className={`locations__item-link tabs__item ${cityName.name === city.name ? 'tabs__item--active' : ''}`} to="/" onClick={() => {
+        onCityClick(city);
+      }}
+      >
         <span>{city.name}</span>
       </Link>
     </li>
