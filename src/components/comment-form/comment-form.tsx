@@ -1,4 +1,5 @@
-import { ChangeEvent, Fragment, memo, useEffect, useState } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import { ChangeEvent, Fragment, useEffect, useState } from 'react';
 import { AppRoute, StarTitles } from '../../const';
 import { CommentToSend } from '../../types/comments';
 import { useAppSelector } from '../../hooks';
@@ -26,6 +27,7 @@ function CommentForm({onFormSubmit}: CommentFormProps) {
     };
 
     clearInputs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const textareaChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
@@ -59,6 +61,7 @@ function CommentForm({onFormSubmit}: CommentFormProps) {
           comment: ''
         });
       }}
+      data-testid="commentForm"
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
@@ -76,6 +79,7 @@ function CommentForm({onFormSubmit}: CommentFormProps) {
         ).reverse()}
       </div>
       <textarea className="reviews__textarea form__textarea"
+        data-testid="commentElement"
         id="review" name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={textareaChangeHandler}
@@ -92,4 +96,4 @@ function CommentForm({onFormSubmit}: CommentFormProps) {
   );
 }
 
-export default memo(CommentForm);
+export default CommentForm;

@@ -21,6 +21,7 @@ type MainPageProps = {
   onOfferHover: OfferHover;
   selectedOffer: Offer | undefined;
 }
+
 function MainPage({onOfferClick, onOfferHover, selectedOffer}: MainPageProps): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

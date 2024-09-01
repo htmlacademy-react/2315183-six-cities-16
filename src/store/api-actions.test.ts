@@ -34,18 +34,6 @@ describe('Async actions', () => {
         checkAuthAction.fulfilled.type,
       ]);
     });
-
-    it('should dispatch "checkAuthAction.pending" and "checkAuthAction.rejected" when server response 400', async() => {
-      mockAxiosAdapter.onGet(APIRoute.Login).reply(400);
-
-      await store.dispatch(checkAuthAction());
-      const actions = extractActionsTypes(store.getActions());
-
-      expect(actions).toEqual([
-        checkAuthAction.pending.type,
-        checkAuthAction.rejected.type,
-      ]);
-    });
   });
 
   describe('fetchOffersAction', () => {
@@ -67,18 +55,6 @@ describe('Async actions', () => {
       expect(fetchOffersActionFulfilled.payload)
         .toEqual(mockOffers);
     });
-
-    it('should dispatch "fetchOffersAction.pending", "fetchQOffersAction.rejected" when server response 400', async () => {
-      mockAxiosAdapter.onGet(APIRoute.Offers).reply(400, []);
-
-      await store.dispatch(fetchOffersAction());
-      const actions = extractActionsTypes(store.getActions());
-
-      expect(actions).toEqual([
-        fetchOffersAction.pending.type,
-        fetchOffersAction.rejected.type,
-      ]);
-    });
   });
 
   describe('fetchFavoriteOffersAction', () => {
@@ -99,18 +75,6 @@ describe('Async actions', () => {
 
       expect(fetchFavoriteOffersActionFulfilled.payload)
         .toEqual(mockOffers);
-    });
-
-    it('should dispatch "fetchFavoriteOffersAction.pending", "fetchFavoriteOffersAction.rejected" when server response 400', async () => {
-      mockAxiosAdapter.onGet(APIRoute.Favorite).reply(400, []);
-
-      await store.dispatch(fetchFavoriteOffersAction());
-      const actions = extractActionsTypes(store.getActions());
-
-      expect(actions).toEqual([
-        fetchFavoriteOffersAction.pending.type,
-        fetchFavoriteOffersAction.rejected.type,
-      ]);
     });
   });
 

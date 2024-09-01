@@ -9,6 +9,7 @@ import { fetchFavoriteOffersAction } from '../../store/api-actions.ts';
 import { getFavoriteOffers, getOffersDataLoadingStatus } from '../../store/offer-data/selectors.ts';
 import Loader from '../../components/loader/loader.tsx';
 import FavoritesEmptyList from '../../components/favorites-empty-list/favorites-empty-list.tsx';
+import { Link } from 'react-router-dom';
 
 store.dispatch(fetchFavoriteOffersAction());
 
@@ -51,9 +52,9 @@ function FavoritesPage({onOfferClick, onOfferHover}: FavoritesPageProps): JSX.El
                                 <li className="favorites__locations-items" key={city.name}>
                                   <div className="favorites__locations locations locations--current">
                                     <div className="locations__item">
-                                      <a className="locations__item-link" href="#">
+                                      <Link className="locations__item-link" to="">
                                         <span>{city.name}</span>
-                                      </a>
+                                      </Link>
                                     </div>
                                   </div>
                                   <StayPlaceCardList
@@ -74,9 +75,9 @@ function FavoritesPage({onOfferClick, onOfferHover}: FavoritesPageProps): JSX.El
                 </div>
               </main>
               <footer className="footer container">
-                <a className="footer__logo-link" href="main.html">
+                <Link className="footer__logo-link" to="/">
                   <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-                </a>
+                </Link>
               </footer>
             </>
           )

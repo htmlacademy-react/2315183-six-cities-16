@@ -6,10 +6,10 @@ describe('CommentsData Slice', () => {
   it('should return initial state with empty action', () => {
     const emptyAction = { type: '' };
     const expectedState = {
-      comments: makeFakeComments()
+      comments: []
     };
 
-    const result = commentsData.reducer(expectedState.comments, emptyAction);
+    const result = commentsData.reducer(expectedState, emptyAction);
 
     expect(result).toEqual(expectedState);
   });
@@ -28,7 +28,7 @@ describe('CommentsData Slice', () => {
   it('should set "comments" to array with comments with "fetchCommentsAction.fulfilled"', () => {
     const mockComments = makeFakeComments();
     const expectedState = {
-      comments: [mockComments]
+      comments: [...mockComments.comments]
     };
 
     const result = commentsData.reducer(undefined, fetchCommentsAction.fulfilled(mockComments.comments, '', ''));

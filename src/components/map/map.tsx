@@ -26,6 +26,8 @@ function Map({city, points, selectedOffer}: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
@@ -52,7 +54,7 @@ function Map({city, points, selectedOffer}: MapProps): JSX.Element {
         map.setView(new LatLng(city.location.latitude, city.location.longitude), city.location.zoom);
       };
     }
-  }, [map, points, selectedOffer]);
+  }, [city, points, selectedOffer, map]);
 
   return (
     <div

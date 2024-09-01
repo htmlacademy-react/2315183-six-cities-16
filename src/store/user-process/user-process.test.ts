@@ -36,21 +36,20 @@ describe('UserProcess Slice', () => {
       authorizationStatus: AuthorizationStatus.Auth,
       user: mockUser };
 
-    const result = userProcess.reducer(initialState, checkAuthAction.fulfilled);
+    const result = userProcess.reducer(initialState, checkAuthAction.fulfilled(mockUser, '', undefined));
 
     expect(result).toEqual(expectedState);
   });
 
   it('should set "NoAuth" with "checkAuthAction.rejected" action', () => {
-    const mockUser = makeFakeUser();
     const initialState = {
       authorizationStatus: AuthorizationStatus.Auth,
-      user: mockUser };
+      user: null };
     const expectedState = {
       authorizationStatus: AuthorizationStatus.NoAuth,
       user: null };
 
-    const result = userProcess.reducer(initialState, checkAuthAction.rejected);
+    const result = userProcess.reducer(initialState, checkAuthAction.rejected(null, '', undefined));
 
     expect(result).toEqual(expectedState);
   });
@@ -65,7 +64,7 @@ describe('UserProcess Slice', () => {
       user: mockUser
     };
 
-    const result = userProcess.reducer(initialState, loginAction.fulfilled);
+    const result = userProcess.reducer(initialState, loginAction.fulfilled(mockUser, '', {email: 'krok@mail.ru', password: 'gadshhv33'}));
 
     expect(result).toEqual(expectedState);
   });
